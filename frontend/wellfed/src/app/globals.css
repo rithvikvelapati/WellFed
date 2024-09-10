@@ -1,33 +1,27 @@
+/* styles/global.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
+/* Mobile-first approach for base styles */
+html,
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply text-fluid-md font-sans bg-white text-gray-800; /* Roboto applied here */
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+a {
+  @apply text-primary hover:text-secondary transition-colors;
+}
+
+button.primary-btn {
+  @apply bg-primary text-white py-fluid-px px-4 rounded hover:bg-secondary transition;
+}
+
+button.secondary-btn {
+  @apply bg-secondary text-white py-fluid-px px-4 rounded hover:bg-third transition;
+}
+
+.logo {
+  @apply text-primary font-bold fluid-lg;  /* Responsive logo size */
 }
