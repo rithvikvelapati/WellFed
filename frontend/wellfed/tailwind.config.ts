@@ -7,11 +7,22 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+   extend: {
+      colors: {
+        primary: '#b64b29',
+        secondary: '#ec9556',
+        third: '#438e8d',
+      },
+      fontFamily: {
+        sans: ['Roboto', 'sans-serif'], // Set Roboto as the default sans-serif font
+      },
+      fontSize: {
+        'fluid-lg': 'clamp(1.25rem, 5vw, 2rem)',
+        'fluid-md': 'clamp(1rem, 4vw, 1.5rem)',
+        'fluid-sm': 'clamp(0.875rem, 3vw, 1.25rem)',
+      },
+      spacing: {
+        'fluid-px': 'clamp(0.5rem, 4vw, 1rem)',
       },
     },
   },
