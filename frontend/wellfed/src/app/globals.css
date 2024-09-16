@@ -23,5 +23,5 @@ button.secondary-btn {
 }
 
 .logo {
-  @apply text-primary font-bold fluid-lg;  /* Responsive logo size */
+  @apply text-primary font-bold text-lg md:text-xl lg:text-2xl;  /* Responsive logo size */
 }
