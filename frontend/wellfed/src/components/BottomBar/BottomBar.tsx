@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const BottomBar = () => {
   return (
-    <div className="fixed bottom-0 w-full h-16 bg-white shadow-md flex justify-around items-center border-t border-gray-300">
+    <div className="fixed bottom-0 w-full h-16 bg-white shadow-md flex justify-around items-center ">
       <button className="flex justify-center items-center">
         <Image
           src="/Camera.svg"

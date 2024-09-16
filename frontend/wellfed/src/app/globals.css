@@ -4,7 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Mobile-first approach for base styles */
-html,
-body {
+
+.react-datepicker-wrapper {
+    width: 100% !important;
+}
+
+.pad-2 {
+    padding: 0.5rem;
+}
+
+.icon {
+    right: 10px;
+    top: 10px;
 }
