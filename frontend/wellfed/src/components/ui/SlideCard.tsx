@@ -14,7 +14,6 @@ interface SlideshowProps {
 const SlideCard: React.FC<SlideshowProps> = ({ slides }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Automatically change the slide every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       goToNextSlide();
@@ -22,14 +21,12 @@ const SlideCard: React.FC<SlideshowProps> = ({ slides }) => {
     return () => clearInterval(interval);
   }, [currentIndex]);
 
-  // Function to move to the next slide
   const goToNextSlide = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === slides.length - 1 ? 0 : prevIndex + 1
     );
   };
 
-  // Function to move to the previous slide
   const goToPrevSlide = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? slides.length - 1 : prevIndex - 1
@@ -51,10 +48,16 @@ const SlideCard: React.FC<SlideshowProps> = ({ slides }) => {
           alt={`Slide ${currentIndex}`}
           className="w-full h-40 object-cover"
         />
-        {/* Overlay Content */}
-        <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-50 p-4 text-center text-white">
+        <div className="absolute inset-0 bg-black bg-opacity-50 p-4 flex flex col justify-center">
+          <div className="text-white text-left">
           <p className="text-fluid-sm font-sans mb-2">{slides[currentIndex].title}</p>
           <p className="text-xs font-sans">{slides[currentIndex].description}</p>
+          <button onClick={() => console.log('Try Now clicked!')} // Replace with your action
+          className="mt-4 py-2 px-4 bg-white text-orange-600 font-sans text-xs rounded-full shadow-md hover:bg-gray-100">
+            Try Now!
+          </button>
+          </div>
+        
         </div>
       </div>
 
