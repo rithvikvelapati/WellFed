@@ -4,11 +4,11 @@ import EventCard from './EventCard';
 const EventsSection = () => {
   const eventData1 = {
     title: "SF Night Grille",
-    imageUrl: "/SF.svg", // Replace with real URL
+    imageUrl: "/SF.svg",
     rating: 4.5,
     reviewsCount: 32,
     users: [
-      "https://example.com/avatar1.jpg", // Replace with real user avatar URLs
+      "https://example.com/avatar1.jpg",
       "https://example.com/avatar2.jpg",
       "https://example.com/avatar3.jpg"
     ],
@@ -18,11 +18,11 @@ const EventsSection = () => {
 
   const eventData2 = {
     title: "SF Night Grille",
-    imageUrl: "/SF.svg", // Replace with real URL
+    imageUrl: "/SF.svg",
     rating: 3.5,
     reviewsCount: 20,
     users: [
-      "https://example.com/avatar1.jpg", // Replace with real user avatar URLs
+      "https://example.com/avatar1.jpg",
       "https://example.com/avatar2.jpg",
       "https://example.com/avatar3.jpg"
     ],
@@ -32,9 +32,8 @@ const EventsSection = () => {
 
   return (
       <div className="relative overflow-x-auto scrollbar-hide">
-        {/* Horizontal flex container */}
+
         <div className="flex space-x-4">
-          {/* Ensure each EventCard has flex-shrink-0 to maintain sizing */}
           <div className="flex-shrink-0">
             <EventCard {...eventData1} />
           </div>

@@ -7,7 +7,6 @@ const recipes: Recipe[] = [
   { id: 2, title: 'Mushroom Russitto', image: '/MR.jpg', likes: 223, username: 'AiNoKitchen' },
   { id: 3, title: 'Karelian Pie with Egg Butter', image: '/KP.jpg', likes: 300, username: 'AiNoKitchen' },
   { id: 4, title: 'Chicken Biryani', image: '/CB.jpg', likes: 450, username: 'AiNoKitchen' },
-  // Additional recipes
 ];
 
 const SuggestedRecipes: React.FC = () => {

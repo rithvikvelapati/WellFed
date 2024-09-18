@@ -23,9 +23,7 @@ export default function RootLayout({
             <TopBar />
           </div>
 
-          {/* Main Content Area */}
           <div className="flex-col mt-12 ml-12">
-            {/* Main Dashboard Content - Scrollable */}
             <main className="w-full -pt-8 -pl-8 bg-third rounded-tl-lg overflow-auto">
               {children}
             </main>

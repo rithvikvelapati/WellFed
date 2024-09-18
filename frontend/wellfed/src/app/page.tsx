@@ -3,8 +3,7 @@ import DashboardContent from "../components/DashboardContent";
 
 const Page: React.FC = () => {
   return (
-    <div className="p-4">
-      {/* This page doesn't do anything for now */}
+    <div className="p-2">
       <DashboardContent/>
     </div>
   );

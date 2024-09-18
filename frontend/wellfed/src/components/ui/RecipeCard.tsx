@@ -1,9 +1,7 @@
-// components/RecipeCard.tsx
 import React from 'react';
 import Image from "next/image";
 import { FaHeart } from 'react-icons/fa';
 
-// Define the Recipe interface directly here
 interface Recipe {
   id: number;
   title: string;
@@ -31,4 +29,4 @@ const RecipeCard: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
 };
 
 export default RecipeCard;
-export type { Recipe };  // Exporting the Recipe type if needed elsewhere
+export type { Recipe }; 
