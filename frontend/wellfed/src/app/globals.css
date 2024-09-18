@@ -23,18 +23,5 @@ button.secondary-btn {
 }
 
 .logo {
-  @apply text-primary font-bold;  /* Responsive logo size */
+  @apply text-primary font-bold fluid-lg;  /* Responsive logo size */
 }
-
-.scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Opera */
-}
-/* Tailwind CSS for handling overflow and flex layout */
-
-
-
