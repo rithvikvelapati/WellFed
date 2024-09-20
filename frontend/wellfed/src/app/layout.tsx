@@ -1,7 +1,7 @@
 import React from 'react';
 import TopBar from '../components/Topbar';
 import Sidebar from '../components/Sidebar';
-import '../app/globals.css';
+import './globals.css';
 
 export const metadata = {
   title: 'WellFed',

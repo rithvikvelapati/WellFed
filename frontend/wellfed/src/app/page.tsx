@@ -1,6 +1,5 @@
 import React from 'react';
 import DashboardContent from "../components/DashboardContent";
-import '../app/globals.css';
 
 const Page: React.FC = () => {
   return (

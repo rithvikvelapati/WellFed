@@ -1,5 +1,4 @@
-// Purpose: Configuration for Next.js
-// next.config.mjs
-export default {
-  reactStrictMode: true,
-};
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
+export default nextConfig;
