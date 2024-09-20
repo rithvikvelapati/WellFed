@@ -1,16 +1,14 @@
-import Calendar from './components/EventCalender/Calender';
-import EditEvent from './components/EditEvent/EditEvent';
+import React from 'react';
+import DashboardContent from "../components/DashboardContent";
+import '../app/globals.css';
 
-const Home: React.FC = () => {
+const Page: React.FC = () => {
   return (
-    <div className="w-full">
-
-      {/* Edit Event Component */}
-      <div>
-        <EditEvent /> 
-      </div>
+    <div className="p-4">
+      {/* This page doesn't do anything for now */}
+      <DashboardContent/>
     </div>
   );
 };
 
-export default Home;
+export default Page;

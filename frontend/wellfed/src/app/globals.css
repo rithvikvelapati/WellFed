@@ -23,3 +23,24 @@
     max-width: 1024px;
   }
 }
+
+button.secondary-btn {
+  @apply bg-secondary text-white py-fluid-px px-4 rounded hover:bg-third transition;
+}
+
+.logo {
+  @apply text-primary font-bold;  /* Responsive logo size */
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+/* Tailwind CSS for handling overflow and flex layout */
+
+
+
