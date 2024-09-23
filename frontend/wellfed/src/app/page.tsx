@@ -1,12 +1,18 @@
+
 import React from "react";
 import BottomBar from "@/components/BottomBar/BottomBar";
 import Profile from "@/components/Profile/Profile";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import TopBar from "@/components/TopBar/TopBar";
 
+import React from 'react';
+import DashboardContent from "../components/DashboardContent";
+import '../app/globals.css';
 
-export default function Home() {
+
+const Page: React.FC = () => {
   return (
+
     <div className="min-h-screen flex flex-col justify-between">
       <TopBar />
       {/* Add some content for the home page */}
@@ -22,3 +28,12 @@ export default function Home() {
     </div>
   );
 }
+    <div className="p-4">
+      {/* This page doesn't do anything for now */}
+      <DashboardContent/>
+    </div>
+  );
+};
+
+export default Page;
+

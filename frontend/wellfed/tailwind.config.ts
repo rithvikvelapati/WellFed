@@ -11,7 +11,7 @@ const config: Config = {
       colors: {
         primary: '#b64b29',
         secondary: '#ec9556',
-        third: '#438e8d',
+        third: '#D7E8E8',
       },
       fontFamily: {
         sans: ['Roboto', 'sans-serif'], // Set Roboto as the default sans-serif font
@@ -26,6 +26,8 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+  ],
 };
 export default config;

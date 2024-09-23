@@ -17,3 +17,19 @@
     right: 10px;
     top: 10px;
 }
+.logo {
+  @apply text-primary font-bold;  /* Responsive logo size */
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+/* Tailwind CSS for handling overflow and flex layout */
+
+
+
