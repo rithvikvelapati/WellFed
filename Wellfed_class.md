@@ -10,7 +10,7 @@
 
 <p><strong>Sign In:</strong></p>
 <p>
-  - Users can sign in using their email or social providers like Google, GitHub (if configured in Clerk).<br/>
+  - Users can sign in using their email or social providers like Google, GitHub.<br/>
   - The authentication system checks user credentials and manages the session, ensuring a smooth login experience.<br/>
   - Implemented with Clerk's <strong>SignIn</strong> component, which handles all necessary login logic.
 </p>
