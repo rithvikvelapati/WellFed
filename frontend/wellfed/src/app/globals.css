@@ -52,8 +52,45 @@ button.mobile-primary-btn {
   @apply bg-primary text-white py-4 px-6 rounded-lg shadow-md transition-all duration-300 w-full;
 }
 
+.fc-daygrid-day-events {
+  display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 0 !important;
+}
+
+.fc-theme-standard td, .fc-theme-standard th {
+  border: none !important;
+}
+
+.fc-daygrid-day-top {
+  justify-content: center !important;
+}
+
+.fc-scrollgrid-sync-inner {
+   background: #d7e8e8;
+}
+
+.fc-scrollgrid-sync-table {
+  margin-top: 2sqawzrem;
+}
+
+.fc-button {
+  background-image: linear-gradient(to right, #B64B29, #EC9556) !important;
+  border:none !important;
+}
+
+.fc .fc-toolbar {
+  flex-direction: column;
+  align-items: start !important;
+}
+
 button.mobile-primary-btn:hover {
   @apply bg-secondary shadow-lg;
+
+}
 
 .react-datepicker-wrapper {
     width: 100% !important;
@@ -65,6 +102,7 @@ button.mobile-primary-btn:hover {
 
 button.mobile-secondary-btn {
   @apply bg-secondary text-white py-3 px-5 rounded hover:bg-third w-full transition;
+}
 .icon {
     right: 10px;
     top: 10px;
@@ -159,4 +197,49 @@ button.mobile-secondary-btn {
 /* Mobile-Only Transitions */
 .mobile-transition {
   @apply transition-all duration-200 ease-in-out;
+}
+.fc-toolbar-chunk:last-child {
+  width: 100%;
+    align-items: end;
+    display: flex;
+    justify-content: end;
+
+}
+
+.fc-toolbar-chunk:first-child {
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+}
+
+.fc-prev-button {
+  margin-right: 5px !important;
+  border-radius: 50% !important;
+}
+
+.fc-next-button {
+  border-radius: 50% !important;
+}
+
+.fc-toolbar-title {
+  font-size: 20px !important;
+}
+
+.fc-day-today .fc-daygrid-day-top a {
+  background-color: #428F8F !important;
+  color: white !important;
+  border-radius: 50% !important ;
+  padding: 5px 10px !important;
+}
+
+.fc-daygrid-event-harness .text-xs {
+  display: none !important;
+}
+
+.fc-daygrid-event-harness {
+  margin-top: -1rem !important;
+}
+
+.fc-timegrid-axis:first-child {
+  background-color: #d7e8e8;
 }

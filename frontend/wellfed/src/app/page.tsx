@@ -4,7 +4,6 @@ import BottomBar from "@/components/BottomBar/BottomBar";
 import Profile from "@/components/Profile/Profile";
 import '@fontawesome/fontawesome-free/css/all.min.css';
 import TopBar from "@/components/TopBar/TopBar";
-import DashboardContent from "../components/DashboardContent";
 import '../app/globals.css';
 
 
