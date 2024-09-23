@@ -12,12 +12,12 @@
 <p>
   - Users can sign in using their email or social providers like Google, GitHub (if configured in Clerk).<br/>
   - The authentication system checks user credentials and manages the session, ensuring a smooth login experience.<br/>
-  - Implemented with Clerk's <code>SignIn</code> component, which handles all necessary login logic.
+  - Implemented with Clerk's <strong>SignIn</strong> component, which handles all necessary login logic.
 </p>
 
 <p><strong>Sign Out:</strong></p>
 <p>
-  - Users can securely sign out of their account with the <code>SignOut</code> component provided by Clerk.<br/>
+  - Users can securely sign out of their account with the <strong>SignOut</strong> component provided by Clerk.<br/>
   - Once signed out, the session is terminated, and the user is redirected to the appropriate page as configured.
 </p>
 
