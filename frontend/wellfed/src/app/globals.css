@@ -243,3 +243,6 @@ button.mobile-secondary-btn {
 .fc-timegrid-axis:first-child {
   background-color: #d7e8e8;
 }
+.fc-timeGridDay-button{
+  display: none;
+}
