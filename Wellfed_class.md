@@ -32,7 +32,7 @@
   The Profile page allows users to edit personal details such as name, email, date of birth, gender, and more.<br/>
   Calendar picker functionality has been added for selecting the date of birth.<br/>
 </p>
-<a href="https://github.com/rithvikvelapati/WellFed/tree/feature/bottom-bar" target="_blank"> <strong>Here's the code</strong></a>
+<a href="https://github.com/rithvikvelapati/WellFed/tree/feature/bottom-bar" target="_blank"> <strong>Here's the code</strong></a><br/><br/>
 
 
 
