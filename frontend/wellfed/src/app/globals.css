@@ -142,21 +142,7 @@ button.mobile-secondary-btn {
   scrollbar-width: none;
 }
 
-.mobile-scrollbar-hide::-webkit-scrollbar {
-  display: none;
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
 }
-
-/* Full-width images for mobile */
-.mobile-full-width-img {
-  @apply w-full h-auto;
-}
-
-/* Mobile-First Inputs: Simplified and larger tap targets */
-.mobile-input {
-  @apply border border-gray-300 rounded-lg py-3 px-4 w-full focus:outline-none focus:border-primary focus:ring-primary;
-}
-
-/* Mobile-Only Transitions */
-.mobile-transition {
-  @apply transition-all duration-200 ease-in-out;
-}
+/* Tailwind CSS for handling overflow and flex layout */
