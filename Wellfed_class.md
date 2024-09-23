@@ -24,7 +24,7 @@
 <p>
   Both processes are integrated through Clerk’s React SDK, providing secure, ready-to-use UI components that are easy to configure and customize.
 </p>
-<a href="https://github.com/rithvikvelapati/WellFed/tree/feature/clerk-auth" target="_blank"> <strong>Here's the code</strong></a>
+<a href="https://github.com/rithvikvelapati/WellFed/tree/feature/clerk-auth" target="_blank"> <strong>Here's the code</strong></a><br/><br/>
 
 <p><strong>Bottom Bar and Profile Section</strong></p>
 <p>
