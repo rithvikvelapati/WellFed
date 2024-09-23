@@ -2,6 +2,11 @@ import React from 'react';
 import TopBar from '../components/Topbar';
 import Sidebar from '../components/Sidebar';
 import '../app/globals.css';
+import { Roboto } from 'next/font/google';
+
+const roboto = Roboto({ subsets: ['latin'],
+  weight: ['300', '400', '500', '700', '900'],
+ });
 
 export const metadata = {
   title: 'WellFed',
@@ -14,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className={`${roboto.className}`}>
         <div className="flex flex-col h-screen">
           <div className="fixed top-0 left-0 h-full w-15 z-10 bg-second">
             <Sidebar />
