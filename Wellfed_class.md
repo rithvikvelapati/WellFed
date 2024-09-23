@@ -26,6 +26,14 @@
 </p>
 <a href="https://github.com/rithvikvelapati/WellFed/tree/feature/clerk-auth" target="_blank"> <strong>Here's the code</strong></a>
 
+<p><strong>Bottom Bar and Profile Section</strong></p>
+<p>
+  The bottom bar now includes quick access to <strong>Camera</strong>, <strong>Search</strong>, and <strong>Profile</strong> sections.<br/>
+  The Profile page allows users to edit personal details such as name, email, date of birth, gender, and more.<br/>
+  Calendar picker functionality has been added for selecting the date of birth.<br/>
+</p>
+<a href="https://github.com/rithvikvelapati/WellFed/tree/feature/bottom-bar" target="_blank"> <strong>Here's the code</strong></a>
+
 
 
 
