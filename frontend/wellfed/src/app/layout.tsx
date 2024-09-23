@@ -10,7 +10,7 @@ const roboto = Roboto({ subsets: ['latin'],
  });
 
 export const metadata = {
-  title: 'WellFed',
+  title: "WellFed",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
