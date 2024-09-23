@@ -33,16 +33,15 @@ const SlideCard: React.FC<SlideshowProps> = ({ slides }) => {
     );
   };
 
-  // Function to go to a specific slide
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
   };
 
   return (
     <div className="relative w-full max-w-3xl mx-auto">
-      {/* Slideshow Card */}
+
       <div className="relative overflow-hidden rounded-lg h-40 bg-white shadow-lg">
-        {/* Background Image */}
+
         <img
           src={slides[currentIndex].imageUrl}
           alt={`Slide ${currentIndex}`}
@@ -61,7 +60,6 @@ const SlideCard: React.FC<SlideshowProps> = ({ slides }) => {
         </div>
       </div>
 
-      {/* Navigation Dots */}
       <div className="absolute bottom-3 left-0 right-0 flex justify-center space-x-2">
         {slides.map((_, index) => (
           <div

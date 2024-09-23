@@ -1,17 +1,48 @@
-import Image from "next/image";
+"use client"
+import React, { useState } from 'react';
+import Link from 'next/link';
 
 const TopBar = () => {
-  return (
-    <div className="bg-white p-4 h-12 flex justify-between items-center">
-      {/* Profile Image */}
-      <div className="flex items-center space-x-2">
-        <span className="text-gray-800 font-medium"></span>
-      </div>
+  // State to track which icon is active (notification or cart)
+  const [activeIcon, setActiveIcon] = useState('');
 
-      {/* Icons */}
+  // Function to handle icon click and set the active icon
+  const handleIconClick = (iconName: string) => {
+    setActiveIcon(iconName);
+  };
+
+  return (
+    <div className="bg-white p-4 flex justify-end items-center">
       <div className="flex items-center space-x-8">
-        <Image src="/Notification.svg" alt="Notification" width={100} height={100} className="w-6 h-6 text-gray-600" />
-        <Image src="/Shopping cart.svg" alt="Shopping Cart" width={100} height={100} className="w-6 h-6 text-gray-600" />
+        <Link href="/notifications" passHref>
+          <div
+            className="relative cursor-pointer"
+            onClick={() => handleIconClick('notification')}
+          >
+            <img
+              src="/Notification.svg"
+              alt="Notification"
+              width={25}
+              height={25}
+              className="transition-all duration-150"
+            />
+          </div>
+        </Link>
+
+        <Link href="/cart" passHref>
+          <div
+            className="relative cursor-pointer"
+            onClick={() => handleIconClick('cart')}
+          >
+            <img
+              src="/Shopping cart.svg"
+              alt="Shopping Cart"
+              width={25}
+              height={25}
+              className="transition-all duration-150"
+            />
+          </div>
+        </Link>
       </div>
     </div>
   );
