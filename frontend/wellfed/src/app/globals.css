@@ -1,27 +1,162 @@
-/* styles/global.css */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Mobile-first approach for base styles */
-html,
-body {
-  @apply text-fluid-md font-sans bg-white text-gray-800; /* Roboto applied here */
+/* Container */
+.container {
+  max-width: 100%;
 }
 
-a {
-  @apply text-primary hover:text-secondary transition-colors;
+/* Custom breakpoints for larger screens */
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
 }
 
-button.primary-btn {
-  @apply bg-primary text-white py-fluid-px px-4 rounded hover:bg-secondary transition;
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
 }
 
-button.secondary-btn {
-  @apply bg-secondary text-white py-fluid-px px-4 rounded hover:bg-third transition;
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
 }
 
-.logo {
-  @apply text-primary font-bold text-lg md:text-xl lg:text-2xl;  /* Responsive logo size */
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+/* Mobile-Only Typography */
+h1.mobile {
+  @apply text-fluid-lg font-bold;
+}
+
+p.mobile {
+  @apply text-fluid-sm leading-relaxed;
+}
+
+/* Mobile-First Buttons: Larger, Touch-Friendly */
+button.mobile-primary-btn {
+  @apply bg-primary text-white py-4 px-6 rounded-lg shadow-md transition-all duration-300 w-full;
+}
+
+button.mobile-primary-btn:hover {
+  @apply bg-secondary shadow-lg;
+
+.react-datepicker-wrapper {
+    width: 100% !important;
+}
+
+.pad-2 {
+    padding: 0.5rem;
+}
+
+button.mobile-secondary-btn {
+  @apply bg-secondary text-white py-3 px-5 rounded hover:bg-third w-full transition;
+.icon {
+    right: 10px;
+    top: 10px;
+}
+/* Mobile Grid Layouts: Stack items in columns on mobile */
+.mobile-grid-2-cols {
+  @apply grid grid-cols-1 gap-4;
+}
+
+@media (min-width: 640px) {
+  .mobile-grid-2-cols {
+    @apply grid-cols-2;
+  }
+}
+
+/* Mobile Spacing */
+.spacing-mobile-small {
+  @apply p-2;
+}
+
+.spacing-mobile-large {
+  @apply p-4;
+}
+
+/* Mobile-Only Flex Utilities */
+.mobile-flex-center {
+  @apply flex items-center justify-center;
+}
+
+.mobile-flex-col {
+  @apply flex flex-col items-start;
+}
+
+/* Hide Elements on Mobile */
+.desktop-only {
+  @apply hidden;
+}
+
+@media (min-width: 640px) {
+  .desktop-only {
+    @apply block;
+  }
+}
+
+/* Show Elements Only on Mobile */
+.mobile-only {
+  @apply block;
+}
+
+@media (min-width: 640px) {
+  .mobile-only {
+    @apply hidden;
+  }
+}
+
+/* Smooth Scroll for Mobile */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Larger tap targets for mobile devices */
+.tap-target {
+  @apply px-4 py-3;
+  touch-action: manipulation; /* Ensure good touch performance */
+}
+
+/* Mobile-Friendly Cards */
+.mobile-card {
+  @apply p-4 rounded-lg shadow-md bg-white;
+}
+
+/* Hide scrollbar for mobile-only elements */
+.mobile-scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.mobile-scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Full-width images for mobile */
+.mobile-full-width-img {
+  @apply w-full h-auto;
+}
+
+/* Mobile-First Inputs: Simplified and larger tap targets */
+.mobile-input {
+  @apply border border-gray-300 rounded-lg py-3 px-4 w-full focus:outline-none focus:border-primary focus:ring-primary;
+}
+
+/* Mobile-Only Transitions */
+.mobile-transition {
+  @apply transition-all duration-200 ease-in-out;
 }
