@@ -2,7 +2,9 @@ import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from "@c
 import React from 'react';
 import TopBar from '../components/Topbar';
 import Sidebar from '../components/Sidebar';
-import '../app/globals.css';
+import Bottombar from '../components/Bottombar';
+import { Box } from '@mui/material';
+import './globals.css';
 import { Roboto } from 'next/font/google';
 
 const roboto = Roboto({ subsets: ['latin'],
