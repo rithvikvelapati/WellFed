@@ -19,13 +19,13 @@ const SuggestedRecipes = () => {
         { id: 6, title: "Chicken Alfredo", imageUrl: "/CB.jpg", time: "30min", cost: "$$", rating: 4, reviews: 23, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
     ]);
 
-    const toggleFavorite = (id) => {
+    const toggleFavorite = (id: number) => {
         setRecipes(recipes.map(recipe =>
             recipe.id === id ? { ...recipe, favorited: !recipe.favorited } : recipe
         ));
     };
 
-    const toggleBookmark = (id) => {
+    const toggleBookmark = (id: number) => {
         setRecipes(recipes.map(recipe =>
             recipe.id === id ? { ...recipe, bookmarked: !recipe.bookmarked } : recipe
         ));

@@ -56,7 +56,6 @@ const SlideCard: React.FC<SlideshowProps> = ({ slides }) => {
             Try Now!
           </button>
           </div>
-        
         </div>
       </div>
 
