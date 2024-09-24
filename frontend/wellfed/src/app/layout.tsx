@@ -1,4 +1,3 @@
-import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import React from 'react';
 import TopBar from '../components/Topbar';
 import Sidebar from '../components/Sidebar';
@@ -17,15 +16,8 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider>
       <html lang="en">
         <body className="flex flex-col h-screen">
-          {/* Signed Out - Show Sign In Button */}
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          {/* Signed In - Show Layout with Sidebar and TopBar */}
-          <SignedIn>
             <div className="fixed top-0 left-0 h-full w-15 z-10 bg-secondary">
               <Sidebar />
             </div>
@@ -37,10 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 {children}
               </main>
             </div>
-          </SignedIn>
         </body>
       </html>
-    </ClerkProvider>
-
   );
 }
