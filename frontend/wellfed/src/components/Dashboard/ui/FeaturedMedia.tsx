@@ -8,8 +8,8 @@ const FeaturedMedia: React.FC<FeaturedMediaProps> = ({ videoId }) => {
   const vimeoUrl = `https://player.vimeo.com/video/${910498960}?autoplay=1&muted=1&loop=1&background=1`;
 
   return (
-    <div className="container my-1 px-2 w-full rounded-lg bg-black">
-      <div className="relative w-full rounded-lg" style={{ paddingTop: '56.25%'}}>
+    <div className="container my-1 px-2 w-full">
+      <div className="overflow-hidden relative w-full rounded-lg" style={{ paddingTop: '56.25%', margin: 0, border: 0}}>
         <iframe
           src={vimeoUrl}
           frameBorder="0"
