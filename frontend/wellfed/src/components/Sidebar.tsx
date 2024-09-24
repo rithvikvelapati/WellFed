@@ -92,6 +92,7 @@ const Sidebar: React.FC = () => {
           >
             <ListItemButton
               onClick={() => handleIconClick(item.path)}
+              selected={activeIcon === item.path}
               sx={{
                 display: 'flex',
                 justifyContent: 'center',

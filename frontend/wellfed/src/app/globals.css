@@ -1,9 +1,96 @@
-/* styles/global.css */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Container */
+.container {
+  max-width: 100%;
+}
+
+/* Custom breakpoints for larger screens */
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
+/* Mobile-Only Typography */
+h1.mobile {
+  @apply text-fluid-lg font-bold;
+}
+
+p.mobile {
+  @apply text-fluid-sm leading-relaxed;
+}
+
+/* Mobile-First Buttons: Larger, Touch-Friendly */
+button.mobile-primary-btn {
+  @apply bg-primary text-white py-4 px-6 rounded-lg shadow-md transition-all duration-300 w-full;
+}
+
+.fc-daygrid-day-events {
+  display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 0 !important;
+}
+
+.fc-theme-standard td, .fc-theme-standard th {
+  border: none !important;
+}
+
+.fc-daygrid-day-top {
+  justify-content: center !important;
+}
+
+.fc-scrollgrid-sync-inner {
+   background: #d7e8e8;
+}
+
+.fc-scrollgrid-sync-table {
+  margin-top: 2sqawzrem;
+}
+
+.fc-button {
+  background-image: linear-gradient(to right, #B64B29, #EC9556) !important;
+  border:none !important;
+}
+
+.fc .fc-toolbar {
+  flex-direction: column;
+  align-items: start !important;
+}
+
+button.mobile-primary-btn:hover {
+  @apply bg-secondary shadow-lg;
+
+}
 
 .react-datepicker-wrapper {
     width: 100% !important;
@@ -13,35 +100,149 @@
     padding: 0.5rem;
 }
 
-button.primary-btn {
-  @apply bg-primary text-white px-4 rounded hover:bg-secondary transition;
+button.mobile-secondary-btn {
+  @apply bg-secondary text-white py-3 px-5 rounded hover:bg-third w-full transition;
 }
-
-button.secondary-btn {
-  @apply bg-secondary text-white px-4 rounded transition;
-}
-
-.logo {
-  @apply text-primary font-bold;  /* Responsive logo size */
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Opera */
-}
-/* Tailwind CSS for handling overflow and flex layout */
-
 .icon {
     right: 10px;
     top: 10px;
 }
-
-.active {
-  filter: brightness(0) saturate(100%) invert(38%) sepia(95%) saturate(5397%) hue-rotate(356deg) brightness(104%) contrast(101%);
-  transition: filter 0.3s ease;
+/* Mobile Grid Layouts: Stack items in columns on mobile */
+.mobile-grid-2-cols {
+  @apply grid grid-cols-1 gap-4;
 }
 
+@media (min-width: 640px) {
+  .mobile-grid-2-cols {
+    @apply grid-cols-2;
+  }
+}
+
+/* Mobile Spacing */
+.spacing-mobile-small {
+  @apply p-2;
+}
+
+.spacing-mobile-large {
+  @apply p-4;
+}
+
+/* Mobile-Only Flex Utilities */
+.mobile-flex-center {
+  @apply flex items-center justify-center;
+}
+
+.mobile-flex-col {
+  @apply flex flex-col items-start;
+}
+
+/* Hide Elements on Mobile */
+.desktop-only {
+  @apply hidden;
+}
+
+@media (min-width: 640px) {
+  .desktop-only {
+    @apply block;
+  }
+}
+
+/* Show Elements Only on Mobile */
+.mobile-only {
+  @apply block;
+}
+
+@media (min-width: 640px) {
+  .mobile-only {
+    @apply hidden;
+  }
+}
+
+/* Smooth Scroll for Mobile */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Larger tap targets for mobile devices */
+.tap-target {
+  @apply px-4 py-3;
+  touch-action: manipulation; /* Ensure good touch performance */
+}
+
+/* Mobile-Friendly Cards */
+.mobile-card {
+  @apply p-4 rounded-lg shadow-md bg-white;
+}
+
+/* Hide scrollbar for mobile-only elements */
+.mobile-scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.mobile-scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Full-width images for mobile */
+.mobile-full-width-img {
+  @apply w-full h-auto;
+}
+
+/* Mobile-First Inputs: Simplified and larger tap targets */
+.mobile-input {
+  @apply border border-gray-300 rounded-lg py-3 px-4 w-full focus:outline-none focus:border-primary focus:ring-primary;
+}
+
+/* Mobile-Only Transitions */
+.mobile-transition {
+  @apply transition-all duration-200 ease-in-out;
+}
+.fc-toolbar-chunk:last-child {
+  width: 100%;
+    align-items: end;
+    display: flex;
+    justify-content: end;
+
+}
+
+.fc-toolbar-chunk:first-child {
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+}
+
+.fc-prev-button {
+  margin-right: 5px !important;
+  border-radius: 50% !important;
+}
+
+.fc-next-button {
+  border-radius: 50% !important;
+}
+
+.fc-toolbar-title {
+  font-size: 20px !important;
+}
+
+.fc-day-today .fc-daygrid-day-top a {
+  background-color: #428F8F !important;
+  color: white !important;
+  border-radius: 50% !important ;
+  padding: 5px 10px !important;
+}
+
+.fc-daygrid-event-harness .text-xs {
+  display: none !important;
+}
+
+.fc-daygrid-event-harness {
+  margin-top: -1rem !important;
+}
+
+.fc-timegrid-axis:first-child {
+  background-color: #d7e8e8;
+}
+.fc-timeGridDay-button{
+  display: none;
+}
