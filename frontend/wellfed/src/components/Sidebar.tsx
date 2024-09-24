@@ -64,7 +64,7 @@ const Sidebar = () => {
           <ListItem
             key={item.name}
             disablePadding
-            selected={activeIcon === item.path}
+            component="li"
             sx={{
               justifyContent: 'center',
               marginBottom: 2,
@@ -78,6 +78,7 @@ const Sidebar = () => {
           >
             <ListItemButton
               onClick={() => handleIconClick(item.path)}
+              selected={activeIcon === item.path}
               sx={{
                 display: 'flex',
                 justifyContent: 'center',
