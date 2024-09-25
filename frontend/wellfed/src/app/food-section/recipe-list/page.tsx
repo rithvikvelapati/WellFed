@@ -3,14 +3,20 @@
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import HorizontalScrollContainer from '../../../components/HorizontalScrollContainer';
 import RecipeSearchBar from './ui/RecipeSearchBar';
+import { useModalContext } from '@/context/ModalContext';
 
 const RecipeListPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
+  const { setModalOpen } = useModalContext();
   const router = useRouter();
 
+  useEffect(() => {
+    setModalOpen(true);
+    return () => setModalOpen(false);
+  }, [setModalOpen]);
   // Animation variants for sliding in from right to left
   const pageVariants = {
     initial: {
@@ -31,7 +37,8 @@ const RecipeListPage = () => {
 
   // Close modal by simulating a back navigation or state change
   const handleClose = () => {
-    setIsModalOpen(false); // Close the modal effect
+    setIsModalOpen(false);
+    setModalOpen(false); // Close the modal effect
     setTimeout(() => router.back(), 500); // Use a delay to match animation before navigating back
   };
 
@@ -49,7 +56,7 @@ const RecipeListPage = () => {
             {/* Back Button */}
             <button
               onClick={handleClose}
-              className="absolute top-4 left-4 p-2 mb-4 focus:outline-none"
+              className="absolute top-4 left-4 py-2 mb-4 focus:outline-none"
             >
               <IoIosArrowBack className="text-2xl text-slate-700" />
             </button>
@@ -73,8 +80,17 @@ const RecipeListPage = () => {
                 {/* Categories Content */}
                 <HorizontalScrollContainer>
                   {/* Replace with your RecipeCard components */}
-                  <div className="snap-start mx-2">
-                    <div className="w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                  <div className="snap-start flex px-2 mx-2">
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Category 1</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Category 1</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Category 1</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
                       <p className="text-center">Category 1</p>
                     </div>
                   </div>
