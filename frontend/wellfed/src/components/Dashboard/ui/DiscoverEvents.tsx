@@ -6,7 +6,6 @@ import StarIcon from '@mui/icons-material/Star';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Link from 'next/link';
-
 const DiscoverEvents = () => {
     const [events, setEvents] = useState([
         { id: 1, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false, priceLevel: 3 },
@@ -18,13 +17,10 @@ const DiscoverEvents = () => {
         { id: 7, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false, priceLevel: 3 },
         { id: 8, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false, priceLevel: 2 },
     ]);
-
-    const toggleBookmark = (id) => {
+    const toggleBookmark = (id: number) => {
         setEvents(events.map(event => event.id === id ? { ...event, bookmarked: !event.bookmarked } : event));
     };
-
-    const renderPriceLevel = (level) => "$".repeat(level);
-
+    const renderPriceLevel = (level: number) => "$".repeat(level);
     return (
         <Box
             className="scrollbar-hide"
@@ -123,5 +119,4 @@ const DiscoverEvents = () => {
         </Box>
     );
 };
-
 export default DiscoverEvents;

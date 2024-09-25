@@ -1,21 +1,12 @@
-
-import React from "react";
-import BottomBar from "@/components/BottomBar/BottomBar";
-import Profile from "@/components/Profile/Profile";
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import TopBar from "@/components/TopBar/TopBar";
-import '../app/globals.css';
-import EditEvent from '../components/EditEvent/EditEvent';
-import Calendar from '../components/EventCalender/Calender';
-
+import React from 'react';
+import DashboardContent from "../components/Dashboard/DashboardContent";
 
 const Page: React.FC = () => {
   return (
-    <div className="p-4">
-      {/* This page doesn't do anything for now */}
-      <Calendar />
+    <div className="p-2">
+      <DashboardContent/>
     </div>
   );
-}
+};
 
 export default Page;
