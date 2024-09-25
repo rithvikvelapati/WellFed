@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
 import React from 'react';
 import Image from 'next/image';
+import { useModalContext } from '../context/ModalContext';
 
-// Define the props interface
 interface BottomBarProps {
   onCameraClick: () => void;
   onSearchClick: () => void;
@@ -15,6 +15,12 @@ const BottomBar: React.FC<BottomBarProps> = ({
   onSearchClick,
   onProfileClick,
 }) => {
+  const { isModalOpen } = useModalContext();
+
+  if (isModalOpen) {
+    return null; // Hide BottomBar when a modal is open
+  }
+
   return (
     <div className="z-0 fixed bottom-0 left-0 right-0 flex justify-around items-center h-16 bg-white shadow-md">
       {/* Camera Button */}
@@ -25,7 +31,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
       >
         <Image
           src="/Camera.svg"
-          alt="Camera Logo"
+          alt="Camera Icon"
           width={24}
           height={24}
           priority
@@ -40,7 +46,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
       >
         <Image
           src="/Avatar.svg"
-          alt="Avatar Logo"
+          alt="Avatar Icon"
           width={30}
           height={30}
           priority
@@ -55,7 +61,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
       >
         <Image
           src="/Search.svg"
-          alt="Search Logo"
+          alt="Search Icon"
           width={24}
           height={24}
           priority
@@ -66,3 +72,4 @@ const BottomBar: React.FC<BottomBarProps> = ({
 };
 
 export default BottomBar;
+
