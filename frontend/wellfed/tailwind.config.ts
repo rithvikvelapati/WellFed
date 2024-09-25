@@ -41,8 +41,8 @@ const config: Config = {
     require('tailwind-scrollbar'),
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/typography'),
+    require('tailwind-scrollbar-hide'),
   ],
 };
 
 export default config;
-

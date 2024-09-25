@@ -34,7 +34,7 @@ const Sidebar: React.FC = () => {
     { name: 'calendar', label: 'Calendar', src: '/Calendar.svg', path: '/calendar' },
     { name: 'groups', label: 'Groups', src: '/Groups.svg', path: '/groups' },
     { name: 'tickets', label: 'Tickets', src: '/Ticket.svg', path: '/tickets' },
-    { name: 'food', label: 'Food', src: '/Food.svg', path: '/food' },
+    { name: 'food', label: 'Food', src: '/Food.svg', path: '/food-section/recipe-list' },
     { name: 'cog', label: 'Settings', src: '/Cog.svg', path: '/cog' },
   ];
 
