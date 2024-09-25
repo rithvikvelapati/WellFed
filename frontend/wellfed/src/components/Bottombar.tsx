@@ -16,7 +16,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
   onProfileClick,
 }) => {
   return (
-    <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center h-16 bg-white shadow-md z-50">
+    <div className="z-0 fixed bottom-0 left-0 right-0 flex justify-around items-center h-16 bg-white shadow-md">
       {/* Camera Button */}
       <button
         className="flex items-center justify-center"
