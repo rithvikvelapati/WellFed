@@ -33,7 +33,7 @@ const Calendar: React.FC = () => {
     },
     {
       title: "Chicken Marsala And Mushrooms",
-      start: "2024-09-22T15:00:00",
+      start: "2024-09-23T15:00:00",
       description: "Items ordered and delivered",
       time: "3:00pm - 4:00pm",
       location: "Home",

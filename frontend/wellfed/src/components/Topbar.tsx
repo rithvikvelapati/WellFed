@@ -1,4 +1,5 @@
-"use client"
+"use client";
+import Image from "next/image";
 import React, { useState } from 'react';
 import Link from 'next/link';
 
@@ -12,18 +13,18 @@ const TopBar = () => {
   };
 
   return (
-    <div className="bg-white p-4 flex justify-end items-center">
-      <div className="flex items-center space-x-8">
+    <div className="bg-white p-4 flex justify-end items-center space-x-8">
+
         <Link href="/notifications" passHref>
           <div
-            className="relative cursor-pointer"
+            className={`relative cursor-pointer ${activeIcon === 'notification' ? 'text-blue-500' : ''}`}
             onClick={() => handleIconClick('notification')}
           >
             <img
               src="/Notification.svg"
               alt="Notification"
-              width={25}
-              height={25}
+              width={24}
+              height={24}
               className="transition-all duration-150"
             />
           </div>
@@ -31,20 +32,19 @@ const TopBar = () => {
 
         <Link href="/cart" passHref>
           <div
-            className="relative cursor-pointer"
+            className={`relative cursor-pointer ${activeIcon === 'cart' ? 'text-blue-500' : ''}`}
             onClick={() => handleIconClick('cart')}
           >
             <img
               src="/Shopping cart.svg"
               alt="Shopping Cart"
-              width={25}
-              height={25}
+              width={24}
+              height={24}
               className="transition-all duration-150"
             />
           </div>
         </Link>
       </div>
-    </div>
   );
 };
 

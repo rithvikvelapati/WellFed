@@ -1,26 +1,21 @@
-"use client"
-import React, { useState } from 'react';
+"use client";
+import React, { useState, useEffect } from 'react';
 import { Box, List, ListItem, ListItemButton } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
+import { sidebarIcons } from '../constants';
 
-const Sidebar = () => {
+const Sidebar: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [activeIcon, setActiveIcon] = useState(pathname === '/' ? '/home' : pathname);
+  const initialPath = pathname === '/' || pathname.startsWith('/home') ? '/' : pathname;
+  const [activeIcon, setActiveIcon] = useState(initialPath);
 
-  const icons = [
-    { name: 'home', label: 'Home', src: '/Home.svg', path: '/home' },
-    { name: 'add-friend', label: 'Add Friend', src: '/AddFriend.svg', path: '/add-friend' },
-    { name: 'messages', label: 'Messages', src: '/Message.svg', path: '/messages' },
-    { name: 'calendar', label: 'Calendar', src: '/Calendar.svg', path: '/calendar' },
-    { name: 'groups', label: 'Groups', src: '/Groups.svg', path: '/groups' },
-    { name: 'tickets', label: 'Tickets', src: '/Ticket.svg', path: '/tickets' },
-    { name: 'food', label: 'Food', src: '/Food.svg', path: '/food' },
-    { name: 'cog', label: 'Cog', src: '/Cog.svg', path: '/cog' },
-  ];
+  useEffect(() => {
+    setActiveIcon(pathname === '/' || pathname.startsWith('/home') ? '/' : pathname);
+  }, [pathname]);
 
   const handleIconClick = (iconPath: string) => {
     setActiveIcon(iconPath);
@@ -31,16 +26,15 @@ const Sidebar = () => {
     <Box
       sx={{
         height: '100vh',
-        width: 80,
+        width: 51,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        paddingTop: 4,
+        paddingTop: 2,
         backgroundColor: '#FFFFFF',
-
       }}
     >
-    <Link href="/home" passHref>
+      <Link href="/" passHref>
         <Box
           sx={{
             width: 60,
@@ -55,25 +49,23 @@ const Sidebar = () => {
             width={100}
             height={100}
             priority
-            className='w-15 h-15'
           />
         </Box>
       </Link>
+
       <List sx={{ width: '100%', padding: 0 }}>
-        {icons.map((item) => (
+        {sidebarIcons.map((item) => (
           <ListItem
             key={item.name}
             disablePadding
-            selected={activeIcon === item.path}
             sx={{
               justifyContent: 'center',
-              marginBottom: 2,
+              marginBottom: 1,
               '&:hover': {
                 backgroundColor: 'rgba(0, 0, 0, 0.04)',
               },
-              '&.Mui-selected': {
-                backgroundColor: '#FFFFFF',
-              },
+              transition: 'transform 0.3s ease-in-out',
+              transform: activeIcon === item.path ? 'translateY(-10px)' : 'translateY(0)',
             }}
           >
             <ListItemButton
@@ -82,37 +74,35 @@ const Sidebar = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 padding: '10px 0',
-                minHeight: 64,
+                minHeight: 58,
+                Width: 51,
                 position: 'relative',
                 '&::before': {
                   content: '""',
                   position: 'absolute',
                   top: 0,
-                  left: '0',
-                  width: activeIcon === item.path ? '100%' : 0,
-                  height: activeIcon === item.path ? '100%' : 0,
-                  backgroundColor: '#B64B29',
-                  transition: 'all 0.3s ease-in-out',
-                  borderRadius: '5px',
-                  zIndex: 0,
-                  boxShadow: activeIcon === item.path
-                    ? '5px 5px 12px rgba(0, 0, 0, 0.3)'
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: activeIcon === item.path
+                    ? 'linear-gradient(90deg, #B64B29, #EC9556)'
                     : 'none',
+                  borderRadius: '5px',
+                  zIndex: -1,
                 },
                 '& img': {
-                  position: 'relative',
-                  zIndex: 1,
-                  transition: 'transform 0.3s ease-in-out',
-                  transform: activeIcon === item.path ? 'scale(1.2)' : 'scale(1)',
-                  filter: activeIcon === item.path ? 'invert(100%) brightness(2)' : 'none',
+                  filter: activeIcon === item.path ? 'brightness(0) invert(1)' : 'none',
+                  transition: 'filter 0.5s ease-in-out',
                 },
               }}
             >
               <Image
                 src={item.src}
                 alt={item.label}
-                width={25}
-                height={25}
+                width={24}
+                height={24}
               />
             </ListItemButton>
           </ListItem>
@@ -121,3 +111,5 @@ const Sidebar = () => {
     </Box>
   );
 };
+
+export default Sidebar;

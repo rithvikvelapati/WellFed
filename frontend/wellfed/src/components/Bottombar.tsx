@@ -1,37 +1,70 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
+import { useModalContext } from '../context/ModalContext';
 
-const BottomBar = () => {
+interface BottomBarProps {
+  onCameraClick: () => void;
+  onSearchClick: () => void;
+  onProfileClick: () => void;
+}
+
+const BottomBar: React.FC<BottomBarProps> = ({
+  onCameraClick,
+  onSearchClick,
+  onProfileClick,
+}) => {
+  const { isModalOpen } = useModalContext();
+
+  if (isModalOpen) {
+    return null; // Hide BottomBar when a modal is open
+  }
+
   return (
-    <div className="fixed bottom-0 w-full h-16 bg-white shadow-md flex justify-around items-center ">
-      <button className="flex justify-center items-center">
+    <div className="z-0 fixed bottom-0 left-0 right-0 flex justify-around items-center h-16 bg-white shadow-md">
+      {/* Camera Button */}
+      <button
+        className="flex items-center justify-center"
+        onClick={onCameraClick}
+        aria-label="Open Camera"
+      >
         <Image
           src="/Camera.svg"
-          alt="Camera Logo"
+          alt="Camera Icon"
           width={24}
           height={24}
           priority
-          className="dark:invert"
         />
       </button>
-      <button className="flex justify-center items-center">
+
+      {/* Profile Button */}
+      <button
+        className="flex items-center justify-center"
+        onClick={onProfileClick}
+        aria-label="Open Profile"
+      >
         <Image
           src="/Avatar.svg"
-          alt="Avatar Logo"
+          alt="Avatar Icon"
           width={30}
           height={30}
           priority
-          className="rounded-full border-2 border-orange-700"
         />
       </button>
-      <button className="flex justify-center items-center">
+
+      {/* Search Button */}
+      <button
+        className="flex items-center justify-center"
+        onClick={onSearchClick}
+        aria-label="Search"
+      >
         <Image
           src="/Search.svg"
-          alt="Search Logo"
+          alt="Search Icon"
           width={24}
           height={24}
           priority
-          className="dark:invert"
         />
       </button>
     </div>
@@ -39,3 +72,4 @@ const BottomBar = () => {
 };
 
 export default BottomBar;
+
