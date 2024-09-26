@@ -4,39 +4,18 @@ import { Box, List, ListItem, ListItemButton } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-
-// Define an interface for icons
-interface Icon {
-  name: string;
-  label: string;
-  src: string;
-  path: string;
-}
+import { sidebarIcons } from '../constants';
 
 const Sidebar: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  // Set initial active icon for the Home if the path is `/` (root) or `/home`
   const initialPath = pathname === '/' || pathname.startsWith('/home') ? '/' : pathname;
   const [activeIcon, setActiveIcon] = useState(initialPath);
 
-  // Sync activeIcon with the current pathname whenever it changes
   useEffect(() => {
     setActiveIcon(pathname === '/' || pathname.startsWith('/home') ? '/' : pathname);
   }, [pathname]);
-
-  // Define icons, ensuring Home button points to the root `/`
-  const icons: Icon[] = [
-    { name: 'home', label: 'Home', src: '/Home.svg', path: '/' },
-    { name: 'add-friend', label: 'Add Friend', src: '/AddFriend.svg', path: '/add-friend' },
-    { name: 'messages', label: 'Messages', src: '/Message.svg', path: '/messages' },
-    { name: 'calendar', label: 'Calendar', src: '/Calendar.svg', path: '/calendar' },
-    { name: 'groups', label: 'Groups', src: '/Groups.svg', path: '/groups' },
-    { name: 'tickets', label: 'Tickets', src: '/Ticket.svg', path: '/tickets' },
-    { name: 'food', label: 'Food', src: '/Food.svg', path: '/food-section/recipe-list' },
-    { name: 'cog', label: 'Settings', src: '/Cog.svg', path: '/cog' },
-  ];
 
   const handleIconClick = (iconPath: string) => {
     setActiveIcon(iconPath);
@@ -47,8 +26,7 @@ const Sidebar: React.FC = () => {
     <Box
       sx={{
         height: '100vh',
-        minWidth: 51, // Ensure sidebar has a minimum width of 51px
-        width: 60, // Default width
+        width: 51,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -76,7 +54,7 @@ const Sidebar: React.FC = () => {
       </Link>
 
       <List sx={{ width: '100%', padding: 0 }}>
-        {icons.map((item) => (
+        {sidebarIcons.map((item) => (
           <ListItem
             key={item.name}
             disablePadding
@@ -92,13 +70,12 @@ const Sidebar: React.FC = () => {
           >
             <ListItemButton
               onClick={() => handleIconClick(item.path)}
-              selected={activeIcon === item.path}
               sx={{
                 display: 'flex',
                 justifyContent: 'center',
                 padding: '10px 0',
                 minHeight: 58,
-                minWidth: 51,
+                Width: 51,
                 position: 'relative',
                 '&::before': {
                   content: '""',
@@ -110,14 +87,14 @@ const Sidebar: React.FC = () => {
                   width: '100%',
                   height: '100%',
                   background: activeIcon === item.path
-                    ? 'linear-gradient(90deg, #B64B29, #EC9556)' // Linear gradient for active icon
+                    ? 'linear-gradient(90deg, #B64B29, #EC9556)'
                     : 'none',
                   borderRadius: '5px',
                   zIndex: -1,
                 },
                 '& img': {
                   filter: activeIcon === item.path ? 'brightness(0) invert(1)' : 'none',
-                  transition: 'filter 0.3s ease-in-out',
+                  transition: 'filter 0.5s ease-in-out',
                 },
               }}
             >
