@@ -6,32 +6,20 @@ import StarIcon from '@mui/icons-material/Star';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import Link from 'next/link';
-const DiscoverEvents = () => {
-    const [events, setEvents] = useState([
-        { id: 1, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false, priceLevel: 3 },
-        { id: 2, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false, priceLevel: 2 },
-        { id: 3, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false, priceLevel: 3 },
-        { id: 4, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false, priceLevel: 2 },
-        { id: 5, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false, priceLevel: 3 },
-        { id: 6, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false, priceLevel: 2 },
-        { id: 7, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false, priceLevel: 3 },
-        { id: 8, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false, priceLevel: 2 },
-    ]);
+import { eventsData } from '../../../constants'; // Importing events data
+import HorizontalScrollContainer from '@/components/HorizontalScrollContainer';
+
+const DiscoverEvents: React.FC = () => {
+    const [events, setEvents] = useState(eventsData); // Using imported eventsData
+
     const toggleBookmark = (id: number) => {
         setEvents(events.map(event => event.id === id ? { ...event, bookmarked: !event.bookmarked } : event));
     };
+
     const renderPriceLevel = (level: number) => "$".repeat(level);
+
     return (
-        <Box
-            className="scrollbar-hide"
-            sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                overflowX: 'auto',
-                padding: 2,
-                gap: 2,
-            }}
-        >
+        <HorizontalScrollContainer>
             {events.map(event => (
                 <Card
                     key={event.id}
@@ -116,7 +104,8 @@ const DiscoverEvents = () => {
                     </Box>
                 </Card>
             ))}
-        </Box>
+        </HorizontalScrollContainer>
     );
 };
+
 export default DiscoverEvents;
