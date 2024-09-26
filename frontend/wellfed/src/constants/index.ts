@@ -5,9 +5,9 @@ export const sidebarIcons = [
     { name: 'calendar', label: 'Calendar', src: '/Calendar.svg', path: '/calendar' },
     { name: 'groups', label: 'Groups', src: '/Groups.svg', path: '/groups' },
     { name: 'tickets', label: 'Tickets', src: '/Ticket.svg', path: '/tickets' },
-    { name: 'food', label: 'Food', src: '/Food.svg', path: '/food' },
+    { name: 'food', label: 'Food', src: '/Food.svg', path: '/food-section/recipe-list' },
     { name: 'cog', label: 'Settings', src: '/Cog.svg', path: '/cog' },
-  ];  
+  ];
 
 export const slidesData = [
     {
@@ -26,7 +26,7 @@ export const slidesData = [
       description: 'Cool off with a refreshing smoothie made from fresh fruits.',
     },
   ];
-  
+
 export const recipesData = [
     { id: 1, title: "Chicken Alfredo", imageUrl: "/CA.jpg", time: "30min", cost: "$$", rating: 4, reviews: 23, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
     { id: 2, title: "Chicken Biryani", imageUrl: "/CB.jpg", time: "45min", cost: "$$", rating: 4.5, reviews: 12, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },

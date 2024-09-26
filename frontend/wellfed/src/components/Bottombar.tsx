@@ -72,4 +72,3 @@ const BottomBar: React.FC<BottomBarProps> = ({
 };
 
 export default BottomBar;
-
