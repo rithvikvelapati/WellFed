@@ -17,16 +17,16 @@ const ToggleButtonGroup: React.FC<ToggleButtonGroupProps> = () => {
   };
 
   return (
-    <div className="flex justify-center space-x-4 mb-6">
+    <div className="flex justify-center space-x-fluid-px mb-6">
       {buttons.map((button) => (
         <button
           key={button}
           onClick={() => handleButtonClick(button)}
-          className={`w-24 h-[36px] rounded-full flex items-center justify-center
+          className={`w-24 h-[36px] rounded-3xl flex items-center justify-center font-normal text-fluid-sm shadow-lg
             ${
               selected === button
-                ? 'bg-gradient text-white'
-                : 'bg-white text-gradient'
+                ? 'bg-gradient-to-r from-primary to-secondary text-white'
+                : 'bg-white bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'
             }
             focus:outline-none focus:ring-2 focus:ring-gradient`}
         >

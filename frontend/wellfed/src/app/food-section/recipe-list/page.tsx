@@ -67,7 +67,9 @@ const RecipeListPage = () => {
               {/* Search Bar */}
               <RecipeSearchBar />
               {/* Toggle Button Group */}
-              <ToggleButtonGroup />
+              <div className="flex space-x-fluid-px">
+                <ToggleButtonGroup />
+              </div>
               {/* Categories Section */}
               <section className="mb-8">
                 <div className="flex justify-between items-center my-4">

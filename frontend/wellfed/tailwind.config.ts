@@ -22,7 +22,7 @@ const config: Config = {
         'fluid-sm': 'clamp(0.875rem, 3vw, 1.25rem)',
       },
       spacing: {
-        'fluid-px': 'clamp(0.5rem, 4vw, 1rem)',
+        'fluid-px': 'clamp(0.25rem, 2vw, .5rem)',
       },
       aspectRatio: {
         '4/3': '4 / 3',
