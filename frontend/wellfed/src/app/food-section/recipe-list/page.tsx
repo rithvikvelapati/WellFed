@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import HorizontalScrollContainer from '../../../components/HorizontalScrollContainer';
 import RecipeSearchBar from './ui/RecipeSearchBar';
 import { useModalContext } from '@/context/ModalContext';
+import ToggleButtonGroup from './ui/ToggleButtonGroup';
 
 const RecipeListPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -65,11 +66,14 @@ const RecipeListPage = () => {
             <div className="pt-16">
               {/* Search Bar */}
               <RecipeSearchBar />
-
+              {/* Toggle Button Group */}
+              <div className="flex space-x-fluid-px">
+                <ToggleButtonGroup />
+              </div>
               {/* Categories Section */}
               <section className="mb-8">
                 <div className="flex justify-between items-center my-4">
-                  <h2 className="text-fluid-lg font-bold">Categories</h2>
+                  <h2 className="text-fluid-lg font-semibold">Categories</h2>
                   <button
                     className="flex items-center text-slate-500 text-fluid-sm"
                     onClick={() => router.push('/categories')}
@@ -101,7 +105,7 @@ const RecipeListPage = () => {
               {/* Trending Now Section */}
               <section className="mb-8">
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-fluid-lg font-bold">Trending Now</h2>
+                  <h2 className="text-fluid-lg font-semibold">Trending Now</h2>
                   <button
                     className="flex items-center text-slate-500 text-fluid-sm"
                     onClick={() => router.push('/trending')}
@@ -112,8 +116,20 @@ const RecipeListPage = () => {
                 {/* Trending Now Content */}
                 <HorizontalScrollContainer>
                   {/* Replace with your RecipeCard components */}
-                  <div className="snap-start mx-2">
-                    <div className="w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                  <div className="snap-start flex px-2 mx-2">
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="mx-2 text-center">Trending Recipe 1</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="mx-2 text-center">Trending Recipe 1</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Trending Recipe 1</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Trending Recipe 1</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
                       <p className="text-center">Trending Recipe 1</p>
                     </div>
                   </div>
@@ -122,9 +138,9 @@ const RecipeListPage = () => {
               </section>
 
               {/* Recent Recipes Section */}
-              <section className="mb-8">
+              <section className="mb-8 pb-2">
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-fluid-lg font-bold">Recent Recipes</h2>
+                  <h2 className="text-fluid-lg font-semibold">Recent Recipes</h2>
                   <button
                     className="flex items-center text-slate-500 text-fluid-sm"
                     onClick={() => router.push('/recent-recipes')}
@@ -135,8 +151,20 @@ const RecipeListPage = () => {
                 {/* Recent Recipes Content */}
                 <HorizontalScrollContainer>
                   {/* Replace with your RecipeCard components */}
-                  <div className="snap-start mx-2">
-                    <div className="w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                  <div className="snap-start flex px-2 mx-2">
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Recent Recipe 1</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Recent Recipe 1</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Recent Recipe 1</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Recent Recipe 1</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
                       <p className="text-center">Recent Recipe 1</p>
                     </div>
                   </div>
