@@ -22,17 +22,10 @@ const SearchBar = () => {
         <input
           type="text"
           placeholder="Search recipes..."
-          className="w-full pl-12 pr-4 py-3 rounded-lg bg-white shadow-inner focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full pl-12 pr-4 py-3 rounded-lg bg-white shadow-inner shadow-slate-300 focus:outline-none focus:ring-2 focus:ring-primary"
           aria-label="Search recipes"
         />
       </div>
-      <button
-        onClick={handleFilterClick}
-        className="ml-4 p-3 bg-white rounded-lg shadow-inner focus:outline-none focus:ring-2 focus:ring-primary"
-        aria-label="Filter recipes"
-      >
-        <FiFilter className="text-gray-600 text-xl" />
-      </button>
     </div>
   );
 };
