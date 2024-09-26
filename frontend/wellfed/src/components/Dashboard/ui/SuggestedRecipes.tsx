@@ -6,16 +6,12 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { grey } from '@mui/material/colors';
+import Link from 'next/link';
+import { recipesData } from '../../../constants'; // Importing recipes data from constants
+import HorizontalScrollContainer from '@/components/HorizontalScrollContainer';
 
 const SuggestedRecipes: React.FC = () => {
-  const [recipes, setRecipes] = useState([
-    { id: 1, title: "Chicken Alfredo", imageUrl: "/CA.jpg", time: "30min", cost: "$$", rating: 4, reviews: 23, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
-    { id: 2, title: "Chicken Biryani", imageUrl: "/CB.jpg", time: "45min", cost: "$$", rating: 4.5, reviews: 12, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
-    { id: 3, title: "Karelian Pie", imageUrl: "/KP.jpg", time: "20min", cost: "$", rating: 4, reviews: 8, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
-    { id: 4, title: "Mushroom Risotto", imageUrl: "/MR.jpg", time: "40min", cost: "$$", rating: 4, reviews: 30, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
-  ]);
+  const [recipes, setRecipes] = useState(recipesData); // Use the imported data
 
   const toggleFavorite = (id: number) => {
     setRecipes(recipes.map(recipe =>
@@ -30,16 +26,7 @@ const SuggestedRecipes: React.FC = () => {
   };
 
   return (
-    <Box
-      className="scrollbar-hide"
-      sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        overflowX: 'auto',
-        p: 2,
-        gap: 2,
-      }}
-    >
+    <HorizontalScrollContainer>
       {recipes.map(recipe => (
         <Card
           key={recipe.id}
@@ -56,19 +43,21 @@ const SuggestedRecipes: React.FC = () => {
           }}
         >
           <Box sx={{ position: 'relative' }}>
+          <Link href={'/recipes/{recipe.id}'} passHref>
             <CardMedia
               component="img"
               image={recipe.imageUrl}
               alt={recipe.title}
               sx={{ height: 120, objectFit: 'cover', borderRadius: '16px 16px 0 0' }}
             />
+            </Link>
             <IconButton
               onClick={() => toggleFavorite(recipe.id)}
               sx={{
                 position: 'absolute',
                 top: 8,
                 right: 8,
-                color: recipe.favorited ? 'red' : grey[500],
+                color: recipe.favorited ? 'red' : 'grey-500',
                 backgroundColor: 'rgba(255, 255, 255, 0.7)',
                 '&:hover': {
                   backgroundColor: 'rgba(255, 255, 255, 0.9)',
@@ -103,7 +92,7 @@ const SuggestedRecipes: React.FC = () => {
                 precision={0.5}
                 sx={{ color: '#EC9556', '& .MuiRating-iconEmpty': { color: '#EC9556' } }}
               />
-              <Typography variant="caption" sx={{ fontSize: '0.6rem', color: grey[600] }}>
+              <Typography variant="caption" sx={{ fontSize: '0.6rem', color: 'grey-600' }}>
                 ({recipe.reviews})
               </Typography>
               <IconButton onClick={() => toggleBookmark(recipe.id)} sx={{ ml: 1, p: '4px' }}>
@@ -113,14 +102,14 @@ const SuggestedRecipes: React.FC = () => {
             
             <Typography
               variant="caption"
-              sx={{ fontSize: '0.6rem', color: grey[500], mt: 0.2, lineHeight: '0.8rem' }}
+              sx={{ fontSize: '0.6rem', color: 'grey-500', mt: 0.2, lineHeight: '0.8rem' }}
             >
               {recipe.handle}
             </Typography>
           </CardContent>
         </Card>
       ))}
-    </Box>
+    </HorizontalScrollContainer>
   );
 };
 

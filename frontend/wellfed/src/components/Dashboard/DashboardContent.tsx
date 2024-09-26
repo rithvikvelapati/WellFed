@@ -17,7 +17,7 @@ const DashboardContent = () => {
           <a className="text-fluid-sm text-orange-500 hover:text-orange-700 transition-colors ease-in-out duration-300">See All</a>
       </div>
       <div className="flex flex-col w-full">
-        <FeaturedMedia videoId="910498960"/>
+        <FeaturedMedia videoUrl={"https://player.vimeo.com/video/910498960?autoplay=1&muted=1&loop=1&background=1"} />
       </div>
       <div className="flex justify-between items-center py-1">
         <h2 className="text-fluid-md font-sans">Discover Events</h2>

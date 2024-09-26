@@ -67,7 +67,7 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
             overflowX: 'hidden',
             backgroundColor: '#bad4d4',
             borderTopLeftRadius: '1rem',
-            padding: '16px',
+            padding: '8px',
           }}
         >
           <main>{children}</main>

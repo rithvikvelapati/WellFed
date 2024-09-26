@@ -1,17 +1,18 @@
 import React from 'react';
 
 interface FeaturedMediaProps {
-  videoId: string;
+  videoUrl: string; // Accept any video URL
 }
 
-const FeaturedMedia: React.FC<FeaturedMediaProps> = ({ videoId }) => {
-  const vimeoUrl = `https://player.vimeo.com/video/${910498960}?autoplay=1&muted=1&loop=1&background=1`;
-
+const FeaturedMedia: React.FC<FeaturedMediaProps> = ({ videoUrl }) => {
   return (
     <div className="container my-1 px-2 w-full">
-      <div className="overflow-hidden relative w-full rounded-lg" style={{ paddingTop: '56.25%', margin: 0, border: 0}}>
+      <div
+        className="overflow-hidden relative w-full rounded-lg"
+        style={{ paddingTop: '56.25%', margin: 0, border: 0 }}
+      >
         <iframe
-          src={vimeoUrl}
+          src={videoUrl} // Use the videoUrl prop
           frameBorder="0"
           allow="autoplay; fullscreen; picture-in-picture"
           allowFullScreen
