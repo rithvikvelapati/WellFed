@@ -9,6 +9,7 @@ import { setModalOpen } from '../../../store/modalSlice';
 import HorizontalScrollContainer from '../../../components/HorizontalScrollContainer';
 import RecipeSearchBar from './ui/RecipeSearchBar';
 import ToggleButtonGroup from './ui/ToggleButtonGroup';
+import FilterButton from './ui/FilterButton';
 
 const RecipeListPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -68,8 +69,14 @@ const RecipeListPage = () => {
 
             {/* Content Container with Top Padding */}
             <div className="pt-16">
-              {/* Search Bar */}
-              <RecipeSearchBar />
+              <div className="flex items-center w-full mb-6">
+                {/* Search Bar */}
+                <div className="flex-grow">
+                  <RecipeSearchBar />
+                </div>
+                {/* Filter Button */}
+                <FilterButton />
+              </div>
               {/* Toggle Button Group */}
               <div className="flex space-x-fluid-px">
                 <ToggleButtonGroup />
@@ -92,6 +99,18 @@ const RecipeListPage = () => {
                     {/* Example Cards */}
                     <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
                       <p className="text-center">Category 1</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Category 2</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Category 3</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Category 4</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Category 5</p>
                     </div>
                     {/* Add more cards as needed */}
                   </div>
@@ -116,6 +135,18 @@ const RecipeListPage = () => {
                     <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
                       <p className="text-center">Trending Recipe 1</p>
                     </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Trending Recipe 2</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Trending Recipe 3</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Trending Recipe 4</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Trending Recipe 5</p>
+                    </div>
                     {/* Add more cards as needed */}
                   </div>
                 </HorizontalScrollContainer>
@@ -138,6 +169,18 @@ const RecipeListPage = () => {
                     {/* Example Cards */}
                     <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
                       <p className="text-center">Recent Recipe 1</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Recent Recipe 2</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Recent Recipe 3</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Recent Recipe 4</p>
+                    </div>
+                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
+                      <p className="text-center">Recent Recipe 5</p>
                     </div>
                     {/* Add more cards as needed */}
                   </div>
