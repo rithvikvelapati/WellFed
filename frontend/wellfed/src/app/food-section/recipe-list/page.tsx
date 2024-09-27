@@ -4,20 +4,24 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setModalOpen } from '../../../store/modalSlice';
 import HorizontalScrollContainer from '../../../components/HorizontalScrollContainer';
 import RecipeSearchBar from './ui/RecipeSearchBar';
-import { useModalContext } from '@/context/ModalContext';
 import ToggleButtonGroup from './ui/ToggleButtonGroup';
 
 const RecipeListPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
-  const { setModalOpen } = useModalContext();
+  const dispatch = useDispatch();
   const router = useRouter();
 
   useEffect(() => {
-    setModalOpen(true);
-    return () => setModalOpen(false);
-  }, [setModalOpen]);
+    dispatch(setModalOpen(true));
+    return () => {
+      dispatch(setModalOpen(false));
+    };
+  }, [dispatch]);
+
   // Animation variants for sliding in from right to left
   const pageVariants = {
     initial: {
@@ -39,7 +43,7 @@ const RecipeListPage = () => {
   // Close modal by simulating a back navigation or state change
   const handleClose = () => {
     setIsModalOpen(false);
-    setModalOpen(false); // Close the modal effect
+    dispatch(setModalOpen(false)); // Update Redux state
     setTimeout(() => router.back(), 500); // Use a delay to match animation before navigating back
   };
 
@@ -85,20 +89,12 @@ const RecipeListPage = () => {
                 <HorizontalScrollContainer>
                   {/* Replace with your RecipeCard components */}
                   <div className="snap-start flex px-2 mx-2">
+                    {/* Example Cards */}
                     <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
                       <p className="text-center">Category 1</p>
                     </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Category 1</p>
-                    </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Category 1</p>
-                    </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Category 1</p>
-                    </div>
+                    {/* Add more cards as needed */}
                   </div>
-                  {/* Add more cards as needed */}
                 </HorizontalScrollContainer>
               </section>
 
@@ -115,30 +111,18 @@ const RecipeListPage = () => {
                 </div>
                 {/* Trending Now Content */}
                 <HorizontalScrollContainer>
-                  {/* Replace with your RecipeCard components */}
                   <div className="snap-start flex px-2 mx-2">
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="mx-2 text-center">Trending Recipe 1</p>
-                    </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="mx-2 text-center">Trending Recipe 1</p>
-                    </div>
+                    {/* Example Cards */}
                     <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
                       <p className="text-center">Trending Recipe 1</p>
                     </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Trending Recipe 1</p>
-                    </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Trending Recipe 1</p>
-                    </div>
+                    {/* Add more cards as needed */}
                   </div>
-                  {/* Add more cards as needed */}
                 </HorizontalScrollContainer>
               </section>
 
               {/* Recent Recipes Section */}
-              <section className="mb-8 pb-2">
+              <section className="mb-4 pb-2">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-fluid-lg font-semibold">Recent Recipes</h2>
                   <button
@@ -150,25 +134,13 @@ const RecipeListPage = () => {
                 </div>
                 {/* Recent Recipes Content */}
                 <HorizontalScrollContainer>
-                  {/* Replace with your RecipeCard components */}
                   <div className="snap-start flex px-2 mx-2">
+                    {/* Example Cards */}
                     <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
                       <p className="text-center">Recent Recipe 1</p>
                     </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Recent Recipe 1</p>
-                    </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Recent Recipe 1</p>
-                    </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Recent Recipe 1</p>
-                    </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Recent Recipe 1</p>
-                    </div>
+                    {/* Add more cards as needed */}
                   </div>
-                  {/* Add more cards as needed */}
                 </HorizontalScrollContainer>
               </section>
             </div>

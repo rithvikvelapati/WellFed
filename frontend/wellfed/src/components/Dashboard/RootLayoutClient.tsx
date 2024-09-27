@@ -5,7 +5,7 @@ import TopBar from '../Topbar';
 import Sidebar from '../Sidebar';
 import BottomBar from '../Bottombar';
 import { Box } from '@mui/material';
-import { ModalProvider } from '../../context/ModalContext'; // Import ModalProvider
+import ReduxProvider from '@/store/ReduxProvider'; // Import the Redux Provider
 
 interface RootLayoutClientProps {
   children: React.ReactNode;
@@ -25,8 +25,9 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
   };
 
   return (
-    <ModalProvider>
+    <ReduxProvider>
       <Box sx={{ display: 'flex', minHeight: '100vh', overflowX: 'hidden' }}>
+        {/* Sidebar */}
         <Box
           sx={{
             position: 'fixed',
@@ -41,16 +42,18 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
           <Sidebar />
         </Box>
 
+        {/* Main Content */}
         <Box
           sx={{
             flexGrow: 1,
-            marginLeft: '80px', // Adjusted margin to match Sidebar width
+            marginLeft: '80px',
             display: 'flex',
             flexDirection: 'column',
             height: '100vh',
             overflowX: 'hidden',
           }}
         >
+          {/* Top Bar */}
           <Box
             sx={{
               height: '64px',
@@ -62,6 +65,7 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
             <TopBar />
           </Box>
 
+          {/* Page Content */}
           <Box
             sx={{
               flexGrow: 1,
@@ -75,23 +79,15 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
             <main>{children}</main>
           </Box>
 
-          <Box
-            sx={{
-              height: '64px',
-              backgroundColor: '#fff',
-              zIndex: 15,
-              flexShrink: 0,
-            }}
-          >
-            <BottomBar
-              onCameraClick={handleCameraClick}
-              onSearchClick={handleSearchClick}
-              onProfileClick={handleProfileClick}
-            />
-          </Box>
+          {/* Bottom Bar */}
+          <BottomBar
+            onCameraClick={handleCameraClick}
+            onSearchClick={handleSearchClick}
+            onProfileClick={handleProfileClick}
+          />
         </Box>
       </Box>
-    </ModalProvider>
+    </ReduxProvider>
   );
 };
 

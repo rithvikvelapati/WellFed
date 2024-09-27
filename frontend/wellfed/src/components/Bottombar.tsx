@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { useModalContext } from '../context/ModalContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 interface BottomBarProps {
   onCameraClick: () => void;
@@ -15,14 +16,14 @@ const BottomBar: React.FC<BottomBarProps> = ({
   onSearchClick,
   onProfileClick,
 }) => {
-  const { isModalOpen } = useModalContext();
+  const isModalOpen = useSelector((state: RootState) => state.modal.isModalOpen);
 
   if (isModalOpen) {
     return null; // Hide BottomBar when a modal is open
   }
 
   return (
-    <div className="z-0 fixed bottom-0 left-0 right-0 flex justify-around items-center h-16 bg-white shadow-md">
+    <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center h-16 bg-white shadow-md">
       {/* Camera Button */}
       <button
         className="flex items-center justify-center"
