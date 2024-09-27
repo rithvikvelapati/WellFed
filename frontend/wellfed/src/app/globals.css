@@ -244,5 +244,5 @@ button.mobile-secondary-btn {
   background-color: #d7e8e8;
 }
 .fc-timeGridDay-button{
-  display: none;
+  display: none !important;
 }
