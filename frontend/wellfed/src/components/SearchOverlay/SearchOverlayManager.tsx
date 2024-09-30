@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
 import SearchOverlay from './SearchOverlay';
-import BottomBar from '../Bottombar';
 
 const SearchOverlayManager: React.FC = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -28,11 +27,6 @@ const SearchOverlayManager: React.FC = () => {
   return (
     <>
       <SearchOverlay isOpen={showSearch} closeSearch={() => setShowSearch(false)} inputRef={inputRef} />
-      <BottomBar
-        onCameraClick={handleCameraClick}
-        onSearchClick={toggleSearch}
-        onProfileClick={handleProfileClick}
-      />
     </>
   );
 };
