@@ -10,6 +10,8 @@ import HorizontalScrollContainer from '@/components/HorizontalScrollContainer';
 import RecipeSearchBar from './ui/RecipeSearchBar';
 import ToggleButtonGroup from './ui/ToggleButtonGroup';
 import FilterButton from './ui/FilterButton';
+import { categories } from '@/constants';
+import CategoryCard from '@/components/CategoryCard';
 
 const RecipeListPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -69,7 +71,7 @@ const RecipeListPage = () => {
 
     //         {/* Content Container with Top Padding */}
             <div className="pt-4">
-              <div className="flex items-center w-full mb-6">
+              <div className="flex mx-2 items-center w-full mb-4">
                 {/* Search Bar */}
                 <div className="flex-grow">
                   <RecipeSearchBar />
@@ -78,12 +80,12 @@ const RecipeListPage = () => {
                 <FilterButton />
               </div>
               {/* Toggle Button Group */}
-              <div className="flex space-x-fluid-px">
+              <div className="mx-2 flex space-x-fluid-px">
                 <ToggleButtonGroup />
               </div>
               {/* Categories Section */}
-              <section className="mb-8">
-                <div className="flex justify-between items-center my-4">
+              <section className="mb-4">
+                <div className="flex justify-between items-center ml-1 mb-2">
                   <h2 className="text-fluid-lg font-semibold">Categories</h2>
                   {/* see all section for categories to be added at a later time */}
                   {/* <button
@@ -96,31 +98,22 @@ const RecipeListPage = () => {
                 {/* Categories Content */}
                 <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                   {/* Replace with your RecipeCard components */}
-                  <div className="snap-start flex px-2 mx-2">
+                  <div className="snap-start flex px-2 mb-3 ">
                     {/* Example Cards */}
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Category 1</p>
-                    </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Category 2</p>
-                    </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Category 3</p>
-                    </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Category 4</p>
-                    </div>
-                    <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                      <p className="text-center">Category 5</p>
-                    </div>
+                    {categories.map((category) => (
+                      <CategoryCard
+                        key={category.id}
+                        category={category}
+                      />
+                    ))}
                     {/* Add more cards as needed */}
                   </div>
                 </HorizontalScrollContainer>
               </section>
 
               {/* Trending Now Section */}
-              <section className="mb-8">
-                <div className="flex justify-between items-center mb-4">
+              <section className="mb-4">
+                <div className="flex justify-between items-center ml-1 mb-4">
                   <h2 className="text-fluid-lg font-semibold">Trending Now</h2>
                   <button
                     className="flex items-center text-slate-500 text-fluid-sm"
@@ -155,7 +148,7 @@ const RecipeListPage = () => {
 
               {/* Recent Recipes Section */}
               <section className="mb-4 pb-2">
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center ml-1 mb-4">
                   <h2 className="text-fluid-lg font-semibold">Recent Recipes</h2>
                   <button
                     className="flex items-center text-slate-500 text-fluid-sm"

@@ -25,7 +25,7 @@ const ToggleButtonGroup: React.FC<ToggleButtonGroupProps> = () => {
   };
 
   return (
-    <div className="flex justify-center space-x-4 mb-6">
+    <div className="flex justify-center space-x-4 mb-2">
       {buttons.map((button) => (
         <button
           key={button}
