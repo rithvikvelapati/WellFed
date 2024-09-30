@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setModalOpen } from '../../../store/modalSlice';
-import HorizontalScrollContainer from '../../../components/HorizontalScrollContainer';
+import { setModalOpen } from '@/store/modalSlice';
+import HorizontalScrollContainer from '@/components/HorizontalScrollContainer';
 import RecipeSearchBar from './ui/RecipeSearchBar';
 import ToggleButtonGroup from './ui/ToggleButtonGroup';
 import FilterButton from './ui/FilterButton';
@@ -49,25 +49,25 @@ const RecipeListPage = () => {
   };
 
   return (
-    <AnimatePresence>
-      {isModalOpen && (
-        <motion.div
-          className="absolute top-0 left-0 w-full h-full bg-white z-50"
-          initial="initial"
-          animate="in"
-          exit="out"
-          variants={pageVariants}
-        >
-          <div className="relative w-full h-full p-4">
-            {/* Back Button */}
-            <button
-              onClick={handleClose}
-              className="absolute top-4 left-4 py-2 mb-4 focus:outline-none"
-            >
-              <IoIosArrowBack className="text-2xl text-slate-700" />
-            </button>
+    // <AnimatePresence>
+    //   {isModalOpen && (
+    //     <motion.div
+    //       className="absolute top-0 left-0 w-full h-full bg-white z-50"
+    //       initial="initial"
+    //       animate="in"
+    //       exit="out"
+    //       variants={pageVariants}
+    //     >
+    //       <div className="relative w-full h-full p-4">
+    //         {/* Back Button */}
+    //         <button
+    //           onClick={handleClose}
+    //           className="absolute top-4 left-4 py-2 mb-4 focus:outline-none"
+    //         >
+    //           <IoIosArrowBack className="text-2xl text-slate-700" />
+    //         </button>
 
-            {/* Content Container with Top Padding */}
+    //         {/* Content Container with Top Padding */}
             <div className="pt-16">
               <div className="flex items-center w-full mb-6">
                 {/* Search Bar */}
@@ -187,10 +187,10 @@ const RecipeListPage = () => {
                 </HorizontalScrollContainer>
               </section>
             </div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    //       </div>
+    //     </motion.div>
+    //   )}
+    // </AnimatePresence>
   );
 };
 
