@@ -44,3 +44,56 @@ export const eventsData = [
     { id: 7, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false, priceLevel: 3 },
     { id: 8, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false, priceLevel: 2 },
   ];
+
+  export interface Category {
+  id: number;
+  name: string;
+  recipeCount: number;
+  image: string;
+}
+
+export const categories: Category[] = [
+  {
+    id: 1,
+    name: 'Appetizers',
+    recipeCount: 324,
+    image: '/appetizers.png',
+  },
+  {
+    id: 2,
+    name: 'Breakfast',
+    recipeCount: 440,
+    image: '/breakfast.png',
+  },
+  {
+    id: 3,
+    name: 'Lunch',
+    recipeCount: 430,
+    image: '/lunch.png',
+  },
+  {
+    id: 4,
+    name: 'Dinner',
+    recipeCount: 515,
+    image: '/dinner.png',
+  },
+  {
+    id: 5,
+    name: 'Desserts',
+    recipeCount: 230,
+    image: '/desserts.png',
+  },
+  {
+    id: 6,
+    name: 'Beverages',
+    recipeCount: 350,
+    image: '/beverages.png',
+  },
+  {
+    id: 7,
+    name: 'Snacks',
+    recipeCount: 200,
+    image: '/snack.png',
+  }
+  // Add more categories as needed
+];
