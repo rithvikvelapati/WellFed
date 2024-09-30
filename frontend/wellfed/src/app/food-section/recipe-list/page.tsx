@@ -14,16 +14,16 @@ import { categories } from '@/constants';
 import CategoryCard from '@/components/CategoryCard';
 
 const RecipeListPage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  const dispatch = useDispatch();
+  // const [isModalOpen, setIsModalOpen] = useState(true);
+  // const dispatch = useDispatch();
   const router = useRouter();
 
-  useEffect(() => {
-    dispatch(setModalOpen(true));
-    return () => {
-      dispatch(setModalOpen(false));
-    };
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(setModalOpen(true));
+  //   return () => {
+  //     dispatch(setModalOpen(false));
+  //   };
+  // }, [dispatch]);
 
   // Animation variants for sliding in from right to left
   const pageVariants = {
@@ -44,11 +44,11 @@ const RecipeListPage = () => {
   };
 
   // Close modal by simulating a back navigation or state change
-  const handleClose = () => {
-    setIsModalOpen(false);
-    dispatch(setModalOpen(false)); // Update Redux state
-    setTimeout(() => router.back(), 500); // Use a delay to match animation before navigating back
-  };
+  // const handleClose = () => {
+  //   setIsModalOpen(false);
+  //   dispatch(setModalOpen(false)); // Update Redux state
+  //   setTimeout(() => router.back(), 500); // Use a delay to match animation before navigating back
+  // };
 
   return (
     // <AnimatePresence>
@@ -147,7 +147,7 @@ const RecipeListPage = () => {
               </section>
 
               {/* Recent Recipes Section */}
-              <section className="mb-4 pb-2">
+              <section className="mb-10 pb-2">
                 <div className="flex justify-between items-center ml-1 mb-4">
                   <h2 className="text-fluid-lg font-semibold">Recent Recipes</h2>
                   <button
