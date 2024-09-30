@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { useModalContext } from '../context/ModalContext';
 
@@ -12,21 +12,34 @@ interface BottomBarProps {
 
 const BottomBar: React.FC<BottomBarProps> = ({
   onCameraClick,
-  onSearchClick,
+  onSearchClick,  // Keep the onSearchClick callback in case you want to implement it later
   onProfileClick,
 }) => {
   const { isModalOpen } = useModalContext();
+
+  // Track which button is selected
+  const [selected, setSelected] = useState<'camera' | 'search' | 'profile'>('profile');
 
   if (isModalOpen) {
     return null; // Hide BottomBar when a modal is open
   }
 
+  // Dynamic indicator bar width and selected class
+  const selectedClass = (button: 'camera' | 'search' | 'profile') => {
+    return selected === button
+      ? 'border-t-4 border-orange-500 w-1/2' // Increase indicator width
+      : '';
+  };
+
   return (
-    <div className="z-0 fixed bottom-0 left-0 right-0 flex justify-around items-center h-16 bg-white shadow-md">
+    <div className="fixed bottom-0 left-0 right-0 m-0 p-0 z-50 flex justify-around items-center h-10 bg-white shadow-md">
       {/* Camera Button */}
       <button
-        className="flex items-center justify-center"
-        onClick={onCameraClick}
+        className={`flex flex-col items-center justify-center w-20 h-full ${selectedClass('camera')}`}
+        onClick={() => {
+          setSelected('camera');
+          onCameraClick();  // Keeps the onCameraClick functionality
+        }}
         aria-label="Open Camera"
       >
         <Image
@@ -40,8 +53,11 @@ const BottomBar: React.FC<BottomBarProps> = ({
 
       {/* Profile Button */}
       <button
-        className="flex items-center justify-center"
-        onClick={onProfileClick}
+        className={`flex flex-col items-center justify-center w-20 h-full ${selectedClass('profile')}`}
+        onClick={() => {
+          setSelected('profile');
+          onProfileClick();  // Keeps the onProfileClick functionality
+        }}
         aria-label="Open Profile"
       >
         <Image
@@ -55,8 +71,10 @@ const BottomBar: React.FC<BottomBarProps> = ({
 
       {/* Search Button */}
       <button
-        className="flex items-center justify-center"
-        onClick={onSearchClick}
+        className={`flex flex-col items-center justify-center w-20 h-full ${selectedClass('search')}`}
+        onClick={() => {
+          setSelected('search');  // Allows the indicator to move when Search is selected
+        }}
         aria-label="Search"
       >
         <Image
