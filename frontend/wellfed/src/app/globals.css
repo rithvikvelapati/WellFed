@@ -7,6 +7,11 @@
   max-width: 100%;
 }
 
+/* custom color for dashboard background */
+.bg-dashboard {
+  @apply bg-backgroundDash;
+}
+
 /* Custom breakpoints for larger screens */
 @media (min-width: 640px) {
   .container {

@@ -11,7 +11,9 @@ const config: Config = {
       colors: {
         primary: '#b64b29',
         secondary: '#ec9556',
-        third: '#D7E8E8',
+        third: '#428f8f',
+        background: '#f5f5f5',
+        backgroundDash: 'rgba(66, 143, 143, 0.1)',
       },
       fontFamily: {
         sans: ['Roboto', 'sans-serif'], // Set Roboto as the default sans-serif font

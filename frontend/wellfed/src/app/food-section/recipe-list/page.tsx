@@ -68,7 +68,7 @@ const RecipeListPage = () => {
     //         </button>
 
     //         {/* Content Container with Top Padding */}
-            <div className="pt-16">
+            <div className="pt-4">
               <div className="flex items-center w-full mb-6">
                 {/* Search Bar */}
                 <div className="flex-grow">
@@ -85,15 +85,16 @@ const RecipeListPage = () => {
               <section className="mb-8">
                 <div className="flex justify-between items-center my-4">
                   <h2 className="text-fluid-lg font-semibold">Categories</h2>
-                  <button
+                  {/* see all section for categories to be added at a later time */}
+                  {/* <button
                     className="flex items-center text-slate-500 text-fluid-sm"
                     onClick={() => router.push('/categories')}
                   >
                     See All <IoIosArrowForward className="ml-1" />
-                  </button>
+                  </button> */}
                 </div>
                 {/* Categories Content */}
-                <HorizontalScrollContainer>
+                <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                   {/* Replace with your RecipeCard components */}
                   <div className="snap-start flex px-2 mx-2">
                     {/* Example Cards */}
@@ -129,7 +130,7 @@ const RecipeListPage = () => {
                   </button>
                 </div>
                 {/* Trending Now Content */}
-                <HorizontalScrollContainer>
+                <HorizontalScrollContainer className='bg-gradient-to-r from-backgroundDash to-inherit'>
                   <div className="snap-start flex px-2 mx-2">
                     {/* Example Cards */}
                     <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
@@ -164,7 +165,7 @@ const RecipeListPage = () => {
                   </button>
                 </div>
                 {/* Recent Recipes Content */}
-                <HorizontalScrollContainer>
+                <HorizontalScrollContainer className='bg-gradient-to-r from-backgroundDash to-inherit'>
                   <div className="snap-start flex px-2 mx-2">
                     {/* Example Cards */}
                     <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
