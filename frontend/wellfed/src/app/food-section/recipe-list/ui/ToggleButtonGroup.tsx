@@ -34,7 +34,7 @@ const ToggleButtonGroup: React.FC<ToggleButtonGroupProps> = () => {
             ${
               selected === button
                 ? 'bg-gradient-to-r from-primary to-secondary text-white'
-                : 'bg-slate-200 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'
+                : 'bg-white bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'
             }
             focus:outline-none focus:ring-2 focus:ring-secondary`}
         >

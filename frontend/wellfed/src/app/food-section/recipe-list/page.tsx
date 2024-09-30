@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setModalOpen } from '../../../store/modalSlice';
-import HorizontalScrollContainer from '../../../components/HorizontalScrollContainer';
+import { setModalOpen } from '@/store/modalSlice';
+import HorizontalScrollContainer from '@/components/HorizontalScrollContainer';
 import RecipeSearchBar from './ui/RecipeSearchBar';
 import ToggleButtonGroup from './ui/ToggleButtonGroup';
 import FilterButton from './ui/FilterButton';
@@ -49,26 +49,26 @@ const RecipeListPage = () => {
   };
 
   return (
-    <AnimatePresence>
-      {isModalOpen && (
-        <motion.div
-          className="absolute top-0 left-0 w-full h-full bg-white z-50"
-          initial="initial"
-          animate="in"
-          exit="out"
-          variants={pageVariants}
-        >
-          <div className="relative w-full h-full p-4">
-            {/* Back Button */}
-            <button
-              onClick={handleClose}
-              className="absolute top-4 left-4 py-2 mb-4 focus:outline-none"
-            >
-              <IoIosArrowBack className="text-2xl text-slate-700" />
-            </button>
+    // <AnimatePresence>
+    //   {isModalOpen && (
+    //     <motion.div
+    //       className="absolute top-0 left-0 w-full h-full bg-white z-50"
+    //       initial="initial"
+    //       animate="in"
+    //       exit="out"
+    //       variants={pageVariants}
+    //     >
+    //       <div className="relative w-full h-full p-4">
+    //         {/* Back Button */}
+    //         <button
+    //           onClick={handleClose}
+    //           className="absolute top-4 left-4 py-2 mb-4 focus:outline-none"
+    //         >
+    //           <IoIosArrowBack className="text-2xl text-slate-700" />
+    //         </button>
 
-            {/* Content Container with Top Padding */}
-            <div className="pt-16">
+    //         {/* Content Container with Top Padding */}
+            <div className="pt-4">
               <div className="flex items-center w-full mb-6">
                 {/* Search Bar */}
                 <div className="flex-grow">
@@ -85,15 +85,16 @@ const RecipeListPage = () => {
               <section className="mb-8">
                 <div className="flex justify-between items-center my-4">
                   <h2 className="text-fluid-lg font-semibold">Categories</h2>
-                  <button
+                  {/* see all section for categories to be added at a later time */}
+                  {/* <button
                     className="flex items-center text-slate-500 text-fluid-sm"
                     onClick={() => router.push('/categories')}
                   >
                     See All <IoIosArrowForward className="ml-1" />
-                  </button>
+                  </button> */}
                 </div>
                 {/* Categories Content */}
-                <HorizontalScrollContainer>
+                <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                   {/* Replace with your RecipeCard components */}
                   <div className="snap-start flex px-2 mx-2">
                     {/* Example Cards */}
@@ -129,7 +130,7 @@ const RecipeListPage = () => {
                   </button>
                 </div>
                 {/* Trending Now Content */}
-                <HorizontalScrollContainer>
+                <HorizontalScrollContainer className='bg-gradient-to-r from-backgroundDash to-inherit'>
                   <div className="snap-start flex px-2 mx-2">
                     {/* Example Cards */}
                     <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
@@ -164,7 +165,7 @@ const RecipeListPage = () => {
                   </button>
                 </div>
                 {/* Recent Recipes Content */}
-                <HorizontalScrollContainer>
+                <HorizontalScrollContainer className='bg-gradient-to-r from-backgroundDash to-inherit'>
                   <div className="snap-start flex px-2 mx-2">
                     {/* Example Cards */}
                     <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
@@ -187,10 +188,10 @@ const RecipeListPage = () => {
                 </HorizontalScrollContainer>
               </section>
             </div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    //       </div>
+    //     </motion.div>
+    //   )}
+    // </AnimatePresence>
   );
 };
 
