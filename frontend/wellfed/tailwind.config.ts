@@ -11,7 +11,9 @@ const config: Config = {
       colors: {
         primary: '#b64b29',
         secondary: '#ec9556',
-        third: '#D7E8E8',
+        third: '#428f8f',
+        background: '#f5f5f5',
+        backgroundDash: 'rgba(66, 143, 143, 0.1)',
       },
       fontFamily: {
         sans: ['Roboto', 'sans-serif'], // Set Roboto as the default sans-serif font
@@ -22,7 +24,7 @@ const config: Config = {
         'fluid-sm': 'clamp(0.875rem, 3vw, 1.25rem)',
       },
       spacing: {
-        'fluid-px': 'clamp(0.5rem, 4vw, 1rem)',
+        'fluid-px': 'clamp(0.25rem, 2vw, .5rem)',
       },
       aspectRatio: {
         '4/3': '4 / 3',

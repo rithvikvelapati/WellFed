@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { useModalContext } from '../context/ModalContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 interface BottomBarProps {
   onCameraClick: () => void;
@@ -15,7 +16,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
   onSearchClick,  // Keep the onSearchClick callback in case you want to implement it later
   onProfileClick,
 }) => {
-  const { isModalOpen } = useModalContext();
+  const isModalOpen = useSelector((state: RootState) => state.modal.isModalOpen);
 
   // Track which button is selected
   const [selected, setSelected] = useState<'camera' | 'search' | 'profile'>('profile');
@@ -38,7 +39,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
         className={`flex flex-col items-center justify-center w-20 h-full ${selectedClass('camera')}`}
         onClick={() => {
           setSelected('camera');
-          onCameraClick();  // Keeps the onCameraClick functionality
+          onCameraClick(); // Keeps the onCameraClick functionality
         }}
         aria-label="Open Camera"
       >
@@ -56,7 +57,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
         className={`flex flex-col items-center justify-center w-20 h-full ${selectedClass('profile')}`}
         onClick={() => {
           setSelected('profile');
-          onProfileClick();  // Keeps the onProfileClick functionality
+          onProfileClick(); // Keeps the onProfileClick functionality
         }}
         aria-label="Open Profile"
       >
@@ -73,7 +74,8 @@ const BottomBar: React.FC<BottomBarProps> = ({
       <button
         className={`flex flex-col items-center justify-center w-20 h-full ${selectedClass('search')}`}
         onClick={() => {
-          setSelected('search');  // Allows the indicator to move when Search is selected
+          setSelected('search');
+          onSearchClick(); // Keeps the onSearchClick functionality
         }}
         aria-label="Search"
       >
