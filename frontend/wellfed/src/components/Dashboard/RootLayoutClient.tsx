@@ -34,7 +34,7 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
             top: 0,
             left: 0,
             bottom: 0,
-            width: '80px',
+            width: '41px',
             zIndex: 10,
             backgroundColor: 'var(--bg-second)',
           }}
@@ -46,7 +46,7 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
         <Box
           sx={{
             flexGrow: 1,
-            marginLeft: '80px',
+            marginLeft: '36px',
             display: 'flex',
             flexDirection: 'column',
             height: '100vh',

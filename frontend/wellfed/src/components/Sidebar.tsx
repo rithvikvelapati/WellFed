@@ -26,7 +26,7 @@ const Sidebar: React.FC = () => {
     <Box
       sx={{
         height: '100vh',
-        width: 51,
+        width: 41,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
