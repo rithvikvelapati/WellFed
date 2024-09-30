@@ -13,7 +13,7 @@ interface BottomBarProps {
 
 const BottomBar: React.FC<BottomBarProps> = ({
   onCameraClick,
-  onSearchClick,
+  onSearchClick,  // Keep the onSearchClick callback in case you want to implement it later
   onProfileClick,
 }) => {
   const isModalOpen = useSelector((state: RootState) => state.modal.isModalOpen);
@@ -92,4 +92,3 @@ const BottomBar: React.FC<BottomBarProps> = ({
 };
 
 export default BottomBar;
-
