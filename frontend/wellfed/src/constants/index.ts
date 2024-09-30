@@ -2,7 +2,7 @@ export const sidebarIcons = [
     { name: 'home', label: 'Home', src: '/Home.svg', path: '/' },
     { name: 'add-friend', label: 'Add Friend', src: '/AddFriend.svg', path: '/add-friend' },
     { name: 'messages', label: 'Messages', src: '/Message.svg', path: '/messages' },
-    { name: 'calendar', label: 'Calendar', src: '/Calendar.svg', path: '/calendar' },
+    { name: 'calendar', label: 'Calendar', src: '/Calendar.svg', path: '/calendar-section' },
     { name: 'groups', label: 'Groups', src: '/Groups.svg', path: '/groups' },
     { name: 'tickets', label: 'Tickets', src: '/Ticket.svg', path: '/tickets' },
     { name: 'food', label: 'Food', src: '/Food.svg', path: '/food-section/recipe-list' },

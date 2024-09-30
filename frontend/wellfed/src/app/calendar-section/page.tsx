@@ -4,7 +4,6 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import EventDetails from "./EventDetails"; // Assuming this is a modal for event details
 import { FaMapMarkerAlt, FaEdit, FaPlus } from "react-icons/fa"; // Location, Edit, and Plus icons
 import { GoClockFill } from "react-icons/go";
 
@@ -190,7 +189,7 @@ const Calendar: React.FC = () => {
 
 
 
-      {selectedEvent && (
+      {/* {selectedEvent && (
         <EventDetails
           title={selectedEvent.title}
           description={selectedEvent.description}
@@ -198,7 +197,7 @@ const Calendar: React.FC = () => {
           location={selectedEvent.location}
           onClose={() => setSelectedEvent(null)}
         />
-      )}
+      )} */}
     </div>
   );
 };
