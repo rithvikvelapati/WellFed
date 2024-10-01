@@ -1,7 +1,7 @@
 import './globals.css';
-import RootLayoutClient from '../components/Dashboard/RootLayoutClient';
-import SearchOverlayManager from "../components/SearchOverlay/SearchOverlayManager";
-import { ModalProvider } from '@/context/ModalContext';
+import RootLayoutClient from '@/components/Dashboard/RootLayoutClient';
+import SearchOverlayManager from '@/components/SearchOverlay/SearchOverlayManager';
+import ReduxProvider from '../store/ReduxProvider'; // Import ReduxProvider
 
 export default function RootLayout({
   children,
@@ -9,13 +9,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ModalProvider>
     <html lang="en">
       <body>
-        <RootLayoutClient>{children}</RootLayoutClient>
-        <SearchOverlayManager />
+        <ReduxProvider>
+          <RootLayoutClient>{children}</RootLayoutClient>
+          <SearchOverlayManager />
+        </ReduxProvider>
       </body>
     </html>
-    </ModalProvider>
   );
 }

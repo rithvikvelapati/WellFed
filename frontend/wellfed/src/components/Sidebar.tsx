@@ -1,20 +1,25 @@
-"use client";
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { Box, List, ListItem, ListItemButton } from '@mui/material';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { sidebarIcons } from '../constants';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
-const Sidebar: React.FC = () => {
+const SideBar: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const isModalOpen = useSelector((state: RootState) => state.modal.isModalOpen);
 
-  const initialPath = pathname === '/' || pathname.startsWith('/home') ? '/' : pathname;
+  const initialPath =
+    pathname === '/' || pathname.startsWith('/home') ? '/' : pathname;
   const [activeIcon, setActiveIcon] = useState(initialPath);
 
   useEffect(() => {
-    setActiveIcon(pathname === '/' || pathname.startsWith('/home') ? '/' : pathname);
+    setActiveIcon(
+      pathname === '/' || pathname.startsWith('/home') ? '/' : pathname
+    );
   }, [pathname]);
 
   const handleIconClick = (iconPath: string) => {
@@ -22,94 +27,89 @@ const Sidebar: React.FC = () => {
     router.push(iconPath);
   };
 
-  return (
-    <Box
-      sx={{
-        height: '100vh',
-        width: 51,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        paddingTop: 2,
-        backgroundColor: '#FFFFFF',
-      }}
-    >
-      <Link href="/" passHref>
-        <Box
-          sx={{
-            width: 60,
-            height: 60,
-            marginBottom: 4,
-            cursor: 'pointer',
-          }}
-        >
-          <Image
-            src="/Logo.svg"
-            alt="Logo"
-            width={100}
-            height={100}
-            priority
-          />
-        </Box>
-      </Link>
+  // Separate the last icon from the rest
+  const mainIcons = sidebarIcons.slice(0, -1);
+  const lastIcon = sidebarIcons[sidebarIcons.length - 1];
 
-      <List sx={{ width: '100%', padding: 0 }}>
-        {sidebarIcons.map((item) => (
-          <ListItem
+  if (isModalOpen) {
+    return null; // Hide SideBar when a modal is open
+  }
+
+  return (
+    <div className="fixed top-0 left-0 h-screen w-10 flex flex-col bg-white pt-32 z-40">
+      {/* Top Icons */}
+      <div className="flex flex-col space-y-2">
+        {mainIcons.map((item) => (
+          <div
             key={item.name}
-            disablePadding
-            sx={{
-              justifyContent: 'center',
-              marginBottom: 1,
-              '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.04)',
-              },
-              transition: 'transform 0.3s ease-in-out',
-              transform: activeIcon === item.path ? 'translateY(-10px)' : 'translateY(0)',
-            }}
+            className={`relative flex items-center w-full h-14 cursor-pointer transition-transform duration-300 ${
+              activeIcon === item.path ? '-translate-y-2' : 'translate-y-0'
+            }`}
+            onClick={() => handleIconClick(item.path)}
           >
-            <ListItemButton
-              onClick={() => handleIconClick(item.path)}
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                padding: '10px 0',
-                minHeight: 58,
-                Width: 51,
-                position: 'relative',
-                '&::before': {
-                  content: '""',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  width: '100%',
-                  height: '100%',
-                  background: activeIcon === item.path
-                    ? 'linear-gradient(90deg, #B64B29, #EC9556)'
-                    : 'none',
-                  borderRadius: '5px',
-                  zIndex: -1,
-                },
-                '& img': {
-                  filter: activeIcon === item.path ? 'brightness(0) invert(1)' : 'none',
-                  transition: 'filter 0.5s ease-in-out',
-                },
-              }}
-            >
+            {/* Background for active icon */}
+            {activeIcon === item.path && (
+              <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-r-lg -z-10"></div>
+            )}
+
+            {/* Indicator on the left side */}
+            {activeIcon === item.path && (
+              <div className="absolute left-0 top-2 bottom-2 w-0.5 bg-white rounded-tr-lg rounded-br-lg"></div>
+            )}
+
+            {/* Icon Image */}
+            <div className="pl-1">
               <Image
                 src={item.src}
                 alt={item.label}
-                width={24}
-                height={24}
+                width={22}
+                height={22}
+                className={`transition duration-500 ${
+                  activeIcon === item.path ? 'filter invert brightness-0' : ''
+                }`}
               />
-            </ListItemButton>
-          </ListItem>
+            </div>
+          </div>
         ))}
-      </List>
-    </Box>
+      </div>
+
+      {/* Spacer to push last icon to the bottom */}
+      <div className="flex-grow"></div>
+
+      {/* Last Icon at the bottom */}
+      <div className="mb-8">
+        <div
+          key={lastIcon.name}
+          className={`relative flex items-center w-full h-14 cursor-pointer transition-transform duration-300 ${
+            activeIcon === lastIcon.path ? '-translate-y-2' : 'translate-y-0'
+          }`}
+          onClick={() => handleIconClick(lastIcon.path)}
+        >
+          {/* Background for active icon */}
+          {activeIcon === lastIcon.path && (
+            <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-r-lg -z-10"></div>
+          )}
+          
+          {activeIcon === lastIcon.path && (
+            <div className="absolute left-0 top-2 bottom-2 w-0.5 bg-white rounded-tr-lg rounded-br-lg"></div>
+          )}
+
+          {/* Icon Image */}
+          <div className="pl-1">
+            <Image
+              src={lastIcon.src}
+              alt={lastIcon.label}
+              width={24}
+              height={24}
+              className={`transition duration-500 ${
+                activeIcon === lastIcon.path ? 'filter invert brightness-0' : ''
+              }`}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default Sidebar;
+export default SideBar;

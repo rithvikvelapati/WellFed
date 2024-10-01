@@ -7,6 +7,17 @@
   max-width: 100%;
 }
 
+/* resets native sizing */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+/* custom color for dashboard background */
+.bg-dashboard {
+  @apply bg-backgroundDash;
+}
+
 /* Custom breakpoints for larger screens */
 @media (min-width: 640px) {
   .container {
@@ -244,5 +255,5 @@ button.mobile-secondary-btn {
   background-color: #d7e8e8;
 }
 .fc-timeGridDay-button{
-  display: none;
+  display: none !important;
 }

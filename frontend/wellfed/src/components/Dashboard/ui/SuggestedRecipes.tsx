@@ -1,17 +1,18 @@
-"use client";
+'use client';
 import React, { useState } from 'react';
-import { Box, Card, CardContent, Typography, IconButton, CardMedia, Rating } from '@mui/material';
+import { Box, Card, CardContent, Typography, IconButton, CardMedia } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import StarIcon from '@mui/icons-material/Star';
 import Link from 'next/link';
-import { recipesData } from '../../../constants'; // Importing recipes data from constants
+import { recipesData } from '../../../constants';
 import HorizontalScrollContainer from '@/components/HorizontalScrollContainer';
 
 const SuggestedRecipes: React.FC = () => {
-  const [recipes, setRecipes] = useState(recipesData); // Use the imported data
+  const [recipes, setRecipes] = useState(recipesData);
 
   const toggleFavorite = (id: number) => {
     setRecipes(recipes.map(recipe =>
@@ -26,90 +27,122 @@ const SuggestedRecipes: React.FC = () => {
   };
 
   return (
-    <HorizontalScrollContainer>
-      {recipes.map(recipe => (
-        <Card
-          key={recipe.id}
-          sx={{
-            minWidth: 180,
-            minHeight: 175,
-            borderRadius: '12px',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-            flexShrink: 0,
-            margin: '2px',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-          }}
-        >
-          <Box sx={{ position: 'relative' }}>
-          <Link href={'/recipes/{recipe.id}'} passHref>
-            <CardMedia
-              component="img"
-              image={recipe.imageUrl}
-              alt={recipe.title}
-              sx={{ height: 120, objectFit: 'cover', borderRadius: '16px 16px 0 0' }}
-            />
-            </Link>
-            <IconButton
-              onClick={() => toggleFavorite(recipe.id)}
-              sx={{
-                position: 'absolute',
-                top: 8,
-                right: 8,
-                color: recipe.favorited ? 'red' : 'grey-500',
-                backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                },
-                borderRadius: '50%',
-              }}
-            >
-              {recipe.favorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            </IconButton>
+      <HorizontalScrollContainer className='bg-gradient-to-r from-backgroundDash to-inherit'>
+        {recipes.map(recipe => (
+          <Card
+            key={recipe.id}
+            sx={{
+              width: 180,
+              minHeight: 175,
+              borderRadius: '12px',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              flexShrink: 0,
+              margin: '5px',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+            }}
+          >
+            <Box sx={{ position: 'relative' }}>
+              <Link href={`/recipes/${recipe.id}`} passHref>
+                <CardMedia
+                  component="img"
+                  image={recipe.imageUrl}
+                  alt={recipe.title}
+                  sx={{ height: 132, objectFit: 'cover', borderRadius: '16px 16px 0 0' }}
+                />
+              </Link>
 
-            <Box sx={{ position: 'absolute', bottom: 8, left: 8, display: 'flex', alignItems: 'center', gap: 1, backgroundColor: 'rgba(0,0,0,0.4)', padding: '4px 8px', borderRadius: '8px' }}>
-              <AccessTimeIcon sx={{ fontSize: '0.8rem', color: 'white' }} />
-              <Typography variant="caption" sx={{ fontSize: '0.6rem', color: 'white'  }}>{recipe.time}</Typography>
-              <Typography variant="caption" sx={{ fontSize: '0.6rem', color: 'white', ml:2 }}>{recipe.cost}</Typography>
-            </Box>
-          </Box>
-
-          <CardContent sx={{ padding: '4px' }}>
-            <Typography
-              variant="subtitle1"
-              sx={{ fontWeight: 'bold', fontSize: '0.6rem', mb: 0.5, lineHeight: '0.8rem' }}
-            >
-              {recipe.title}
-            </Typography>
-            
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Rating
-                name="read-only"
-                value={recipe.rating}
-                readOnly
-                size="small"
-                precision={0.5}
-                sx={{ color: '#EC9556', '& .MuiRating-iconEmpty': { color: '#EC9556' } }}
-              />
-              <Typography variant="caption" sx={{ fontSize: '0.6rem', color: 'grey-600' }}>
-                ({recipe.reviews})
-              </Typography>
-              <IconButton onClick={() => toggleBookmark(recipe.id)} sx={{ ml: 1, p: '4px' }}>
-                {recipe.bookmarked ? <BookmarkIcon sx={{ color: '#EC9556' }} /> : <BookmarkBorderIcon sx={{ color: '#EC9556' }} />}
+              <IconButton
+                onClick={() => toggleBookmark(recipe.id)}
+                sx={{
+                  position: 'absolute',
+                  top: 6,
+                  right: 6,
+                  color: recipe.bookmarked ? '#EC9556' : '#EC9556',
+                  backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                  },
+                  borderRadius: '50%',
+                }}
+              >
+                {recipe.bookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
               </IconButton>
             </Box>
-            
-            <Typography
-              variant="caption"
-              sx={{ fontSize: '0.6rem', color: 'grey-500', mt: 0.2, lineHeight: '0.8rem' }}
+
+            <CardContent
+              sx={{
+                padding: '4px 4px 0px 4px', // Ensure no bottom padding
+                flexGrow: 1, // Let the content take full vertical space
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
             >
-              {recipe.handle}
-            </Typography>
-          </CardContent>
-        </Card>
-      ))}
-    </HorizontalScrollContainer>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', ml: 1}}>
+                <Box sx={{
+                    display: 'block',
+                    maxWidth: '70%',
+                  }}
+                >
+                  <Typography
+                    className="mobile-scrollbar-hide"
+                    sx={{
+                      fontWeight: 'bold',
+                      fontSize: 12,
+                      whiteSpace: 'nowrap',
+                      overflowX: 'auto',
+                    }}
+                  >
+                    {recipe.title}
+                  </Typography>
+                </Box>
+
+                <IconButton
+                  onClick={() => toggleFavorite(recipe.id)}
+                  sx={{ p: '4px', color: recipe.favorited ? '#EC9556' : '#EC9556' }}
+                >
+                  {recipe.favorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                </IconButton>
+              </Box>
+
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px', ml: 1 }}>
+                <Typography
+                  sx={{ fontSize: '0.6rem', color: 'grey-600', display: 'flex', alignItems: 'center' }}
+                >
+                  {recipe.rating}
+                  <StarIcon sx={{ fontSize: '12px', color: '#EC9556', ml: '2px' }} />
+                  ({recipe.reviews})
+                </Typography>
+
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <AccessTimeIcon sx={{ fontSize: '0.8rem', color: 'black' }} />
+                  <Typography sx={{ fontSize: '0.6rem', color: 'grey-600' }}>
+                    {recipe.time}~
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
+                <Typography
+                  className="mobile-scrollbar-hide"
+                  sx={{
+                    fontSize: '0.6rem',
+                    color: 'grey-500',
+                    lineHeight: '0.8rem',
+                    whiteSpace: 'nowrap',
+                    overflowX: 'auto',
+                    maxWidth: '60%',
+                  }}
+                >
+                  {recipe.handle}
+                </Typography>
+              </Box>
+            </CardContent>
+          </Card>
+        ))}
+      </HorizontalScrollContainer>
   );
 };
 
