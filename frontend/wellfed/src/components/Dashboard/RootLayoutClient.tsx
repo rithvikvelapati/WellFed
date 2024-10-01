@@ -1,11 +1,10 @@
 'use client';
 
 import React from 'react';
-import TopBar from '../Topbar';
-import BottomBar from '../Bottombar';
-import { Box } from '@mui/material';
+import TopBar from '@/components/TopBar/TopBar';
+import BottomBar from '@/components/Bottombar';
 import ReduxProvider from '@/store/ReduxProvider'; // Import the Redux Provider
-import SideBar from '../Sidebar';
+import SideBar from '@/components/SideBar';
 
 interface RootLayoutClientProps {
   children: React.ReactNode;
@@ -26,58 +25,23 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
 
   return (
     <ReduxProvider>
-      <Box sx={{ display: 'flex', minHeight: '100vh', overflowX: 'hidden' }}>
+      <div className="flex min-h-screen overflow-x-hidden">
         {/* Sidebar */}
-        <Box
-          sx={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            bottom: 0,
-            width: '41px',
-            zIndex: 10,
-            backgroundColor: 'var(--bg-second)',
-          }}
-        >
+        <div className="fixed top-0 left-0 bottom-0 w-[41px] z-10 bg-bg-second">
           <SideBar />
-        </Box>
+        </div>
 
         {/* Main Content */}
-        <Box
-          sx={{
-            flexGrow: 1,
-            marginLeft: '36px',
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100vh',
-            overflowX: 'hidden',
-          }}
-        >
+        <div className="flex-grow ml-[41px] flex flex-col h-screen overflow-x-hidden">
           {/* Top Bar */}
-          <Box
-            sx={{
-              height: '64px',
-              backgroundColor: 'var(--bg-second)',
-              zIndex: 20,
-              flexShrink: 0,
-            }}
-          >
+          <div className="h-[64px] bg-bg-second z-20 flex-shrink-0">
             <TopBar />
-          </Box>
+          </div>
 
           {/* Page Content */}
-          <Box
-            sx={{
-              flexGrow: 1,
-              overflowY: 'auto',
-              overflowX: 'hidden',
-              backgroundColor: 'rgba(66, 143, 143, 0.1)',
-              borderTopLeftRadius: '1rem',
-              padding: '2px',
-            }}
-          >
+          <div className="flex-grow mb-10 overflow-y-auto overflow-x-hidden bg-[rgba(66,143,143,0.1)] rounded-tl-lg p-1">
             <main>{children}</main>
-          </Box>
+          </div>
 
           {/* Bottom Bar */}
           <BottomBar
@@ -85,8 +49,8 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
             onSearchClick={handleSearchClick}
             onProfileClick={handleProfileClick}
           />
-        </Box>
-      </Box>
+        </div>
+      </div>
     </ReduxProvider>
   );
 };

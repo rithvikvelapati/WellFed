@@ -51,13 +51,19 @@ const SideBar: React.FC = () => {
             {activeIcon === item.path && (
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-r-lg -z-10"></div>
             )}
+
+            {/* Indicator on the left side */}
+            {activeIcon === item.path && (
+              <div className="absolute left-0 top-2 bottom-2 w-0.5 bg-white rounded-tr-lg rounded-br-lg"></div>
+            )}
+
             {/* Icon Image */}
             <div className="pl-1">
               <Image
                 src={item.src}
                 alt={item.label}
-                width={24}
-                height={24}
+                width={22}
+                height={22}
                 className={`transition duration-500 ${
                   activeIcon === item.path ? 'filter invert brightness-0' : ''
                 }`}
@@ -71,7 +77,7 @@ const SideBar: React.FC = () => {
       <div className="flex-grow"></div>
 
       {/* Last Icon at the bottom */}
-      <div className="mb-6">
+      <div className="mb-8">
         <div
           key={lastIcon.name}
           className={`relative flex items-center w-full h-14 cursor-pointer transition-transform duration-300 ${
@@ -83,6 +89,11 @@ const SideBar: React.FC = () => {
           {activeIcon === lastIcon.path && (
             <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-r-lg -z-10"></div>
           )}
+          
+          {activeIcon === lastIcon.path && (
+            <div className="absolute left-0 top-2 bottom-2 w-0.5 bg-white rounded-tr-lg rounded-br-lg"></div>
+          )}
+
           {/* Icon Image */}
           <div className="pl-1">
             <Image

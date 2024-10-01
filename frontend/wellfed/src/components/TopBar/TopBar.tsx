@@ -6,7 +6,7 @@ import Image from 'next/image';
 import NotificationIcon from './NotificationIcon';
 import CartIcon from './CartIcon';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import { RootState } from '@/store/store';
 
 const TopBar: React.FC = () => {
   const isModalOpen = useSelector((state: RootState) => state.modal.isModalOpen);
