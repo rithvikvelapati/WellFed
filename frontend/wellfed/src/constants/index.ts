@@ -28,7 +28,7 @@ export const slidesData = [
   ];
 
 export const recipesData = [
-    { id: 1, title: "Chicken Alfredo", imageUrl: "/CA.jpg", time: "30min", cost: "$$", rating: 4, reviews: 23, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
+    { id: 1, title: "Chicken Alfredo Chicken Alfredo Chicken Alfredo Chicken Alfredo Chicken Alfredo", imageUrl: "/CA.jpg", time: "30min", cost: "$$", rating: 4, reviews: 23, favorited: false, bookmarked: false, handle: "@AriNosoKitchenAriNosoKitchenAriNosoKitchenAriNosoKitchen" },
     { id: 2, title: "Chicken Biryani", imageUrl: "/CB.jpg", time: "45min", cost: "$$", rating: 4.5, reviews: 12, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
     { id: 3, title: "Karelian Pie", imageUrl: "/KP.jpg", time: "20min", cost: "$", rating: 4, reviews: 8, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
     { id: 4, title: "Mushroom Risotto", imageUrl: "/MR.jpg", time: "40min", cost: "$$", rating: 4, reviews: 30, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
