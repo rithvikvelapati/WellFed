@@ -19,7 +19,7 @@ const DiscoverEvents: React.FC = () => {
     const renderPriceLevel = (level: number) => "$".repeat(level);
 
     return (
-        <HorizontalScrollContainer>
+        <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
             {events.map(event => (
                 <Card
                     key={event.id}
