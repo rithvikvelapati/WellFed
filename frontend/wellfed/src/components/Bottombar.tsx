@@ -33,7 +33,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 m-0 p-0 z-50 flex justify-around items-center h-10 bg-white shadow-md">
+    <div className="fixed bottom-0 left-0 right-0 m-0 p-0 z-50 flex justify-around items-center h-10 bg-white shadow-md mb-0.5 pb-1.5">
       {/* Camera Button */}
       <button
         className={`flex flex-col items-center justify-center w-20 h-full ${selectedClass('camera')}`}

@@ -26,7 +26,7 @@ const SuggestedRecipes: React.FC = () => {
   };
 
   return (
-    <HorizontalScrollContainer>
+    <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-transparent">
       {recipes.map(recipe => (
         <Card
           key={recipe.id}
@@ -82,7 +82,7 @@ const SuggestedRecipes: React.FC = () => {
             >
               {recipe.title}
             </Typography>
-            
+
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Rating
                 name="read-only"
@@ -99,7 +99,7 @@ const SuggestedRecipes: React.FC = () => {
                 {recipe.bookmarked ? <BookmarkIcon sx={{ color: '#EC9556' }} /> : <BookmarkBorderIcon sx={{ color: '#EC9556' }} />}
               </IconButton>
             </Box>
-            
+
             <Typography
               variant="caption"
               sx={{ fontSize: '0.6rem', color: 'grey-500', mt: 0.2, lineHeight: '0.8rem' }}

@@ -7,6 +7,12 @@
   max-width: 100%;
 }
 
+/* resets native sizing */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
 /* custom color for dashboard background */
 .bg-dashboard {
   @apply bg-backgroundDash;
