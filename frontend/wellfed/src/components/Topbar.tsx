@@ -1,50 +1,40 @@
-"use client";
-import Image from "next/image";
-import React, { useState } from 'react';
+'use client';
+
+import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import NotificationIcon from './NotificationIcon';
+import CartIcon from './CartIcon';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
-const TopBar = () => {
-  // State to track which icon is active (notification or cart)
-  const [activeIcon, setActiveIcon] = useState('');
+const TopBar: React.FC = () => {
+  const isModalOpen = useSelector((state: RootState) => state.modal.isModalOpen);
 
-  // Function to handle icon click and set the active icon
-  const handleIconClick = (iconName: string) => {
-    setActiveIcon(iconName);
-  };
+  if (isModalOpen) {
+    return null; // Hide TopBar when a modal is open
+  }
 
   return (
-    <div className="bg-white p-4 flex justify-end items-center space-x-8">
-
-        <Link href="/notifications" passHref>
-          <div
-            className={`relative cursor-pointer ${activeIcon === 'notification' ? 'text-blue-500' : ''}`}
-            onClick={() => handleIconClick('notification')}
-          >
-            <img
-              src="/Notification.svg"
-              alt="Notification"
-              width={24}
-              height={24}
-              className="transition-all duration-150"
-            />
-          </div>
-        </Link>
-
-        <Link href="/cart" passHref>
-          <div
-            className={`relative cursor-pointer ${activeIcon === 'cart' ? 'text-blue-500' : ''}`}
-            onClick={() => handleIconClick('cart')}
-          >
-            <img
-              src="/Shopping cart.svg"
-              alt="Shopping Cart"
-              width={24}
-              height={24}
-              className="transition-all duration-150"
-            />
-          </div>
-        </Link>
+    <div className="fixed top-0 left-0 right-0 h-[72px] w-full flex justify-end items-end pr-4 z-50">
+      {/* Logo */}
+      <Link href="/" passHref>
+        <div className="absolute left-0 bottom-0 cursor-pointer mb-2">
+          <Image
+            src="/Logo.svg"
+            alt="Logo"
+            width={36}
+            height={36}
+            priority
+          />
+        </div>
+      </Link>
+      {/* Icons */}
+      <div className="flex items-end space-x-fluid-px mb-4">
+        <NotificationIcon />
+        <CartIcon />
       </div>
+    </div>
   );
 };
 

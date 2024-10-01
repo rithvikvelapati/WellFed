@@ -2,10 +2,10 @@
 
 import React from 'react';
 import TopBar from '../Topbar';
-import Sidebar from '../Sidebar';
 import BottomBar from '../Bottombar';
 import { Box } from '@mui/material';
 import ReduxProvider from '@/store/ReduxProvider'; // Import the Redux Provider
+import SideBar from '../Sidebar';
 
 interface RootLayoutClientProps {
   children: React.ReactNode;
@@ -39,7 +39,7 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
             backgroundColor: 'var(--bg-second)',
           }}
         >
-          <Sidebar />
+          <SideBar />
         </Box>
 
         {/* Main Content */}
