@@ -26,7 +26,7 @@ const SuggestedRecipes: React.FC = () => {
   };
 
   return (
-    <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-transparent">
+    <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
       {recipes.map(recipe => (
         <Card
           key={recipe.id}
