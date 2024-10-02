@@ -23,7 +23,7 @@ const HorizontalScrollContainer: React.FC<HorizontalScrollContainerProps> = ({ c
       ></div>
 
       {/* Scrollable content */}
-      <div className="flex overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory">
+      <div className="flex overflow-x-auto scrollbar-hide whitespace-nowrap space-x-4 scroll-smooth snap-x snap-mandatory">
         {children}
       </div>
     </div>
