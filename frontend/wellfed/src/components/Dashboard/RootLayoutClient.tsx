@@ -6,12 +6,17 @@ import BottomBar from '../Bottombar';
 import { Box } from '@mui/material';
 import ReduxProvider from '@/store/ReduxProvider'; // Import the Redux Provider
 import SideBar from '../Sidebar';
+import { usePathname } from 'next/navigation';
 
 interface RootLayoutClientProps {
   children: React.ReactNode;
 }
 
+const routeswithStandalone = ['/calendar-section/new-schedule','/calendar-section/meal-details','/calendar-section/meal-editdetails','/calendar-section/edit-event']
+
 const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
+
+  const pathname = usePathname();
   const handleCameraClick = () => {
     console.log('Camera clicked');
   };
@@ -24,29 +29,38 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
     console.log('Profile clicked');
   };
 
+  const showLayout = () => {
+    if (routeswithStandalone.includes(pathname)) {
+      return false;
+    }
+    return true;
+  }
+
   return (
     <ReduxProvider>
       <Box sx={{ display: 'flex', minHeight: '100vh', overflowX: 'hidden' }}>
         {/* Sidebar */}
-        <Box
-          sx={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            bottom: 0,
-            width: '41px',
-            zIndex: 10,
-            backgroundColor: 'var(--bg-second)',
-          }}
-        >
-          <SideBar />
-        </Box>
+        {showLayout() &&
+          <Box
+            sx={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              bottom: 0,
+              width: '41px',
+              zIndex: 10,
+              backgroundColor: 'var(--bg-second)',
+            }}
+          >
+            <SideBar />
+          </Box>
+        }
 
         {/* Main Content */}
         <Box
           sx={{
             flexGrow: 1,
-            marginLeft: '36px',
+            marginLeft: showLayout() ? '36px' : '0',
             display: 'flex',
             flexDirection: 'column',
             height: '100vh',
@@ -54,16 +68,18 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
           }}
         >
           {/* Top Bar */}
-          <Box
-            sx={{
-              height: '64px',
-              backgroundColor: 'var(--bg-second)',
-              zIndex: 20,
-              flexShrink: 0,
-            }}
-          >
-            <TopBar />
-          </Box>
+          {showLayout() &&
+            <Box
+              sx={{
+                height: '64px',
+                backgroundColor: 'var(--bg-second)',
+                zIndex: 20,
+                flexShrink: 0,
+              }}
+            >
+              <TopBar />
+            </Box>
+          }
 
           {/* Page Content */}
           <Box
@@ -80,11 +96,13 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
           </Box>
 
           {/* Bottom Bar */}
-          <BottomBar
-            onCameraClick={handleCameraClick}
-            onSearchClick={handleSearchClick}
-            onProfileClick={handleProfileClick}
-          />
+          {showLayout() &&
+            <BottomBar
+              onCameraClick={handleCameraClick}
+              onSearchClick={handleSearchClick}
+              onProfileClick={handleProfileClick}
+            />
+          }
         </Box>
       </Box>
     </ReduxProvider>
