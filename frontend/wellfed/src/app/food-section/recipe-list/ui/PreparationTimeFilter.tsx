@@ -14,7 +14,7 @@ const PreparationTimeFilter: React.FC<PreparationTimeFilterProps> = ({
   onSelectTime,
 }) => {
   return (
-    <div className="p-4 max-w-[740px]">
+    <div className="p-4 ml-4 max-w-[740px]">
       <ul>
         {preparationTimeOptions.map((option) => (
           <li
