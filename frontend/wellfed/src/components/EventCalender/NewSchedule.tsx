@@ -5,6 +5,8 @@ import { FaChevronLeft } from "react-icons/fa";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { FaCalendarDay } from "react-icons/fa";
 import { MenuItem, Select } from "@mui/material";
+import { useRouter } from "next/navigation";
+
 
 // Helper function to generate time slots
 const generateTimeSlots = (interval: number) => {
@@ -23,6 +25,7 @@ const generateTimeSlots = (interval: number) => {
 };
 
 const NewSchedule = () => {
+    const router = useRouter();
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date);
     const [startTime, setStartTime] = useState("09:00 AM");
@@ -59,9 +62,9 @@ const NewSchedule = () => {
     return (
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-md">
             <div className="flex justify-between items-center p-6">
-                <button className="font-semibold text-lg"><FaChevronLeft /></button>
+                <button className="font-semibold text-lg" onClick={() => router.push('/calendar-section')}><FaChevronLeft /></button>
                 <button className="font-semibold text-2xl">New Schedule</button>
-                <button className="font-semibold text-md">Cancel</button>
+                <button className="font-semibold text-md" onClick={() => router.push('/calendar-section')}>Cancel</button>
             </div>
 
             <div className="flex items-center justify-between rounded-md p-1 px-12 mb-8">
@@ -180,7 +183,7 @@ const NewSchedule = () => {
                 </div>
 
                 {/* Add to Calendar Button */}
-                <button className="mt-2 flex items-center justify-center w-full py-2 px-4 bg-[#F1F1F1] text-orange-700 font-semibold rounded-full shadow-xl">
+                <button className="mt-2 flex items-center justify-center w-full py-2 px-4 bg-[#F1F1F1] text-orange-700 font-semibold rounded-full shadow-xl" onClick={() => router.push('/calendar-section/meal-details')}>
                     <FaCalendarDay className="mr-2" /> Add to Calendar
                 </button>
 
