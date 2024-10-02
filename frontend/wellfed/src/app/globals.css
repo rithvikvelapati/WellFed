@@ -258,27 +258,16 @@ button.mobile-secondary-btn {
   display: none !important;
 }
 
-/* Keyframe animation for auto-scrolling */
-@keyframes scrollText {
+@keyframes marquee {
   0% {
-    transform: translateX(100%); /* Start off the right edge */
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%); /* Move off the left edge */
+    transform: translateX(-100%);
   }
 }
 
-.scroll-container {
-  overflow: hidden;
-  white-space: nowrap;
-  max-width: 100px; /* Set this based on how much space you want */
+.animate-marquee {
+  animation: marquee linear infinite;
 }
 
-.scroll-text {
-  display: inline-block;
-  white-space: nowrap;
-}
-
-.scrolling {
-  animation: scrollText 10s linear infinite; /* Smooth continuous scroll */
-}
