@@ -257,3 +257,28 @@ button.mobile-secondary-btn {
 .fc-timeGridDay-button{
   display: none !important;
 }
+
+/* Keyframe animation for auto-scrolling */
+@keyframes scrollText {
+  0% {
+    transform: translateX(100%); /* Start off the right edge */
+  }
+  100% {
+    transform: translateX(-100%); /* Move off the left edge */
+  }
+}
+
+.scroll-container {
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100px; /* Set this based on how much space you want */
+}
+
+.scroll-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.scrolling {
+  animation: scrollText 10s linear infinite; /* Smooth continuous scroll */
+}

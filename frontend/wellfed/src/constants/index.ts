@@ -28,21 +28,37 @@ export const slidesData = [
   ];
 
 export const recipesData = [
-    { id: 1, title: "Chicken Alfredo Chicken Alfredo Chicken Alfredo Chicken Alfredo Chicken Alfredo", imageUrl: "/CA.jpg", time: "30min", cost: "$$", rating: 4, reviews: 23, favorited: false, bookmarked: false, handle: "@AriNosoKitchenAriNosoKitchenAriNosoKitchenAriNosoKitchen" },
+    { id: 1, title: "Chicken Alfredo Chicken Alfredo Chicken Alfredo Chicken Alfredo Chicken Alfredo", imageUrl: "/CA.jpg", time: "30min", cost: "$$", rating: 4, reviews: 23, favorited: false, bookmarked: false, handle: "@ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+    { id: 2, title: "Chicken Biryani", imageUrl: "/CB.jpg", time: "45min", cost: "$$", rating: 4.5, reviews: 12, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
+    { id: 3, title: "Karelian Pie", imageUrl: "/KP.jpg", time: "20min", cost: "$", rating: 4, reviews: 8, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
+    { id: 4, title: "Mushroom Risotto", imageUrl: "/MR.jpg", time: "40min", cost: "$$", rating: 4, reviews: 30, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
+    { id: 1, title: "Chicken Alfredo Chicken Alfredo Chicken Alfredo Chicken Alfredo Chicken Alfredo", imageUrl: "/CA.jpg", time: "30min", cost: "$$", rating: 4, reviews: 23, favorited: false, bookmarked: false, handle: "@ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+    { id: 2, title: "Chicken Biryani", imageUrl: "/CB.jpg", time: "45min", cost: "$$", rating: 4.5, reviews: 12, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
+    { id: 3, title: "Karelian Pie", imageUrl: "/KP.jpg", time: "20min", cost: "$", rating: 4, reviews: 8, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
+    { id: 4, title: "Mushroom Risotto", imageUrl: "/MR.jpg", time: "40min", cost: "$$", rating: 4, reviews: 30, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
+    { id: 1, title: "Chicken Alfredo Chicken Alfredo Chicken Alfredo Chicken Alfredo Chicken Alfredo", imageUrl: "/CA.jpg", time: "30min", cost: "$$", rating: 4, reviews: 23, favorited: false, bookmarked: false, handle: "@ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
     { id: 2, title: "Chicken Biryani", imageUrl: "/CB.jpg", time: "45min", cost: "$$", rating: 4.5, reviews: 12, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
     { id: 3, title: "Karelian Pie", imageUrl: "/KP.jpg", time: "20min", cost: "$", rating: 4, reviews: 8, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
     { id: 4, title: "Mushroom Risotto", imageUrl: "/MR.jpg", time: "40min", cost: "$$", rating: 4, reviews: 30, favorited: false, bookmarked: false, handle: "@AriNosoKitchen" },
   ];
 
 export const eventsData = [
-    { id: 1, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false, priceLevel: 3 },
-    { id: 2, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false, priceLevel: 2 },
-    { id: 3, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false, priceLevel: 3 },
-    { id: 4, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false, priceLevel: 2 },
-    { id: 5, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false, priceLevel: 3 },
-    { id: 6, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false, priceLevel: 2 },
-    { id: 7, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false, priceLevel: 3 },
-    { id: 8, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false, priceLevel: 2 },
+    { id: 1, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false },
+    { id: 2, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false },
+    { id: 3, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false },
+    { id: 4, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false },
+    { id: 5, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false },
+    { id: 6, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false },
+    { id: 7, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false },
+    { id: 8, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false },
+    { id: 1, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false },
+    { id: 2, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false },
+    { id: 3, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false },
+    { id: 4, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false },
+    { id: 5, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false },
+    { id: 6, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false },
+    { id: 7, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false },
+    { id: 8, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false },
   ];
 
   export interface Category {
