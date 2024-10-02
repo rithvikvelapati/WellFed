@@ -23,8 +23,8 @@ const TopBar: React.FC = () => {
           <Image
             src="/Logo.svg"
             alt="Logo"
-            width={36}
-            height={36}
+            width={40}
+            height={40}
             priority
           />
         </div>
