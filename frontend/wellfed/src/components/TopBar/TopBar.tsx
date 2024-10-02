@@ -19,7 +19,7 @@ const TopBar: React.FC = () => {
     <div className="fixed top-0 left-0 right-0 h-[72px] w-full flex justify-end items-end pr-4 z-50">
       {/* Logo */}
       <Link href="/" passHref>
-        <div className="absolute left-0 bottom-0 cursor-pointer mb-2">
+        <div className="absolute left-0 bottom-0 cursor-pointer mb-0">
           <Image
             src="/Logo.svg"
             alt="Logo"
