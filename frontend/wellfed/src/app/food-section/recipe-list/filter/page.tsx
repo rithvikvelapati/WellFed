@@ -58,7 +58,7 @@ const FilterPage: React.FC = () => {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-50 bg-white"
+        className="fixed inset-0 z-50 bg-white overflow-y-auto"
         variants={modalVariants}
         initial="initial"
         animate="animate"
@@ -73,17 +73,18 @@ const FilterPage: React.FC = () => {
           <IoIosArrowBack className="text-2xl text-gray-700" />
         </button>
 
-        {/* Modal Content */}
-        <div className="mt-16 pt-4 pl-4">
+        {/* Scrollable Content */}
+        <div className="mt-16 pt-4 pl-4 pb-20">
           <h1 className="text-3xl font-bold my-4">Filter</h1>
-          {/* Add your filter options here */}
+
+          {/* Categories Section */}
           <h2 className="text-lg font-bold mt-6 ml-4">Categories</h2>
-        </div>
-        <CategoryFilter
+          <CategoryFilter
             selectedCategoryId={selectedCategoryId}
             onSelectCategory={handleSelectCategory}
           />
-        <div className="pl-4">
+
+          {/* Preparation Time Section */}
           <h2 className="text-lg font-bold mt-6 ml-4">Preparation Time</h2>
           <PreparationTimeFilter
             selectedTimeId={selectedTimeId}
@@ -96,3 +97,4 @@ const FilterPage: React.FC = () => {
 };
 
 export default FilterPage;
+

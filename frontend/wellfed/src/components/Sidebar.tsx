@@ -89,7 +89,6 @@ const SideBar: React.FC = () => {
           {activeIcon === lastIcon.path && (
             <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-r-lg -z-10"></div>
           )}
-          
           {activeIcon === lastIcon.path && (
             <div className="absolute left-0 top-2 bottom-2 w-0.5 bg-white rounded-tr-lg rounded-br-lg"></div>
           )}
