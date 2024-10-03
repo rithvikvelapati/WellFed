@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { FaBookmark, FaRegBookmark, FaHeart, FaRegHeart, FaStar, FaClock } from 'react-icons/fa';
 import AutoScrollText from './AutoScrollText';
 
@@ -30,7 +31,12 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, toggleFavorite, toggleB
     >
       {/* Recipe Image */}
       <div className="relative w-full h-[131px]">
-        <img src={recipe.imageUrl} alt={recipe.title} className="w-full h-full object-cover" />
+      <Image 
+          src={recipe.imageUrl} 
+          alt={recipe.title} 
+          layout="fill" // Ensures the image takes up the full container
+          objectFit="cover" // Maintains aspect ratio
+        />
 
         {/* Curved Gradient Overlay */}
         {isFocused && (
