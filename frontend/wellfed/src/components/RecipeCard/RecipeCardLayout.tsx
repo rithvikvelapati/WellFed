@@ -9,12 +9,14 @@ const RecipeCardLayout = () => {
 
   return (
     <div>
+      
         <Header />
         <Profile />
         <Timer />
         <Ingredients />
         <Nutrition />
         <Reviews />
+
     </div>
     
   );
