@@ -41,7 +41,29 @@
 <ul>
 <li>
   <a href="https://github.com/rithvikvelapati/WellFed/blob/main/frontend/wellfed/src/components/ui/SlideCard.tsx" target="_blank"> Slide Card </a> 
-  <p> Image Carousel with Navigational Dots, where each card has an imageUrl, title, and description.</p>
+  <p> 
+    Image Carousel with Navigational Dots, where each card has an imageUrl, title, and description.
+  </p>
+</li>
+
+<li>
+  <a href="https://github.com/rithvikvelapati/WellFed/blob/dummy_main/frontend/wellfed/src/components/AutoScrollText.tsx" target="_blank"> Auto-Scroll Text </a> 
+</li>
+<p>
+  It displays text and scrolls it if it’s longer than 15 characters when focused. It shows a truncated version otherwise. Gradient overlays appear on focus, and it uses Tailwind CSS for styling.
+</p>
+<li>
+  <a href="https://github.com/rithvikvelapati/WellFed/blob/dummy_main/frontend/wellfed/src/components/RecipeCard.tsx" target="_blank"> Recipe Card </a>
+  <p>
+    It displays recipe details (image, title, rating, time) with toggleable favorite and bookmark icons. It handles focus for visual effects and is styled using Tailwind CSS, making it easily adaptable for various recipe data inputs.
+  </p>
+</li>
+
+<li>
+  <a href="https://github.com/rithvikvelapati/WellFed/blob/dummy_main/frontend/wellfed/src/components/EventCard.tsx" target="_blank"> Event Card </a>
+  <p>
+    It displays an event's image, title, rating (with stars), and bookmark icon. It allows toggling the bookmark status.
+  </p>
 </li>
   
 </ul>
