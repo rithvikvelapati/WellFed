@@ -34,6 +34,11 @@
 </p>
 <a href="https://github.com/rithvikvelapati/WellFed/tree/feature/bottom-bar" target="_blank"> <strong>Here's the code</strong></a><br/><br/>
 
+<p><strong>Side Bar</strong></p>
+<p>
+  This component dynamically tracks and highlights the active icon based on the current page, updates the view when an icon is clicked, and hides itself when a modal is open. It also adds smooth animations to enhance the user experience.
+</p>
+<a href="https://github.com/rithvikvelapati/WellFed/blob/dummy_main/frontend/wellfed/src/components/Sidebar.tsx" target="_blank"> <strong>Here's the code</strong></a><br/><br/>
 
 
 
