@@ -142,3 +142,87 @@ export const preparationTimeOptions: PreparationTimeOption[] = [
     value: 60, // You might use a special value to indicate "over"
   },
 ];
+
+export const recipeCard = {
+  videoSrc: "/demo-video.mp4",
+  category: "Breakfast",
+  title: "Patty Melt Beef Garlic Aioli Herb Butter",
+  rating: 4.2,
+  ratingsCount: 349,
+  likes: 347,
+  profilePic: "/amandapic.svg",
+  name: "Amanda Lockwood",
+  recipes: "746",
+  location: "London",
+  description: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."
+};
+
+export const recipeTimes = [
+{ name: 'Cooking', time: 40 },
+];
+
+export const initialServings = 4;
+
+export const initialIngredients = [
+{ name: "beef (sirloin)", quantity: 450, unit: "g" },
+{ name: "broccoli", quantity: 400, unit: "g" },
+{ name: "soy sauce", quantity: 6, unit: "tbsp" },
+{ name: "lime (juice)", quantity: 1, unit: "" },
+{ name: "beef stock", quantity: 200, unit: "ml" },
+{ name: "cane sugar", quantity: 2, unit: "tbsp" },
+{ name: "cornstarch", quantity: 1.5, unit: "tbsp" },
+{ name: "ginger", quantity: 10, unit: "g" },
+{ name: "garlic", quantity: 2, unit: "cloves" },
+{ name: "chili", quantity: 1, unit: "" },
+{ name: "green onions", quantity: 3, unit: "" },
+];
+
+export const tools = [
+"Cutting board",
+"Chef’s knife",
+"Mixing bowls",
+"Whisk",
+"Frying pan",
+"Spatula",
+];
+
+export const steps = [
+"Cut the beef into thin slices.",
+"Chop the broccoli into small florets.",
+"Mix soy sauce, lime juice, and beef stock in a bowl.",
+"Heat a frying pan over medium-high heat and add the beef.",
+"Stir-fry the beef until browned, then remove from the pan.",
+"In the same pan, add the broccoli and stir-fry for a few minutes.",
+"Add the sauce mixture and bring to a simmer.",
+"Return the beef to the pan and stir until heated through.",
+"Serve hot with garnished green onions.",
+];
+
+export const nutritionData = {
+calories: 650,
+protein: '36g',
+fat: '47g',
+carbs: '21g'
+};
+
+export const reviewSummary = {
+imagesCount: 12,
+commentsCount: 37
+};
+
+export const reviews = [
+{
+    id: 1,
+    username: "Sri Wedari Soekarno",
+    avatar: "/amandapic.svg",
+    rating: 5,
+    time: "15 minutes ago",
+    comment: "Delicious! Is there any way to make this baby/toddler friendly but still taste nice? I’m trying to avoid salt (soya sauce) and sugar, not sure how it will taste without it.",
+    images: [
+        "/CA.jpg",
+        "/CB.jpg",
+        "/KP.jpg",
+    ]
+},
+];
+

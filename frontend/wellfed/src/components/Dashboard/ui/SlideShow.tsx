@@ -4,7 +4,7 @@ import { slidesData } from '../../../constants'; // Import slides data
 
 const SlideShow: React.FC = () => {
   return (
-    <div className="container mx-auto py-1 px-1">
+    <div className="container rounded-xl">
       <SlideCard slides={slidesData} />
     </div>
   );

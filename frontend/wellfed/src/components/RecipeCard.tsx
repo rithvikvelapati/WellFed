@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Image from 'next/image';
 import { FaBookmark, FaRegBookmark, FaHeart, FaRegHeart, FaStar, FaClock } from 'react-icons/fa';
 import AutoScrollText from './AutoScrollText';
 
@@ -19,56 +20,93 @@ interface RecipeCardProps {
 }
 
 const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, toggleFavorite, toggleBookmark }) => {
+  const [isFocused, setIsFocused] = useState(false); // State to control focus
+
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = (e: React.FocusEvent) => {
+    // Only blur if the focus is leaving the entire card (and not moving to one of its children)
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      setIsFocused(false);
+    }
+  };
+
   return (
-    <div className="relative inline-block flex-shrink-0 w-[180px] h-[200px] bg-white rounded-lg shadow-md mx-1 overflow-hidden relative">
+    <div
+      className="relative inline-block flex-shrink-0 w-[180px] h-[178px] bg-white rounded-lg overflow-hidden shadow-lg"
+      tabIndex={0} // Make the card focusable
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+    >
       {/* Recipe Image */}
       <div className="relative w-full h-[131px]">
-        <img src={recipe.imageUrl} alt={recipe.title} className="w-full h-full object-cover" />
+        <Image src={recipe.imageUrl} alt={recipe.title} width={100} height={100} className="w-full h-full object-cover" />
+
+        {/* Curved Gradient Overlay */}
+        {!isFocused && (
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+        )}
 
         {/* Bookmark Button */}
-        <button
-          onClick={() => toggleBookmark(recipe.id)}
-          className={`absolute top-2 right-2 p-2 rounded-full ${
-            recipe.bookmarked ? 'text-[#EC9556]' : 'text-gray-400'
-          } bg-white bg-opacity-75 hover:bg-opacity-100 text-xl`}
-        >
-          {recipe.bookmarked ? <FaBookmark /> : <FaRegBookmark />}
-        </button>
+        <div className="absolute top-0 right-0 p-0 m-2">
+          <button
+            onMouseDown={(e) => e.preventDefault()} // Prevent triggering onBlur
+            onClick={() => toggleBookmark(recipe.id)}
+            className="text-lg text-[#EC9556] hover:text-[#e8773c] p-0"
+          >
+            {recipe.bookmarked ? (
+              <FaBookmark className="drop-shadow-[0_0_5px_rgba(0,0,0,1)]" />
+            ) : (
+              <FaRegBookmark className="drop-shadow-[0_0_5px_rgba(0,0,0,1)]" />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Recipe Details */}
-      <div className="px-2 flex flex-col justify-between w-full h-[70px]">
+      <div className="flex flex-col w-full p-0 bottom-0 ml-1 mt-0">
         {/* Title and Favorite Icon on Opposite Sides */}
-        <div className="flex justify-between items-center">
-          {/* Title on the left */}
-          <AutoScrollText text={recipe.title} className="text-sm font-semibold truncate" />
+        <div className="flex justify-between items-center m-0 p-0 w-full">
+          {/* Conditionally use AutoScrollText for title if it's longer than 15 characters */}
+          {recipe.title.length > 15 ? (
+            <AutoScrollText text={recipe.title} className="text-md text-[12px] w-[110px] truncate leading-tight m-0 p-0" isFocused={isFocused} />
+          ) : (
+            <span className="text-md text-[12px] truncate leading-tight m-0 p-0">{recipe.title}</span>
+          )}
 
-          {/* Favorite Button on the right */}
-          <button
-            onClick={() => toggleFavorite(recipe.id)}
-            className={`p-1 ${recipe.favorited ? 'text-[#EC9556]' : 'text-gray-400'} text-xl`}
-          >
-            {recipe.favorited ? <FaHeart /> : <FaRegHeart />}
-          </button>
+          {/* Favorite Button */}
+          <div className="absolute top-[125px] right-0 p-0 m-2">
+            <button
+              onMouseDown={(e) => e.preventDefault()} // Prevent triggering onBlur
+              onClick={() => toggleFavorite(recipe.id)}
+              className="text-[#EC9556] hover:text-[#e8773c]"
+            >
+              {recipe.favorited ? <FaHeart /> : <FaRegHeart />}
+            </button>
+          </div>
         </div>
 
         {/* Rating, Review Count, Dot, and Time */}
-        <div className="flex items-center justify-start text-xs mt-1">
-          <div className="flex items-center">
-            <FaStar className="text-[#EC9556] mr-1" /> 
-            {recipe.rating} <span className="ml-1">({recipe.reviews})</span>
+        <div className="flex items-center text-[10px] leading-tight ml-1 p-0">
+          <div className="flex items-center m-0 p-0">
+            <span className="font-semibold">{recipe.rating}</span>
+            <FaStar className="text-[#EC9556] ml-0.5 m-0 p-0" />
+            <span className="ml-0.5 m-0 p-0">({recipe.reviews})</span>
           </div>
-          {/* Dot */}
-          <span className="mx-1">•</span>
-          <div className="flex items-center">
-            <FaClock className="mr-1" /> 
+          <span className="mx-1 m-0 p-0">•</span>
+          <div className="flex items-center m-0 p-0">
+            <FaClock className="mr-0.5 m-0 p-0" />
             {recipe.time}~
           </div>
         </div>
 
-        {/* Handle */}
-        <div className="flex justify-end items-center mt-1">
-          <AutoScrollText text={recipe.handle} className="text-xs" />
+        {/* Chef Handle (aligned to the right side, scrolling within 90px if needed) */}
+        <div className="flex justify-end items-center mr-3 p-0 leading-tight">
+          {/* Conditionally use AutoScrollText for handle if it's longer than 15 characters */}
+          {recipe.handle.length > 15 ? (
+            <AutoScrollText text={recipe.handle} className="text-[10px] text-md m-0 p-0 leading-tight w-[110px] text-right" isFocused={isFocused} />
+          ) : (
+            <span className="text-[10px] text-md m-0 p-0 leading-tight w-[90px] text-right">{recipe.handle}</span>
+          )}
         </div>
       </div>
     </div>

@@ -32,14 +32,14 @@ const SlideCard: React.FC<SlideshowProps> = ({ slides }) => {
   };
 
   return (
-    <div className="relative w-full max-w-3xl mx-auto rounded-lg">
-      <div className="relative overflow-hidden h-40 bg-white shadow-lg">
+    <div className="relative w-full rounded-xl">
+      <div className="relative overflow-hidden h-40">
         <img
           src={slides[currentIndex].imageUrl}
           alt={`Slide ${currentIndex}`}
-          className="w-full h-40 object-cover"
+          className="w-full h-full rounded-xl object-cover"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-50 p-4 flex flex-col justify-center">
+        <div className="absolute inset-0 bg-black bg-opacity-50 p-4 flex flex-col justify-center rounded-lg">
           <div className="text-white text-left">
             <p className="text-lg font-sans mb-2">{slides[currentIndex].title}</p>
             <p className="text-xs font-sans">{slides[currentIndex].description}</p>

@@ -1,6 +1,7 @@
 import './globals.css';
 import RootLayoutClient from '@/components/Dashboard/RootLayoutClient';
 import SearchOverlayManager from '@/components/SearchOverlay/SearchOverlayManager';
+import RecipeCardLayout from "../components/RecipeCard/RecipeCardLayout";
 import ReduxProvider from '../store/ReduxProvider'; // Import ReduxProvider
 
 export default function RootLayout({
