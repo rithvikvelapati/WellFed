@@ -8,7 +8,7 @@ const FilterButton = () => {
   const router = useRouter();
 
   const handleFilterClick = () => {
-    router.push('/filter');
+    router.push('./recipe-list/filter');
   };
 
   return (
