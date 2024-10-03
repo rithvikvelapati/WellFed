@@ -37,7 +37,7 @@
 
 
 
-
+<p><strong>Reusable Components :</strong></p>
 <ul>
 <li>
   <a href="https://github.com/rithvikvelapati/WellFed/blob/main/frontend/wellfed/src/components/ui/SlideCard.tsx" target="_blank"> Slide Card </a> 
