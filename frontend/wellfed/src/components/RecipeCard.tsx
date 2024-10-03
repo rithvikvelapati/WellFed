@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { FaBookmark, FaRegBookmark, FaHeart, FaRegHeart, FaStar, FaClock } from 'react-icons/fa';
 import AutoScrollText from './AutoScrollText';
-import Image from 'next/image';
 
 interface RecipeCardProps {
   recipe: {
