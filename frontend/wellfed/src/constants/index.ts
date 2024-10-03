@@ -114,6 +114,35 @@ export const categories: Category[] = [
   // Add more categories as needed
 ];
 
+export interface PreparationTimeOption {
+  id: number;
+  label: string;
+  value: number; // This could represent minutes or a code
+}
+
+export const preparationTimeOptions: PreparationTimeOption[] = [
+  {
+    id: 1,
+    label: 'Under 15 minutes',
+    value: 15,
+  },
+  {
+    id: 2,
+    label: 'Under 30 minutes',
+    value: 30,
+  },
+  {
+    id: 3,
+    label: 'Under 45 minutes',
+    value: 45,
+  },
+  {
+    id: 4,
+    label: 'Over 60 minutes',
+    value: 60, // You might use a special value to indicate "over"
+  },
+];
+
 export const recipeCard = {
   videoSrc: "/demo-video.mp4",
   category: "Breakfast",
