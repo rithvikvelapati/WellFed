@@ -22,25 +22,34 @@ interface RecipeCardProps {
 const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, toggleFavorite, toggleBookmark }) => {
   const [isFocused, setIsFocused] = useState(false); // State to control focus
 
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = (e: React.FocusEvent) => {
+    // Only blur if the focus is leaving the entire card (and not moving to one of its children)
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      setIsFocused(false);
+    }
+  };
+
   return (
     <div
       className="relative inline-block flex-shrink-0 w-[180px] h-[178px] bg-white rounded-lg overflow-hidden shadow-lg"
       tabIndex={0} // Make the card focusable
-      onFocus={() => setIsFocused(true)} // Set focus
-      onBlur={() => setIsFocused(false)} // Remove focus when blur
+      onFocus={handleFocus}
+      onBlur={handleBlur}
     >
       {/* Recipe Image */}
       <div className="relative w-full h-[131px]">
         <Image src={recipe.imageUrl} alt={recipe.title} width={100} height={100} className="w-full h-full object-cover" />
 
         {/* Curved Gradient Overlay */}
-        {isFocused && (
+        {!isFocused && (
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         )}
 
         {/* Bookmark Button */}
         <div className="absolute top-0 right-0 p-0 m-2">
           <button
+            onMouseDown={(e) => e.preventDefault()} // Prevent triggering onBlur
             onClick={() => toggleBookmark(recipe.id)}
             className="text-lg text-[#EC9556] hover:text-[#e8773c] p-0"
           >
@@ -59,7 +68,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, toggleFavorite, toggleB
         <div className="flex justify-between items-center m-0 p-0 w-full">
           {/* Conditionally use AutoScrollText for title if it's longer than 15 characters */}
           {recipe.title.length > 15 ? (
-            <AutoScrollText text={recipe.title} className="text-md text-[12px] w-[120px] truncate leading-tight m-0 p-0" isFocused={isFocused} />
+            <AutoScrollText text={recipe.title} className="text-md text-[12px] w-[110px] truncate leading-tight m-0 p-0" isFocused={isFocused} />
           ) : (
             <span className="text-md text-[12px] truncate leading-tight m-0 p-0">{recipe.title}</span>
           )}
@@ -67,6 +76,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, toggleFavorite, toggleB
           {/* Favorite Button */}
           <div className="absolute top-[125px] right-0 p-0 m-2">
             <button
+              onMouseDown={(e) => e.preventDefault()} // Prevent triggering onBlur
               onClick={() => toggleFavorite(recipe.id)}
               className="text-[#EC9556] hover:text-[#e8773c]"
             >
@@ -93,7 +103,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, toggleFavorite, toggleB
         <div className="flex justify-end items-center mr-3 p-0 leading-tight">
           {/* Conditionally use AutoScrollText for handle if it's longer than 15 characters */}
           {recipe.handle.length > 15 ? (
-            <AutoScrollText text={recipe.handle} className="text-[10px] text-md m-0 p-0 leading-tight w-[90px] text-right" isFocused={isFocused} />
+            <AutoScrollText text={recipe.handle} className="text-[10px] text-md m-0 p-0 leading-tight w-[110px] text-right" isFocused={isFocused} />
           ) : (
             <span className="text-[10px] text-md m-0 p-0 leading-tight w-[90px] text-right">{recipe.handle}</span>
           )}
