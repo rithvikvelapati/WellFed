@@ -39,14 +39,7 @@ const MealDetails = () => {
     return (
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg">
             {/* Header Section */}
-            <div className="text-center mb-4 p-6 relative">
-                <button className="font-semibold text-lg absolute left-6 top-6" onClick={() => router.push('/calendar-section/new-schedule')}>
-                    <FaChevronLeft />
-                </button>
-                <h2 className="text-3xl font-semibold mt-5 mb-2">Wednesday</h2>
-                <p className="text-xl">28 September 2024 <FaChevronDown className="inline ml-2 text-sm" /></p>
-            </div>
-
+            
             {/* Meal Details */}
             <div className="rounded-t-[2.5rem] shadow-[0px_0px_15px_5px_#dcdcdc]  p-2">
                 <div className=" p-2 pt-6 rounded-lg flex justify-between items-center mb-4">

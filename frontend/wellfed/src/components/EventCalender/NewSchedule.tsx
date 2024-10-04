@@ -59,7 +59,7 @@ const NewSchedule: React.FC = () => {
     const timeSlots = generateTimeSlots(30);
 
     return (
-        <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+        <div className="max-w-md mx-auto bg-white rounded-lg shadow-md">
             {/* Toggle Buttons */}
             <div className="flex items-center justify-between rounded-md p-1 px-12 mb-8">
                 <button className="w-1/2 py-2 text-center font-medium bg-gradient-to-r shadow-[3px_1px_7px_1px_#dcdcdc] from-[#B64B29] to-[#EC9556] text-white rounded-l-xl">
