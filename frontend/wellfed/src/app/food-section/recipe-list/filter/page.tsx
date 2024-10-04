@@ -1,26 +1,27 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { IoIosArrowBack } from "react-icons/io";
-import { useDispatch } from "react-redux";
-import { setModalOpen } from "@/store/modalSlice";
-import CategoryFilter from "../ui/CategoryFilter";
-import PreparationTimeFilter from "../ui/PreparationTimeFilter";
-import ServingsFilter from "../ui/ServingsFilter";
-import ToggleButtonGroup from "../ui/ToggleButtonGroup";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import { IoIosArrowBack } from 'react-icons/io';
+import { useDispatch } from 'react-redux';
+import { setModalOpen } from '@/store/modalSlice';
+import CategoryFilter from '../ui/CategoryFilter';
+import PreparationTimeFilter from '../ui/PreparationTimeFilter';
+import ServingsFilter from '../ui/ServingsFilter';
+import ToggleButtonGroup from '../ui/ToggleButtonGroup';
+import CaloriesFilter from '../ui/CaloriesFilter';
 
 const FilterPage: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // State for selected category and preparation time
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
-    null
-  );
+  // State for selected filters
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
   const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
   const [servings, setServings] = useState<number>(1);
+  const [calorieRange, setCalorieRange] = useState<[number, number]>([0, 5000]);
+  // Add other filter states as needed
 
   // Set modal open state to true when component mounts
   useEffect(() => {
@@ -33,23 +34,38 @@ const FilterPage: React.FC = () => {
   // Animation variants for sliding in from left to right
   const modalVariants = {
     initial: {
-      x: "-100vw", // Start from the left
-      opacity: 0
+      x: '-100vw', // Start from the left
+      opacity: 0,
     },
     animate: {
       x: 0, // End at the center
       opacity: 1,
-      transition: { type: "tween", duration: 0.5 }
+      transition: { type: 'tween', duration: 0.5 },
     },
     exit: {
-      x: "100vw", // Exit to the right
+      x: '100vw', // Exit to the right
       opacity: 0,
-      transition: { type: "tween", duration: 0.5 }
-    }
+      transition: { type: 'tween', duration: 0.5 },
+    },
   };
 
   const handleClose = () => {
     router.back(); // Navigate back to the previous page
+  };
+
+  const handleReset = () => {
+    setSelectedCategoryId(null);
+    setSelectedTimeId(null);
+    setServings(1);
+    setCalorieRange([0, 5000]);
+    // Reset any other filters you might have
+  };
+
+  const handleApplyFilters = () => {
+    // Save the filter states to Redux store or context if needed
+    // For this example, we'll assume you navigate back to the previous page
+    // and the filters are applied there
+    router.back();
   };
 
   const handleSelectCategory = (categoryId: number) => {
@@ -64,6 +80,10 @@ const FilterPage: React.FC = () => {
     setServings(newServings);
   };
 
+  const handleCaloriesChange = (values: [number, number]) => {
+    setCalorieRange(values);
+  };
+
   return (
     <AnimatePresence>
       <motion.div
@@ -73,17 +93,25 @@ const FilterPage: React.FC = () => {
         animate="animate"
         exit="exit"
       >
-        {/* Back Button */}
-        <button
-          onClick={handleClose}
-          className="absolute top-10 left-0 p-2 focus:outline-none"
-          aria-label="Close Filter Modal"
-        >
-          <IoIosArrowBack className="text-2xl text-gray-700" />
-        </button>
+        {/* Top Bar with Back and Reset Buttons */}
+        <div className="absolute top-10 left-0 right-0 flex justify-between items-center px-4">
+          <button
+            onClick={handleClose}
+            className="p-2 focus:outline-none"
+            aria-label="Close Filter Modal"
+          >
+            <IoIosArrowBack className="text-2xl text-slate-900" />
+          </button>
+          <button
+            onClick={handleReset}
+            className="text-base font-normal focus:outline-none"
+          >
+            Reset
+          </button>
+        </div>
 
         {/* Scrollable Content */}
-        <div className="mt-16 pt-4 pl-4 pb-20">
+        <div className="mt-16 pt-4 pl-4 pb-10">
           <h1 className="text-3xl font-bold my-4">Filters</h1>
 
           {/* Categories Section */}
@@ -92,8 +120,9 @@ const FilterPage: React.FC = () => {
             selectedCategoryId={selectedCategoryId}
             onSelectCategory={handleSelectCategory}
           />
+
           {/* Number of Servings Section */}
-          <div className="flex items-center justify-between max-w-[740px]">
+          <div className="flex justify-between items-center">
             <h2 className="text-lg font-bold ml-4">Number of Servings</h2>
             <ServingsFilter
               servings={servings}
@@ -101,20 +130,36 @@ const FilterPage: React.FC = () => {
             />
           </div>
 
-            {/* Preparation Time Section */}
-            <h2 className="text-lg font-bold mt-6 ml-4">Preparation Time</h2>
-            <PreparationTimeFilter
-              selectedTimeId={selectedTimeId}
-              onSelectTime={handleSelectTime}
-            />
-            {/* Calories Section */}
-            <h2 className="text-lg font-bold mt-6 ml-4">Calories</h2>
+          {/* Preparation Time Section */}
+          <h2 className="text-lg font-bold mt-6 ml-4">Preparation Time</h2>
+          <PreparationTimeFilter
+            selectedTimeId={selectedTimeId}
+            onSelectTime={handleSelectTime}
+          />
 
-            {/* Cooking for Section */}
-            <h2 className="text-lg font-bold mt-6 ml-4">Cooking for</h2>
-            <div className="ml-6 mt-4 flex space-x-fluid-px">
-              <ToggleButtonGroup />
-            </div>
+          {/* Calories Section */}
+          <h2 className="text-lg font-bold mt-6 ml-4">Calories</h2>
+          <CaloriesFilter
+            minCalories={calorieRange[0]}
+            maxCalories={calorieRange[1]}
+            onCaloriesChange={handleCaloriesChange}
+          />
+
+          {/* Cooking for Section */}
+          <h2 className="text-lg font-bold mt-6 ml-4">Cooking for</h2>
+          <div className="ml-6 mt-4 flex space-x-fluid-px">
+            <ToggleButtonGroup />
+          </div>
+        </div>
+
+        {/* Apply Filters Button */}
+        <div className="bg-white p-4 border-t border-gray-200">
+          <button
+            onClick={handleApplyFilters}
+            className="w-full py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg text-lg"
+          >
+            Apply Filters
+          </button>
         </div>
       </motion.div>
     </AnimatePresence>
