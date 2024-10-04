@@ -4,23 +4,32 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IoIosArrowBack } from 'react-icons/io';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/store/store';
 import { setModalOpen } from '@/store/modalSlice';
 import CategoryFilter from '../ui/CategoryFilter';
 import PreparationTimeFilter from '../ui/PreparationTimeFilter';
 import ServingsFilter from '../ui/ServingsFilter';
 import ToggleButtonGroup from '../ui/ToggleButtonGroup';
 import CaloriesFilter from '../ui/CaloriesFilter';
+import { setFilters, resetFilters } from '@/store/filterSlice';
 
 const FilterPage: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // State for selected filters
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
-  const [selectedTimeId, setSelectedTimeId] = useState<number | null>(null);
-  const [servings, setServings] = useState<number>(1);
-  const [calorieRange, setCalorieRange] = useState<[number, number]>([0, 5000]);
+  // Get filter values from Redux store
+  const categoryIdFromStore = useSelector((state: RootState) => state.filter.categoryId);
+  const timeIdFromStore = useSelector((state: RootState) => state.filter.timeId);
+  const servingsFromStore = useSelector((state: RootState) => state.filter.servings);
+  const calorieRangeFromStore = useSelector((state: RootState) => state.filter.calorieRange);
+
+
+// Local state initialized from Redux store
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(categoryIdFromStore);
+  const [selectedTimeId, setSelectedTimeId] = useState<number | null>(timeIdFromStore);
+  const [servings, setServings] = useState<number>(servingsFromStore);
+  const [calorieRange, setCalorieRange] = useState<[number, number]>(calorieRangeFromStore);
   // Add other filter states as needed
 
   // Set modal open state to true when component mounts
@@ -54,17 +63,24 @@ const FilterPage: React.FC = () => {
   };
 
   const handleReset = () => {
+    dispatch(resetFilters());
+    // Reset local state
     setSelectedCategoryId(null);
     setSelectedTimeId(null);
     setServings(1);
     setCalorieRange([0, 5000]);
-    // Reset any other filters you might have
   };
 
-  const handleApplyFilters = () => {
-    // Save the filter states to Redux store or context if needed
-    // For this example, we'll assume you navigate back to the previous page
-    // and the filters are applied there
+    const handleApplyFilters = () => {
+    dispatch(
+      setFilters({
+        categoryId: selectedCategoryId,
+        timeId: selectedTimeId,
+        servings,
+        calorieRange,
+        // Include other filters as needed
+      })
+    );
     router.back();
   };
 
