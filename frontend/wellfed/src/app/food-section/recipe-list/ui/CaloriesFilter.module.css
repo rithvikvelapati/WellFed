@@ -1,0 +1,27 @@
+/* CaloriesFilter.module.css */
+
+.caloriesSlider :global(.rc-slider-rail) {
+  background-color: transparent;
+}
+
+.caloriesSlider :global(.rc-slider-track) {
+  background-color: transparent;
+}
+
+.caloriesSlider :global(.rc-slider-handle) {
+  border: 2px solid #B64B29;
+  background-color: #FFFFFF;
+  height: 24px;
+  width: 24px;
+  margin-top: -7px;
+}
+
+.caloriesSlider :global(.rc-slider-handle:active),
+.caloriesSlider :global(.rc-slider-handle:focus),
+.caloriesSlider :global(.rc-slider-handle:hover) {
+  border-color: #B64B29;
+}
+
+.caloriesSlider :global(.rc-slider-mark-text) {
+  font-size: 12px;
+}

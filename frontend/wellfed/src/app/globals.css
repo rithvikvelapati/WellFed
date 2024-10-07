@@ -271,3 +271,15 @@ button.mobile-secondary-btn {
   animation: marquee linear infinite;
 }
 
+/* styling for media card */
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.react-player > video,
+.react-player > iframe {
+  width: 100% !important;
+  height: 100% !important;
+}

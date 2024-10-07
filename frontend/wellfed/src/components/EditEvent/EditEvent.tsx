@@ -40,7 +40,7 @@ const EditEvent: React.FC = () => {
       <div className="absolute top-4 left-4 z-10">
         <button
           className="font-semibold text-lg"
-          onClick={() => router.push('/calendar-section/new-schedule')}
+          onClick={() => router.push('/calendar-section')}
         >
           <FaChevronLeft />
         </button>
