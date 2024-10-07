@@ -34,9 +34,9 @@ const ToggleButtonGroup: React.FC<ToggleButtonGroupProps> = () => {
             ${
               selected === button
                 ? 'bg-gradient-to-r from-primary to-secondary text-white'
-                : 'bg-white bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'
+                : 'bg-white text-secondary'
             }
-            focus:outline-none focus:ring-2 focus:ring-secondary`}
+            focus:outline-none focus:ring-0 focus:ring-secondary`}
         >
           <span>{button}</span>
         </button>
@@ -46,7 +46,7 @@ const ToggleButtonGroup: React.FC<ToggleButtonGroupProps> = () => {
         onClick={handleAddButtonClick}
         className="w-9 h-9 rounded-full flex items-center justify-center font-normal text-sm shadow-lg
           bg-gradient-to-r from-primary to-secondary text-white
-          focus:outline-none focus:ring-2 focus:ring-secondary"
+          focus:outline-0 focus:ring-2 focus:ring-none"
         aria-label="Add Member"
       >
         <IoIosAdd className="text-2xl" />

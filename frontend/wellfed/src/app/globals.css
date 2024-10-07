@@ -7,6 +7,12 @@
   max-width: 100%;
 }
 
+/* resets native sizing */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
 /* custom color for dashboard background */
 .bg-dashboard {
   @apply bg-backgroundDash;
@@ -250,4 +256,30 @@ button.mobile-secondary-btn {
 }
 .fc-timeGridDay-button{
   display: none !important;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee linear infinite;
+}
+
+/* styling for media card */
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.react-player > video,
+.react-player > iframe {
+  width: 100% !important;
+  height: 100% !important;
 }

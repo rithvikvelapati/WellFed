@@ -1,12 +1,9 @@
-import React from 'react';
-import DashboardContent from "../components/Dashboard/DashboardContent";
+import DashboardContent from "@/components/Dashboard/DashboardContent";
 
-const Page: React.FC = () => {
+export default function Page() {
   return (
-    <div className="p-2">
-      <DashboardContent/>
-    </div>
+    <>
+      <DashboardContent />
+    </>
   );
 };
-
-export default Page;
