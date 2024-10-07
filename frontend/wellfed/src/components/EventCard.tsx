@@ -1,6 +1,12 @@
-import React from 'react';
-import Image from 'next/image';
-import { FaBookmark, FaRegBookmark, FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
+import React from "react";
+import Image from "next/image";
+import {
+  FaBookmark,
+  FaRegBookmark,
+  FaStar,
+  FaStarHalfAlt,
+  FaRegStar
+} from "react-icons/fa";
 
 interface EventCardProps {
   event: {
@@ -23,16 +29,18 @@ const EventCard: React.FC<EventCardProps> = ({ event, toggleBookmark }) => {
       <div className="flex items-center text-sm mt-1 space-x-1">
         {/* Full Stars */}
         {[...Array(fullStars)].map((_, i) => (
-          <FaStar key={i} style={{ color: '#EC9556' }} />
+          <FaStar key={i} style={{ color: "#EC9556" }} />
         ))}
 
         {/* Half Star (if any) */}
-        {hasHalfStar && <FaStarHalfAlt style={{ color: '#EC9556' }} />}
+        {hasHalfStar && <FaStarHalfAlt style={{ color: "#EC9556" }} />}
 
         {/* Empty Stars */}
-        {[...Array(totalStars - fullStars - (hasHalfStar ? 1 : 0))].map((_, i) => (
-          <FaRegStar key={i} style={{ color: '#EC9556' }} />
-        ))}
+        {[...Array(totalStars - fullStars - (hasHalfStar ? 1 : 0))].map(
+          (_, i) => (
+            <FaRegStar key={i} style={{ color: "#EC9556" }} />
+          )
+        )}
       </div>
     );
   };
@@ -44,7 +52,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, toggleBookmark }) => {
         src={event.imageUrl}
         alt={event.title}
         fill
-        style={{ objectFit: 'cover' }}
+        style={{ objectFit: "cover" }}
         className="rounded-lg"
       />
 
@@ -55,7 +63,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, toggleBookmark }) => {
           toggleBookmark(event.id);
         }}
         className="absolute top-3 right-4 text-lg z-10"
-        style={{ color: event.bookmarked ? '#EC9556' : '#EC9556' }}
+        style={{ color: event.bookmarked ? "#EC9556" : "#EC9556" }}
       >
         {event.bookmarked ? <FaBookmark /> : <FaRegBookmark />}
       </button>
