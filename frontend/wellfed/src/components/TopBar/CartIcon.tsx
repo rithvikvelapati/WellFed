@@ -17,7 +17,7 @@ const CartIcon: React.FC = () => {
           alt="Shopping Cart"
           width={24}
           height={24}
-          className={`transition-all duration-150 ${isActive ? 'filter invert' : ''}`}
+          className={`w-auto h-auto transition-all duration-150 ${isActive ? 'filter invert' : ''}`}
         />
       </div>
     </Link>

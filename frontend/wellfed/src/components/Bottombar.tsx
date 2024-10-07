@@ -28,12 +28,12 @@ const BottomBar: React.FC<BottomBarProps> = ({
   // Dynamic indicator bar width and selected class
   const selectedClass = (button: 'camera' | 'search' | 'profile') => {
     return selected === button
-      ? 'border-t-4 border-orange-500 w-1/2' // Increase indicator width
+      ? 'border-t-4 border-secondary w-1/2' // Increase indicator width
       : '';
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 m-0 p-0 z-50 flex justify-around items-center h-10 bg-white shadow-md pb-1.5">
+    <div className="fixed bottom-0 left-0 right-0 m-0 p-0 z-50 flex justify-around items-center h-10 bg-white pb-1.5">
       {/* Camera Button */}
       <button
         className={`flex flex-col items-center justify-center w-20 h-full ${selectedClass('camera')}`}

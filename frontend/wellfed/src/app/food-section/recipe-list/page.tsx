@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setModalOpen } from "@/store/modalSlice";
+// import { useEffect, useState } from "react";
+// import { useDispatch } from "react-redux";
+// import { setModalOpen } from "@/store/modalSlice";
 import HorizontalScrollContainer from "@/components/HorizontalScrollContainer";
 import RecipeSearchBar from "./ui/RecipeSearchBar";
 import ToggleButtonGroup from "./ui/ToggleButtonGroup";

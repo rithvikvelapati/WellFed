@@ -44,7 +44,7 @@ export const recipesData = [
 
 export const eventsData = [
     { id: 1, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false },
-    { id: 2, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false },
+    { id: 2, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: true },
     { id: 3, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false },
     { id: 4, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false },
     { id: 5, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false },
@@ -58,7 +58,6 @@ export const eventsData = [
     { id: 5, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false },
     { id: 6, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false },
     { id: 7, title: "SF Night Grille", imageUrl: "/SF.svg", rating: 5, bookmarked: false },
-    { id: 8, title: "Beach BBQ Bash", imageUrl: "/SF.svg", rating: 4, bookmarked: false },
   ];
 
   export interface Category {
@@ -225,4 +224,3 @@ export const reviews = [
     ]
 },
 ];
-
