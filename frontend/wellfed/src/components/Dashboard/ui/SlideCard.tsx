@@ -43,7 +43,7 @@ const SlideCard: React.FC<SlideshowProps> = ({ slides }) => {
           width={100}
           height={100}
         />
-        <div className="absolute inset-0 bg-black bg-opacity-50 p-4 flex flex-col justify-center rounded-lg">
+        <div className="absolute inset-0 bg-black bg-opacity-50 p-4 flex flex-col justify-center rounded-xl">
           <div className="text-white text-left">
             <p className="text-lg font-sans mb-2">{slides[currentIndex].title}</p>
             <p className="text-xs font-sans">{slides[currentIndex].description}</p>

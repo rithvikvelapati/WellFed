@@ -8,7 +8,7 @@ const FeaturedMedia: React.FC<FeaturedMediaProps> = ({ videoUrl }) => {
   return (
     <div className="container my-2 w-full">
       <div
-        className="overflow-hidden relative w-full rounded-lg drop-shadow-xl"
+        className="overflow-hidden relative w-full rounded-xl drop-shadow-xl"
         style={{ paddingTop: '56.25%', margin: 0, border: 0 }}
       >
         <iframe
