@@ -1,4 +1,5 @@
 "use client";
+import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 
 interface Slide {
@@ -19,6 +20,7 @@ const SlideCard: React.FC<SlideshowProps> = ({ slides }) => {
       goToNextSlide();
     }, 3000);
     return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex]);
 
   const goToNextSlide = () => {
@@ -32,12 +34,14 @@ const SlideCard: React.FC<SlideshowProps> = ({ slides }) => {
   };
 
   return (
-    <div className="relative w-full rounded-xl">
+    <div className="relative w-full rounded-xl drop-shadow-xl">
       <div className="relative overflow-hidden h-40">
-        <img
+        <Image
           src={slides[currentIndex].imageUrl}
           alt={`Slide ${currentIndex}`}
           className="w-full h-full rounded-xl object-cover"
+          width={100}
+          height={100}
         />
         <div className="absolute inset-0 bg-black bg-opacity-50 p-4 flex flex-col justify-center rounded-lg">
           <div className="text-white text-left">
@@ -45,14 +49,13 @@ const SlideCard: React.FC<SlideshowProps> = ({ slides }) => {
             <p className="text-xs font-sans">{slides[currentIndex].description}</p>
             <button
               onClick={() => console.log('Try Now clicked!')}
-              className="mt-4 py-2 px-4 bg-white text-orange-600 font-sans text-xs rounded-full shadow-md hover:bg-gray-100"
+              className="mt-4 py-2 px-4 bg-white text-primary text-xs font-medium rounded-md shadow-lg focus:bg-slate-300"
             >
               Try Now!
             </button>
           </div>
         </div>
       </div>
-
       <div className="absolute bottom-3 right-3 flex justify-center space-x-2">
         <div className="px-3 py-1 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-full flex space-x-2">
           {slides.map((_, index) => (
