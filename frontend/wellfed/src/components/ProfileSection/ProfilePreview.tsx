@@ -174,8 +174,8 @@ const ProfilePreview: React.FC = () => {
                             <RecipeCard
                                 key={recipe.id}
                                 recipe={recipe}
-                                toggleFavorite={toggleFavorite}
-                                toggleBookmark={toggleBookmark}
+                                onToggleFavorite={toggleFavorite}
+                                onToggleBookmark={toggleBookmark}
                             />
                             </div>
                         ))}
