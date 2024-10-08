@@ -16,7 +16,7 @@ const DiscoverEvents: React.FC = () => {
   };
   return (
     <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
-      <div className="py-2 space-x-fluid-px drop-shadow-xl">
+      <div className="py-2 space-x-fluid-px">
       {events.map((event) => (
         <EventCard
           key={event.id}
