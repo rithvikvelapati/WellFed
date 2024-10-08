@@ -40,21 +40,7 @@ const ProfileInfo = () => {
 
       <div className="w-full max-w-md p-6 mt-[-6rem] shadow-md">
         {/* Profile Picture */}
-        <div className="flex justify-center mb-6">
-          <div className="relative w-20 h-20"> {/* Ensure the container has a fixed width and height */}
-            <Image
-              src="/Profilephoto.svg"
-              alt="Profile Picture"
-              width={80}
-              height={80}
-              className="rounded-full object-cover w-full h-full border-4 border-white shadow-lg"
-            />
-            {/* Edit Button for Profile Picture */}
-            <button className="absolute bottom-0 right-0 bg-[#B64B29] text-white border-2 border-white rounded-full p-1">
-              <FaEdit size={16} />
-            </button>
-          </div>
-        </div>
+       
 
 
         {/* Input Fields with Labels */}

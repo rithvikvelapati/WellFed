@@ -467,3 +467,17 @@ export const reviews = [
     images: ["/CA.jpg", "/CB.jpg", "/KP.jpg"]
   }
 ];
+
+
+export interface Recipe {
+  id: number;
+  title: string;
+  imageUrl: string;
+  time: string;
+  cost: string;
+  rating: number;
+  reviews: number;
+  favorited: boolean;
+  bookmarked: boolean;
+  handle: string;
+}

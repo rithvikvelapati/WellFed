@@ -42,7 +42,6 @@ const ProfileInfoPage: React.FC = () => {
     alert('Back button clicked!');  // Added alert to check button click
     try {
       await router.push('/dashboard-links'); // Navigate back to the dashboard-links page
-      console.log('Navigation successful to /dashboard-links');
     } catch (error) {
       console.error('Navigation failed:', error);
     }
@@ -51,7 +50,6 @@ const ProfileInfoPage: React.FC = () => {
   const handleCalendarSection = async () => {
     try {
       await router.push('/dashboard-links');
-      console.log('Navigation successful to /calendar-section');
     } catch (error) {
       console.error('Navigation failed:', error);
     }
@@ -82,18 +80,38 @@ const ProfileInfoPage: React.FC = () => {
 
           {/* Back Button and See Profile Button */}
           <div className="w-full flex justify-between items-center px-4 mt-4">
-            <button className="text-gray-600" onClick={handleCalendarSection}>
+            <button className="text-gray-600" onClick={() => router.back()}>
               <IoChevronBack size={24} /> {/* Back Button */}
             </button>
+           
+           
+
             <button
               className="text-gray-800 font-semibold flex items-center gap-1"
-              onClick={handleClose}
+              onClick={() => router.push('/profile-section/profile-preview')}
             >
               See Profile <IoChevronForward size={20} /> {/* See Profile Button */}
             </button>
           </div>
+
+
         </div>
-        <div>
+        <div className="absolute top-[6rem] left-[40%] md:left-[50%] flex justify-center mb-6">
+          <div className="relative w-20 h-20"> {/* Ensure the container has a fixed width and height */}
+            <Image
+              src="/Amanda.svg"
+              alt="Profile Picture"
+              width={80}
+              height={80}
+              className="rounded-full object-cover w-full h-full border-4 border-white shadow-lg"
+            />
+            {/* Edit Button for Profile Picture */}
+            <button className="absolute bottom-0 right-0 bg-[#B64B29] text-white border-2 border-white rounded-full p-1">
+              <FaEdit size={16} />
+            </button>
+          </div>
+        </div>
+        <div className='mt-24'>
           <ProfileInfo />
         </div>
       </motion.div>
