@@ -12,6 +12,7 @@ import ToggleButtonGroup from "./ui/ToggleButtonGroup";
 import FilterButton from "./ui/FilterButton";
 import { categories } from "@/constants";
 import CategoryCard from "@/components/CategoryCard";
+import HorizontalRecipeCards from "@/components/Dashboard/ui/HorizontalRecipeCards";
 
 const RecipeListPage = () => {
   // const [isModalOpen, setIsModalOpen] = useState(true);
@@ -70,7 +71,7 @@ const RecipeListPage = () => {
             </button> */}
 
           {/* Content Container with Top Padding */}
-          <div className="pt-3">
+          <div className="pt-2">
             <div className="flex mx-2 items-center w-full mb-4">
               {/* Search Bar */}
               <div className="flex-grow">
@@ -98,7 +99,7 @@ const RecipeListPage = () => {
               {/* Categories Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 {/* Replace with your RecipeCard components */}
-                <div className="snap-start flex px-2 mb-3 ">
+                <div className="snap-start flex px-1 mb-3 ">
                   {/* Example Cards */}
                   {categories.map((category) => (
                     <CategoryCard key={category.id} category={category} />
@@ -110,7 +111,7 @@ const RecipeListPage = () => {
 
             {/* Trending Now Section */}
             <section className="mb-4">
-              <div className="flex justify-between items-center ml-2 mb-4">
+              <div className="flex justify-between items-center ml-2">
                 <h2 className="text-fluid-lg font-semibold">Trending Now</h2>
                 <button
                   className="flex items-center text-slate-500 text-fluid-sm"
@@ -120,32 +121,14 @@ const RecipeListPage = () => {
                 </button>
               </div>
               {/* Trending Now Content */}
-              <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
-                <div className="snap-start flex px-2 mx-2">
-                  {/* Example Cards */}
-                  <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <p className="text-center">Trending Recipe 1</p>
-                  </div>
-                  <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <p className="text-center">Trending Recipe 2</p>
-                  </div>
-                  <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <p className="text-center">Trending Recipe 3</p>
-                  </div>
-                  <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <p className="text-center">Trending Recipe 4</p>
-                  </div>
-                  <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <p className="text-center">Trending Recipe 5</p>
-                  </div>
-                  {/* Add more cards as needed */}
-                </div>
-              </HorizontalScrollContainer>
+              <div className="snap-start flex px-1 ml-1 mb-3 ">
+                <HorizontalRecipeCards />
+              </div>
             </section>
 
             {/* Recent Recipes Section */}
-            <section className="mb-10 pb-2">
-              <div className="flex justify-between items-center ml-2 mb-4">
+            <section className="mb-4">
+              <div className="flex justify-between items-center ml-2">
                 <h2 className="text-fluid-lg font-semibold">Recent Recipes</h2>
                 <button
                   className="flex items-center text-slate-500 text-fluid-sm"
@@ -156,24 +139,8 @@ const RecipeListPage = () => {
               </div>
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
-                <div className="snap-start flex px-2 mx-2">
-                  {/* Example Cards */}
-                  <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <p className="text-center">Recent Recipe 1</p>
-                  </div>
-                  <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <p className="text-center">Recent Recipe 2</p>
-                  </div>
-                  <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <p className="text-center">Recent Recipe 3</p>
-                  </div>
-                  <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <p className="text-center">Recent Recipe 4</p>
-                  </div>
-                  <div className="mx-2 w-48 h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <p className="text-center">Recent Recipe 5</p>
-                  </div>
-                  {/* Add more cards as needed */}
+                <div className="snap-start flex px-2 ml-2">
+                  <HorizontalRecipeCards />
                 </div>
               </HorizontalScrollContainer>
             </section>

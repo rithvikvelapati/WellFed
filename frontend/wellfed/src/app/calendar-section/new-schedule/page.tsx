@@ -39,7 +39,7 @@ const NewSchedulePage: React.FC = () => {
   };
 
   const handleClose = () => {
-    router.back(); // Navigate back to the previous page
+    router.push('/calendar-section'); // Navigate back to the previous page
   };
 
   return (
@@ -51,17 +51,22 @@ const NewSchedulePage: React.FC = () => {
         animate="animate"
         exit="exit"
       >
-        {/* Back Button */}
-        <button
-          onClick={handleClose}
-          className="absolute top-4 left-4 p-2 focus:outline-none"
-          aria-label="Close Modal"
-        >
-          <IoIosArrowBack className="text-2xl text-gray-700" />
-        </button>
+        <div className="flex items-center justify-between">
+          <button
+            onClick={handleClose}
+            className="p-2 focus:outline-none"
+            aria-label="Close Modal"
+          >
+            <IoIosArrowBack className="text-2xl text-gray-700 mt-5" />
+
+          </button>
+            <h2 className="text-3xl font-semibold mt-6 mb-2">New Schedule</h2>
+           
+          <p className="text-xl mt-5 mr-3">Cancel</p>
+        </div>
 
         {/* Modal Content */}
-        <div className="mt-16">
+        <div className="mt-5">
           <NewSchedule />
         </div>
       </motion.div>

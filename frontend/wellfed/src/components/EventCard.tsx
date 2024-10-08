@@ -46,7 +46,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, toggleBookmark }) => {
   };
 
   return (
-    <div className="relative inline-block w-[145px] h-[190px] rounded-lg overflow-hidden">
+    <div className="relative inline-block w-[145px] h-[190px] rounded-xl overflow-hidden drop-shadow-lg">
       {/* Event Background Image */}
       <Image
         src={event.imageUrl}
