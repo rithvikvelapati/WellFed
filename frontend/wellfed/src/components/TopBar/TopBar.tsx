@@ -29,10 +29,11 @@ const TopBar: React.FC = () => {
           />
         </div>
       </Link>
+
       {/* Icons */}
       <div className="flex items-end space-x-fluid-px mb-4">
         <NotificationIcon />
-        <CartIcon />
+        <CartIcon /> {/* CartIcon now navigates to /cart-section/shopping-list */}
       </div>
     </div>
   );
