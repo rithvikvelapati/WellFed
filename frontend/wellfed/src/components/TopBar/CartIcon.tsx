@@ -10,7 +10,7 @@ const CartIcon: React.FC = () => {
   const isActive = pathname === '/cart';
 
   return (
-    <Link href="/cart" passHref>
+    <Link href="/cart-section/shopping-list" passHref>
       <div className="relative cursor-pointer">
         <Image
           src="/Shopping cart.svg"

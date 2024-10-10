@@ -16,7 +16,10 @@ const routeswithStandalone = [
   '/calendar-section/meal-details',
   '/calendar-section/meal-editdetails',
   '/calendar-section/edit-event',
-  '/profile-section/profile-info'
+  '/profile-section/profile-info',
+  '/cart-section/shopping-list',
+  '/cart-section/recipe-ingrediants',
+  '/cart-section/review-ingrediants'
 ];
 
 const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
