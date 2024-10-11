@@ -11,7 +11,7 @@ import RecipeSearchBar from "./ui/RecipeSearchBar";
 import ToggleButtonGroup from "./ui/ToggleButtonGroup";
 import FilterButton from "./ui/FilterButton";
 import { categories } from "@/constants";
-import CategoryCard from "@/components/CategoryCard";
+import CategoryCard from "./ui/CategoryCard";
 import HorizontalRecipeCards from "@/components/Dashboard/ui/HorizontalRecipeCards";
 
 const RecipeListPage = () => {
