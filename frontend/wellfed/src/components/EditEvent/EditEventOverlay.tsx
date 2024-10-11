@@ -5,7 +5,6 @@ import { RiDeleteBinLine, RiMessage2Line } from "react-icons/ri";
 import { FaRegShareFromSquare } from "react-icons/fa6";
 import { IoIosLink, IoMdMore } from "react-icons/io";
 import { MdAdd } from "react-icons/md";
-import Modal from "@/shared/Modal";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface EditEventOverlayProps {
@@ -88,7 +87,6 @@ const EditEventOverlay: React.FC<EditEventOverlayProps> = ({
         animate="animate"
         exit="exit"
       >
-      <Modal isOpen={isModalOpen} onClose={handleModalClose}>
         <div className="p-6 text-white">
 
           {/* All Friends Section */}
@@ -199,7 +197,6 @@ const EditEventOverlay: React.FC<EditEventOverlayProps> = ({
             </button>
           </div>
         </div>
-      </Modal>
     </motion.div>
     </AnimatePresence>
   );

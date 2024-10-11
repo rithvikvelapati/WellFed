@@ -89,7 +89,6 @@ const DashboardLinks = () => {
         {/* My Lists Section */}
         <div className="w-full">
           <h2 className="text-lg font-semibold text-gray-700 mb-2 pl-2">My Lists</h2>
-          
           {/* Uploads (lighter gradient background) */}
           <div className="bg-gradient-to-r from-gray-400 to-gray-700 border border-gray-200 rounded-lg shadow-lg p-4 flex items-center justify-between mb-2 mx-1 h-auto w-full">
             <div className="flex items-center">
