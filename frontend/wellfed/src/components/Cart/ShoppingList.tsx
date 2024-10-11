@@ -1,7 +1,5 @@
-'use client';
-
-import React, { useState } from 'react';
-import { FiEdit } from 'react-icons/fi';  // Import the edit icon
+import React, { useEffect, useState } from 'react';
+import { FiAlertTriangle, FiEdit } from 'react-icons/fi'; // Import the edit icon
 import { RiDeleteBin6Fill } from "react-icons/ri"; // Import the delete icon
 import { SwipeableList, SwipeableListItem } from '@sandstreamdev/react-swipeable-list';
 import '@sandstreamdev/react-swipeable-list/dist/styles.css';
@@ -16,7 +14,6 @@ interface ShoppingItem {
 
 const ShoppingList: React.FC = () => {
   const router = useRouter();
-
   const [items, setItems] = useState<ShoppingItem[]>([
     { id: 1, name: 'Grilled Beef Creamy Sauce', ingredients: 29 },
     { id: 2, name: 'The All-American Breakfast Muffin', ingredients: 17 },
@@ -27,14 +24,37 @@ const ShoppingList: React.FC = () => {
     { id: 7, name: 'Sweet and Sour Pork', ingredients: 12 },
   ]);
 
+  const [editedRecipes, setEditedRecipes] = useState<number[]>([]);
+  const [editedIndexes, setEditedIndexes] = useState<number[]>([]);
+
+  // On component mount, load edited recipe IDs from localStorage
+  useEffect(() => {
+    const storedEditedRecipes = JSON.parse(localStorage.getItem('editedRecipes') || '{}');
+    const editedIds = Object.keys(storedEditedRecipes)
+      .map((id) => parseInt(id))
+      .filter((id) => storedEditedRecipes[id] === true); // Get only the recipes that are marked as edited
+    setEditedRecipes(editedIds);
+
+    const storedEditedIndexes = JSON.parse(localStorage.getItem('editedIngredients') || '[]');
+    setEditedIndexes(storedEditedIndexes); // Set the indexes of edited ingredients
+  }, []);
+
   const handleDelete = (id: number) => {
     const updatedItems = items.filter(item => item.id !== id);
     setItems(updatedItems);
   };
 
-  const handleEdit = (name: string) => {
+  const handleEdit = (name: string, id: number) => {
     if (name === 'Grilled Beef Creamy Sauce') {
       router.push('/cart-section/recipe-ingrediants');
+    }
+
+    // Only mark as edited if recipeEdited is true
+    const isEdited = JSON.parse(localStorage.getItem('recipeEdited') || 'false');
+    if (isEdited) {
+      const updatedEditedRecipes = [...editedRecipes, id];
+      setEditedRecipes(updatedEditedRecipes);
+      localStorage.setItem('editedRecipes', JSON.stringify(updatedEditedRecipes));
     }
   };
 
@@ -58,7 +78,7 @@ const ShoppingList: React.FC = () => {
                     <FiEdit size={32} />
                   </div>
                 ),
-                action: () => handleEdit(item.name),
+                action: () => handleEdit(item.name, item.id),
               }}
 
               // Swipe left to delete
@@ -84,6 +104,13 @@ const ShoppingList: React.FC = () => {
                   <p className="text-lg font-semibold">{item.name}</p>
                   <p className="text-sm text-gray-500">{item.ingredients} ingredients</p>
                 </div>
+
+                {/* Show the disclaimer icon only if the recipe has been edited */}
+                {editedRecipes.includes(item.id) && editedIndexes?.length > 0 && (
+                  <span className="disclaimer-icon" style={{ color: '#B64B29' }}>
+                    <FiAlertTriangle size={20} />
+                  </span>
+                )}
               </motion.div>
             </SwipeableListItem>
           ))}
