@@ -56,6 +56,19 @@ const ReviewIngredients: React.FC = () => {
     // Recalculate subtotal here if necessary
   };
 
+  // Handler for deleting an ingredient
+  const handleDelete = (index: number) => {
+    const updatedIngredients = ingredients.filter((_, i) => i !== index);
+    setIngredients(updatedIngredients);
+
+    // Remove the index from editedIndexes if the ingredient is deleted
+    const newEditedIndexes = editedIndexes.filter(i => i !== index);
+    setEditedIndexes(newEditedIndexes);
+    localStorage.setItem('editedIngredients', JSON.stringify(newEditedIndexes));
+
+    // Recalculate subtotal here if necessary
+  };
+
   // Function to handle click event to show/hide pop-up
   const togglePopUp = (index: number) => {
     setActivePopUpIndex(activePopUpIndex === index ? null : index); // Toggle the pop-up visibility
@@ -132,10 +145,7 @@ const ReviewIngredients: React.FC = () => {
               {/* Delete Button */}
               <button
                 className="ml-4 text-[#B64B29]"
-                onClick={() => {
-                  const updatedIngredients = ingredients.filter((_, i) => i !== index);
-                  setIngredients(updatedIngredients);
-                }}
+                onClick={() => handleDelete(index)} // Updated deletion logic
               >
                 <RiDeleteBin6Fill size={20} />
               </button>
