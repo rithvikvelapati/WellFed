@@ -130,6 +130,12 @@ const FilterPage: React.FC = () => {
         <div className="mt-16 pt-4 pl-4 pb-10">
           <h1 className="text-3xl font-bold my-4">Filters</h1>
 
+          {/* Cooking for Section */}
+          <h2 className="text-lg font-bold mt-6 ml-4">Cooking for</h2>
+          <div className="ml-6 mt-4 flex space-x-fluid-px">
+            <ToggleButtonGroup />
+          </div>
+
           {/* Categories Section */}
           <h2 className="text-lg font-bold mt-6 ml-4">Categories</h2>
           <CategoryFilter
@@ -160,12 +166,6 @@ const FilterPage: React.FC = () => {
             maxCalories={calorieRange[1]}
             onCaloriesChange={handleCaloriesChange}
           />
-
-          {/* Cooking for Section */}
-          <h2 className="text-lg font-bold mt-6 ml-4">Cooking for</h2>
-          <div className="ml-6 mt-4 flex space-x-fluid-px">
-            <ToggleButtonGroup />
-          </div>
         </div>
 
         {/* Apply Filters Button */}

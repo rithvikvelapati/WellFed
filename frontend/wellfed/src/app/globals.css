@@ -283,3 +283,7 @@ button.mobile-secondary-btn {
   width: 100% !important;
   height: 100% !important;
 }
+
+.swipeable-list-item__content {
+  background: transparent !important;
+}
