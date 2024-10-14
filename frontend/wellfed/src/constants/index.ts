@@ -4,13 +4,13 @@ export const sidebarIcons = [
     name: "add-friend",
     label: "Add Friend",
     src: "/AddFriend.svg",
-    path: "/add-friend"
+    path: "/friends-section"
   },
   {
     name: "messages",
     label: "Messages",
     src: "/Message.svg",
-    path: "/messages"
+    path: "/messages-section"
   },
   {
     name: "calendar",
@@ -18,15 +18,15 @@ export const sidebarIcons = [
     src: "/Calendar.svg",
     path: "/calendar-section"
   },
-  { name: "groups", label: "Groups", src: "/Groups.svg", path: "/groups" },
-  { name: "tickets", label: "Tickets", src: "/Ticket.svg", path: "/tickets" },
+  { name: "groups", label: "Groups", src: "/Groups.svg", path: "/groups-section" },
+  { name: "tickets", label: "Tickets", src: "/Ticket.svg", path: "/events-section" },
   {
     name: "food",
     label: "Food",
     src: "/Food.svg",
     path: "/food-section/recipe-list"
   },
-  { name: "cog", label: "Settings", src: "/Cog.svg", path: "/cog" }
+  { name: "cog", label: "Settings", src: "/Cog.svg", path: "/settings" }
 ];
 
 export const slidesData = [
@@ -249,62 +249,6 @@ export const eventsData = [
     rating: 5,
     bookmarked: false
   },
-  {
-    id: 8,
-    title: "Beach BBQ Bash",
-    imageUrl: "/SF.svg",
-    rating: 4,
-    bookmarked: false
-  },
-  {
-    id: 1,
-    title: "SF Night Grille",
-    imageUrl: "/SF.svg",
-    rating: 5,
-    bookmarked: false
-  },
-  {
-    id: 2,
-    title: "Beach BBQ Bash",
-    imageUrl: "/SF.svg",
-    rating: 4,
-    bookmarked: false
-  },
-  {
-    id: 3,
-    title: "SF Night Grille",
-    imageUrl: "/SF.svg",
-    rating: 5,
-    bookmarked: false
-  },
-  {
-    id: 4,
-    title: "Beach BBQ Bash",
-    imageUrl: "/SF.svg",
-    rating: 4,
-    bookmarked: false
-  },
-  {
-    id: 5,
-    title: "SF Night Grille",
-    imageUrl: "/SF.svg",
-    rating: 5,
-    bookmarked: false
-  },
-  {
-    id: 6,
-    title: "Beach BBQ Bash",
-    imageUrl: "/SF.svg",
-    rating: 4,
-    bookmarked: false
-  },
-  {
-    id: 7,
-    title: "SF Night Grille",
-    imageUrl: "/SF.svg",
-    rating: 5,
-    bookmarked: false
-  }
 ];
 
 export interface Category {
