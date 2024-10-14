@@ -23,6 +23,7 @@
     "@mui/icons-material": "^6.1.1",
     "@mui/material": "^6.1.1",
     "@reduxjs/toolkit": "^2.2.7",
+    "@sandstreamdev/react-swipeable-list": "^1.0.2",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.15",
     "autoprefixer": "^10.4.20",
