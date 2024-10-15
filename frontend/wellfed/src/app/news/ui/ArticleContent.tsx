@@ -19,6 +19,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface ArticleContentProps {
   images: ImageItem[];
   currentIndex: number;
+  setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const ArticleContent: React.FC<ArticleContentProps> = ({
