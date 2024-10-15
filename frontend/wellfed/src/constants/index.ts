@@ -425,3 +425,4 @@ export interface Recipe {
   bookmarked: boolean;
   handle: string;
 }
+

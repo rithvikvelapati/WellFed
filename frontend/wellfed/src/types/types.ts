@@ -24,3 +24,30 @@ export interface ImageItem {
   heading: string;
   content: ContentBlock[];
 }
+
+/**
+ * Represents a single step in a recipe.
+ */
+export interface RecipeStep {
+  stepNumber: number;
+  imageUrl: string;
+  instruction: string;
+}
+
+/**
+ * Represents an ingredient with a name and optional quantity.
+ */
+export interface Ingredient {
+  name: string;
+  quantity?: string;
+}
+
+/**
+ * Represents a recipe with steps, ingredients, and tools.
+ */
+export interface Recipe {
+  title: string;
+  ingredients: Ingredient[];
+  tools: string[];
+  steps: RecipeStep[];
+}
