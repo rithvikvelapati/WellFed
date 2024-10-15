@@ -1,5 +1,5 @@
 import React from 'react';
-import { reviews, reviewSummary } from '../../constants';
+import { reviews, reviewSummary } from '@/constants';
 
 interface Review {
     id: number;
@@ -37,7 +37,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
             {/* Rating */}
             <div className="flex mt-2">
                 {Array.from({ length: review.rating }, (_, i) => (
-                    <svg key={i} className="text-yellow-500 w-4 h-4 fill-current" viewBox="0 0 20 20">
+                    <svg key={i} className="text-secondary w-4 h-4 fill-current" viewBox="0 0 20 20">
                         <path d="M10 15l-5.5 3l2-6L2 7h6.5L10 1l1.5 6H18l-4.5 5l2 6z"></path>
                     </svg>
                 ))}
