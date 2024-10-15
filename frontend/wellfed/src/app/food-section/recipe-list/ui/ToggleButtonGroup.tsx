@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { IoIosAdd } from 'react-icons/io';
+import EditEventOverlay from '@/components/EditEvent/EditEventOverlay';
 
 interface ToggleButtonGroupProps {
   // Optional props can be added here in the future
@@ -10,7 +10,8 @@ interface ToggleButtonGroupProps {
 
 const ToggleButtonGroup: React.FC<ToggleButtonGroupProps> = () => {
   const [selected, setSelected] = useState('Self');
-  const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const buttons = ['Self', 'Family'];
 
@@ -20,8 +21,17 @@ const ToggleButtonGroup: React.FC<ToggleButtonGroupProps> = () => {
   };
 
   const handleAddButtonClick = () => {
-    // Navigate to the modal overlay page
-    router.push('/add-member'); // Adjust the route as needed
+    // Open the overlay modal
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    // Close the overlay modal
+    setIsModalOpen(false);
+  };
+
+ const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   };
 
   return (
@@ -51,6 +61,15 @@ const ToggleButtonGroup: React.FC<ToggleButtonGroupProps> = () => {
       >
         <IoIosAdd className="text-2xl" />
       </button>
+      {/* Render the EditEventOverlay component when isModalOpen is true */}
+      {isModalOpen && (
+        <EditEventOverlay
+          isModalOpen={isModalOpen}
+          handleModalClose={handleModalClose}
+          searchQuery={searchQuery}
+          handleSearchChange={handleSearchChange}
+        />
+      )}
     </div>
   );
 };
