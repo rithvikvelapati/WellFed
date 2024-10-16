@@ -1,24 +1,45 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FaEdit, FaCalendarAlt } from 'react-icons/fa';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useRouter } from 'next/navigation';
+import { useUser } from '@clerk/nextjs';
 
 const ProfileInfo = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    firstName: 'Ari',
-    lastName: 'Noso',
-    email: 'Arinoso@Thehealthvice.Com',
-    dob: new Date('1992-09-04'),
-    gender: 'Male',
-    address: '123, Bridgeton, Finland - 12345',
-    phone: '+1 9876543210',
-    familyMembers: '5',
+    firstName: '',
+    lastName: '',
+    email: '',
+    dob: new Date(),
+    gender: '',
+    address: '',
+    phone: '',
+    familyMembers: '',
   });
+
+
+  const { isSignedIn, user } = useUser();
+
+  useEffect(() => {
+    if(isSignedIn && user) {
+      console.log(user)
+      setFormData({
+        firstName: user.firstName || '',
+        lastName:  user.lastName || '',
+        email: user.emailAddresses?.[0].emailAddress || '',
+        dob: new Date(),
+        gender: '',
+        address: '',
+        phone: '',
+        familyMembers: '',
+      })
+    }
+
+  }, [user, isSignedIn])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -104,6 +125,7 @@ const ProfileInfo = () => {
               onChange={handleInputChange}
               className="w-full bg-gradient-to-r from-[#FFFFFF] to-[rgba(236,149,86,0.5)] shadow-inner rounded-xl p-2 border border-gray-300 mt-2"
             >
+                <option value="">Select</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
@@ -142,6 +164,7 @@ const ProfileInfo = () => {
               onChange={handleInputChange}
               className="w-full bg-gradient-to-r from-[#FFFFFF] to-[rgba(236,149,86,0.5)] shadow-inner rounded-xl p-2 border border-gray-300 mt-2"
             >
+                <option value="">Select</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
