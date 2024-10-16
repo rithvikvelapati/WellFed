@@ -52,8 +52,8 @@ const FilterPage: React.FC = () => {
         animate="animate"
         exit="exit"
       >
-        {/* Top Bar with Back and Reset Buttons */}
-        <div className="absolute top-10 left-0 right-0 flex justify-between items-center px-4">
+        {/* Top Bar with Back */}
+        <div className="absolute top-10 left-0 right-0 flex justify-between items-center px-2">
           <button
             onClick={handleClose}
             className="p-2 focus:outline-none"
@@ -66,7 +66,6 @@ const FilterPage: React.FC = () => {
         {/* Scrollable Content */}
         <div className="mt-16 pt-4 pl-4 pb-10">
           <h1 className="text-3xl font-bold my-4">Notifications</h1>
-
         </div>
       </motion.div>
     </AnimatePresence>
