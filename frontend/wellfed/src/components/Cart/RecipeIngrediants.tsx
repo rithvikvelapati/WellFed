@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { MdOutlineShoppingCart } from "react-icons/md";
 
@@ -30,7 +31,7 @@ const RecipeIngredients: React.FC = () => {
     } else {
       setOriginalIngredients([...ingredients]); // Store initial ingredients as original
     }
-  }, []);
+  }, [ingredients]);
 
   // Save ingredients to localStorage on change
   const saveIngredients = (updatedIngredients: Ingredient[]) => {
@@ -72,10 +73,12 @@ const RecipeIngredients: React.FC = () => {
     <div className="bg-white rounded-lg shadow-lg">
       {/* Image Section */}
       <div className="relative w-full h-[250px] mb-4">
-        <img
+        <Image
           src="/appetizers.png"
           alt="Appetizer"
           className="absolute top-0 left-0 w-full h-full object-cover"
+          width={100}
+          height={100}
         />
         {/* Servings Control at the Bottom */}
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent text-white px-4 py-2 flex justify-between items-center">

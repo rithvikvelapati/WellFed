@@ -21,7 +21,6 @@ const EditDetailsModal: React.FC<EditDetailsModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isModalOpen} onClose={handleModalClose}>
       <div className="p-6 bg-white rounded-lg shadow-lg max-w-md w-full mx-auto">
         {/* Modal Header */}
         <div className="flex justify-between items-center mb-4">
@@ -47,8 +46,6 @@ const EditDetailsModal: React.FC<EditDetailsModalProps> = ({
           Submit
         </button>
       </div>
-    </Modal>
-
   );
 };
 
