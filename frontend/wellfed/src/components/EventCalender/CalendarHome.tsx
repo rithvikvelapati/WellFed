@@ -86,8 +86,8 @@ const CalendarHome: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-0 bg-transparent min-h-screen rounded-lg">
-      <div className="bg-transparent p-0 rounded-lg pl-1">
+    <div className="container mx-auto p-0 bg-transparent min-h-screen rounded-xl">
+      <div className="bg-transparent p-0 rounded-xl pl-1">
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
