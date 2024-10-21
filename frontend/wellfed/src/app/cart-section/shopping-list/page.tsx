@@ -52,7 +52,7 @@ const ShoppingListPage: React.FC = () => {
         exit="exit"
       >
         {/* White Card Container */}
-        <div className="bg-white p-4 mb-2">
+        <div className="bg-white px-1 pt-10 mb-2">
 
           {/* Header Section with Back Button and "All Orders" */}
           <div className="flex items-center justify-between mb-1">
@@ -63,8 +63,8 @@ const ShoppingListPage: React.FC = () => {
               whileTap={{ scale: 0.95 }}
             >
               {/* Back Button */}
-              <div className="w-full flex justify-between items-center px-2 mt-2">
-                <button className="text-gray-600" onClick={handleBackClick}>
+              <div className="w-full flex justify-between items-center px-1 mt-2">
+                <button className="text-slate-500" onClick={handleBackClick}>
                   <IoChevronBack size={30} /> {/* Back Button */}
                 </button>
               </div>
@@ -78,7 +78,7 @@ const ShoppingListPage: React.FC = () => {
           </div>
 
           {/* Shopping List Title */}
-          <h1 className="text-2xl font-bold mb-3">Shopping List</h1>
+          <h1 className="text-2xl font-bold ml-4 pb-4">Shopping List</h1>
         </div>
 
         <div>

@@ -6,9 +6,10 @@ import {
   FaHeart,
   FaRegHeart,
   FaStar,
-  FaClock,
+  FaClock
 } from "react-icons/fa";
 import AutoScrollText from "./AutoScrollText";
+import Link from "next/link";
 
 interface Recipe {
   id: number;
@@ -32,7 +33,7 @@ interface RecipeCardProps {
 const RecipeCard: React.FC<RecipeCardProps> = ({
   recipe,
   onToggleFavorite,
-  onToggleBookmark,
+  onToggleBookmark
 }) => {
   // State to control focus for AutoScrollText
   const [isFocused, setIsFocused] = React.useState(false);
@@ -53,12 +54,14 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
     >
       {/* Recipe Image */}
       <div className="relative w-full h-[131px]">
-        <Image
-          src={recipe.imageUrl}
-          alt={recipe.title}
-          fill
-          className="w-full h-full object-cover"
-        />
+        <Link href={`/recipe-card`} passHref>
+          <Image
+            src={recipe.imageUrl}
+            alt={recipe.title}
+            fill
+            className="w-full h-full object-cover"
+          />
+        </Link>
 
         {/* Gradient Overlay */}
         {!isFocused && (
@@ -88,17 +91,20 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
         <div className="flex justify-between items-center w-full font-semibold">
           {/* Title */}
           <div className="flex w-[70%]">
-            {recipe.title.length > 15 ? (
-              <AutoScrollText
-                text={recipe.title}
-                className="text-[12px] leading-tight"
-                isFocused={isFocused}
-              />
-            ) : (
-              <span className="text-[12px] leading-tight">
-                {recipe.title}
-              </span>
-            )}
+            <Link href={`/recipe-card`}
+            className="flex w-[70%]" passHref>
+              {recipe.title.length > 15 ? (
+                <AutoScrollText
+                  text={recipe.title}
+                  className="text-[12px] leading-tight"
+                  isFocused={isFocused}
+                />
+              ) : (
+                <span className="text-[12px] leading-tight">
+                  {recipe.title}
+                </span>
+              )}
+            </Link>
           </div>
 
           {/* Favorite Button */}

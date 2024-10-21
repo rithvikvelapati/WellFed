@@ -7,6 +7,7 @@ import {
   FaStarHalfAlt,
   FaRegStar,
 } from "react-icons/fa";
+import Link from "next/link";
 
 interface Event {
   id: number;
@@ -47,15 +48,18 @@ const EventCard: React.FC<EventCardProps> = ({ event, toggleBookmark }) => {
 
   return (
     <div className="relative inline-block w-[145px] h-[190px] rounded-xl overflow-hidden drop-shadow-lg">
+
       {/* Event Background Image */}
-      <Image
-        src={event.imageUrl}
-        alt={event.title}
-        fill
-        className="object-cover rounded-lg"
-        sizes="(max-width: 768px) 100vw, 145px"
-        priority
-      />
+      <Link href={`/event-card`}>
+        <Image
+          src={event.imageUrl}
+          alt={event.title}
+          fill
+          className="object-cover rounded-lg"
+          sizes="(max-width: 768px) 100vw, 145px"
+          priority
+        />
+      </Link>
 
       {/* Bookmark Icon */}
       <button

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { FaRegPlayCircle, FaRegPauseCircle, FaRegHeart, FaHeart, FaChevronLeft, FaShareAlt } from "react-icons/fa";
 import { recipeCard } from '../../constants';
+import { useRouter } from 'next/navigation';
 
 const RecipeCardHeader = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -19,13 +20,15 @@ const RecipeCardHeader = () => {
     }
   };
 
+  const router = useRouter();
+
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
     setLikes(isFavorite ? likes - 1 : likes + 1);
   };
 
   const handleBack = () => {
-    console.log('Go back');
+    router.back();
   };
 
   const handleShare = () => {
@@ -46,20 +49,20 @@ const RecipeCardHeader = () => {
         {/* Back Button */}
         <button
           onClick={handleBack}
-          className="absolute top-2 left-2 z-20 text-white text-[24px]"
+          className="absolute top-10 left-2 z-20 text-white text-[24px]"
         >
           <FaChevronLeft size={24} />
         </button>
 
         {/* Likes and Share */}
-        <div className="absolute top-2 right-2 z-20 flex flex-col items-center text-white">
+        <div className="absolute top-10 right-1 z-20 flex flex-col items-center text-white">
           <div className="flex items-center">
             <span className="text-[18px]">{likes}</span>
             <button onClick={toggleFavorite} className={`ml-2 ${isFavorite ? 'text-red-500' : 'text-white'}`}>
               {isFavorite ? <FaHeart size={24} /> : <FaRegHeart size={24} />}
             </button>
           </div>
-          <button onClick={handleShare} className="mt-4">
+          <button onClick={handleShare} className="flex mt-4">
             <FaShareAlt size={24} />
           </button>
         </div>
