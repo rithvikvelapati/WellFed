@@ -1,3 +1,5 @@
+// components/BottomBar.tsx
+
 'use client';
 
 import React, { useState } from 'react';
@@ -13,7 +15,7 @@ interface BottomBarProps {
 
 const BottomBar: React.FC<BottomBarProps> = ({
   onCameraClick,
-  onSearchClick,  // Keep the onSearchClick callback in case you want to implement it later
+  onSearchClick,
   onProfileClick,
 }) => {
   const isModalOpen = useSelector((state: RootState) => state.modal.isModalOpen);
@@ -33,13 +35,13 @@ const BottomBar: React.FC<BottomBarProps> = ({
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 m-0 p-0 z-50 flex justify-around items-center h-10 bg-white pb-1.5">
+    <div className="fixed bottom-0 left-0 right-0 m-0 p-0 z-50 flex justify-around items-center h-12 bg-white pb-1">
       {/* Camera Button */}
       <button
         className={`flex flex-col items-center justify-center w-20 h-full ${selectedClass('camera')}`}
         onClick={() => {
           setSelected('camera');
-          onCameraClick(); // Keeps the onCameraClick functionality
+          onCameraClick();
         }}
         aria-label="Open Camera"
       >
@@ -57,7 +59,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
         className={`flex flex-col items-center justify-center w-20 h-full ${selectedClass('profile')}`}
         onClick={() => {
           setSelected('profile');
-          onProfileClick(); // Keeps the onProfileClick functionality
+          onProfileClick();
         }}
         aria-label="Open Profile"
       >
@@ -75,7 +77,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
         className={`flex flex-col items-center justify-center w-20 h-full ${selectedClass('search')}`}
         onClick={() => {
           setSelected('search');
-          onSearchClick(); // Keeps the onSearchClick functionality
+          onSearchClick(); // Trigger the modal
         }}
         aria-label="Search"
       >

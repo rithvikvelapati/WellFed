@@ -1,11 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import TopBar from '@/components/TopBar/TopBar';
-import BottomBar from '@/components/Bottombar';
+import BottomBar from '@/components/BottomBar';
 import ReduxProvider from '@/store/ReduxProvider'; // Import the Redux Provider
 import SideBar from '../Sidebar';
-import { usePathname, useRouter } from 'next/navigation'; // Import useRouter
+import { usePathname, useRouter } from 'next/navigation';
+import SearchModal from '@/components/SearchModal';
 
 interface RootLayoutClientProps {
   children: React.ReactNode;
@@ -25,18 +26,14 @@ const routeswithStandalone = [
 const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter(); // Initialize useRouter
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
   const handleCameraClick = () => {
-    console.log('Camera clicked');
-  };
-
-  const handleSearchClick = () => {
-    console.log('Search clicked');
+    console.log('Camera button clicked!');
   };
 
   // Update handleProfileClick to navigate to the dashboard-links page
   const handleProfileClick = () => {
-    console.log('Profile clicked');
     router.push('/dashboard-links'); // Navigate to dashboard-links page
   };
 
@@ -71,11 +68,15 @@ const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {
             <main>{children}</main>
           </div>
 
+          {/* Render SearchModal when isSearchModalOpen is true */}
+          {isSearchModalOpen && (
+            <SearchModal onClose={() => setIsSearchModalOpen(false)} />
+          )}
           {/* Bottom Bar */}
           {showLayout() && (
             <BottomBar
               onCameraClick={handleCameraClick}
-              onSearchClick={handleSearchClick}
+              onSearchClick={() => setIsSearchModalOpen(true)}
               onProfileClick={handleProfileClick} // Trigger navigation on profile click
             />
           )}

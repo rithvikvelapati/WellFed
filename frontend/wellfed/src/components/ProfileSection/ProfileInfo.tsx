@@ -1,71 +1,68 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { FaEdit, FaCalendarAlt } from 'react-icons/fa';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { useRouter } from 'next/navigation';
-import { useUser } from '@clerk/nextjs';
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { FaEdit, FaCalendarAlt } from "react-icons/fa";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 
 const ProfileInfo = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
+    firstName: "",
+    lastName: "",
+    email: "",
     dob: new Date(),
-    gender: '',
-    address: '',
-    phone: '',
-    familyMembers: '',
+    gender: "",
+    address: "",
+    phone: "",
+    familyMembers: ""
   });
-
 
   const { isSignedIn, user } = useUser();
 
   useEffect(() => {
-    if(isSignedIn && user) {
-      console.log(user)
+    if (isSignedIn && user) {
+      console.log(user);
       setFormData({
-        firstName: user.firstName || '',
-        lastName:  user.lastName || '',
-        email: user.emailAddresses?.[0].emailAddress || '',
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        email: user.emailAddresses?.[0].emailAddress || "",
         dob: new Date(),
-        gender: '',
-        address: '',
-        phone: '',
-        familyMembers: '',
-      })
+        gender: "",
+        address: "",
+        phone: "",
+        familyMembers: ""
+      });
     }
+  }, [user, isSignedIn]);
 
-  }, [user, isSignedIn])
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: value
     }));
   };
 
-  const handleDateChange = (date: Date) => {
+  const handleDateChange = (date: Date | null) => {
     setFormData((prevState) => ({
       ...prevState,
-      dob: date,
+      dob: date || new Date()
     }));
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-start rounded-t-3xl gap-4">
-
-      <div className="w-full max-w-md p-6 mt-[-6rem] shadow-md">
+    <div className="h-screen bg-white flex flex-col items-center justify-start rounded-t-3xl gap-4">
+      <div className="w-full h-screen max-w-md px-4">
         {/* Profile Picture */}
-       
-
 
         {/* Input Fields with Labels */}
-        <form className="max-w-lg mx-auto p-4 bg-white rounded-lg flex flex-col gap-5">
+        <form className="max-w-lg mx-auto px-4 bg-white rounded-lg flex flex-col gap-5">
           {/* First Name */}
           <div className="flex flex-col">
             <label className="text-gray-800 font-semibold">First Name</label>
@@ -112,7 +109,10 @@ const ProfileInfo = () => {
                 dateFormat="dd/MM/yyyy"
                 className="w-full bg-gradient-to-r from-[#FFFFFF] to-[rgba(236,149,86,0.5)] shadow-inner rounded-xl p-2 border border-gray-300 mt-2"
               />
-              <FaCalendarAlt className="absolute right-4 top-4 text-[#B64B29]" size={25} />
+              <FaCalendarAlt
+                className="absolute right-4 top-4 text-[#B64B29]"
+                size={25}
+              />
             </div>
           </div>
 
@@ -125,7 +125,7 @@ const ProfileInfo = () => {
               onChange={handleInputChange}
               className="w-full bg-gradient-to-r from-[#FFFFFF] to-[rgba(236,149,86,0.5)] shadow-inner rounded-xl p-2 border border-gray-300 mt-2"
             >
-                <option value="">Select</option>
+              <option value="">Select</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
@@ -157,14 +157,16 @@ const ProfileInfo = () => {
 
           {/* Family Members */}
           <div className="flex flex-col">
-            <label className="text-gray-800 font-semibold">Family Members</label>
+            <label className="text-gray-800 font-semibold">
+              Family Members
+            </label>
             <select
               name="familyMembers"
               value={formData.familyMembers}
               onChange={handleInputChange}
               className="w-full bg-gradient-to-r from-[#FFFFFF] to-[rgba(236,149,86,0.5)] shadow-inner rounded-xl p-2 border border-gray-300 mt-2"
             >
-                <option value="">Select</option>
+              <option value="">Select</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
@@ -176,9 +178,11 @@ const ProfileInfo = () => {
         </form>
 
         {/* Save and Cancel Buttons */}
-        <div className="flex justify-between mt-6">
+        <div className="flex justify-between my-6">
           <button className="text-[#B64B29] font-semibold ml-12">Cancel</button>
-          <button className="bg-[#B64B29] text-white font-semibold py-2 px-6 rounded-md mr-12">Save</button>
+          <button className="bg-gradient-to-r from-primary to-secondary text-white font-semibold py-2 px-6 rounded-xl mr-12">
+            Save
+          </button>
         </div>
       </div>
     </div>
