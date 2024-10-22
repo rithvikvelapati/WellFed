@@ -7,6 +7,7 @@ import { Recipe } from "@/types/types";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCamera, FaCheckCircle } from "react-icons/fa";
 import { GiCookingPot } from "react-icons/gi";
+import { useRouter } from "next/navigation";
 
 interface RecipeContentProps {
   recipe: Recipe;
@@ -31,6 +32,10 @@ const RecipeContent: React.FC<RecipeContentProps> = ({
 
   // Determine if we are on the last slide
   const isLastSlide = currentStepIndex >= recipe.steps.length;
+  const router = useRouter();
+  const handleClick = () => {
+    return router.push("/");
+  }
 
   return (
     <div className="bg-white w-auto h-auto p-4 z-50">
@@ -124,7 +129,7 @@ const RecipeContent: React.FC<RecipeContentProps> = ({
                 </button>
                 <button
                   onClick={() => {
-                    /* Handle Leave Review action */
+                    handleClick();
                   }}
                   className="px-4 py-2 bg-slate-200 text-primary rounded-2xl focus:outline-none drop-shadow-lg"
                 >

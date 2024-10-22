@@ -90,8 +90,9 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
         {/* Title and Favorite Icon */}
         <div className="flex justify-between items-center w-full font-semibold">
           {/* Title */}
-          <Link href={`/recipe-card`} passHref>
-            <div className="flex w-[70%]">
+          <div className="flex w-[70%]">
+            <Link href={`/recipe-card`}
+            className="flex w-[70%]" passHref>
               {recipe.title.length > 15 ? (
                 <AutoScrollText
                   text={recipe.title}
@@ -103,8 +104,8 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
                   {recipe.title}
                 </span>
               )}
-            </div>
-          </Link>
+            </Link>
+          </div>
 
           {/* Favorite Button */}
           <button
