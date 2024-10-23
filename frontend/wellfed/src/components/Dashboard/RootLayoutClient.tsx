@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import TopBar from '@/components/TopBar/TopBar';
-import BottomBar from '@/components/BottomBar';
+import BottomBar from '@/components/Bottombar';
 import ReduxProvider from '@/store/ReduxProvider'; // Import the Redux Provider
 import SideBar from '../Sidebar';
 import { usePathname, useRouter } from 'next/navigation';
