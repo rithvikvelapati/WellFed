@@ -1,8 +1,8 @@
-// next.config.js
+// Purpose: Configuration for Next.js
+// next.config.mjs
 
-module.exports = {
-  // Other existing configurations...
-
+export default {
+  reactStrictMode: true,
   typescript: {
     ignoreBuildErrors: true,
   },
