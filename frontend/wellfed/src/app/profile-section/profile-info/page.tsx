@@ -73,21 +73,18 @@ const ProfileInfoPage: React.FC = () => {
               objectFit="cover"
             />
             {/* Edit Button for Banner */}
-            <button className="absolute bottom-0 right-4 bg-[#B64B29] border-2 border-white text-white rounded-full p-2">
-              <FaEdit size={16} />
+            <button className="absolute bottom-1 flex items-center justify-center right-4 h-6 w-6 bg-gradient-to-r from-primary to-secondary border-2 border-white text-white rounded-full">
+              <FaEdit className="flex items-center justify-center" size={14} />
             </button>
           </div>
 
           {/* Back Button and See Profile Button */}
-          <div className="w-full flex justify-between items-center px-4 mt-4">
-            <button className="text-gray-600" onClick={() => router.back()}>
-              <IoChevronBack size={24} /> {/* Back Button */}
+          <div className="w-full flex justify-between items-center px-2 mt-4">
+            <button className="text-slate-600" onClick={() => router.back()}>
+              <IoChevronBack size={20} /> {/* Back Button */}
             </button>
-           
-           
-
             <button
-              className="text-gray-800 font-semibold flex items-center gap-1"
+              className="text-slate-600 font-semibold flex items-center space-x-fluid-px"
               onClick={() => router.push('/profile-section/profile-preview')}
             >
               See Profile <IoChevronForward size={20} /> {/* See Profile Button */}
@@ -106,12 +103,12 @@ const ProfileInfoPage: React.FC = () => {
               className="rounded-full object-cover w-full h-full border-4 border-white shadow-lg"
             />
             {/* Edit Button for Profile Picture */}
-            <button className="absolute bottom-0 right-0 bg-[#B64B29] text-white border-2 border-white rounded-full p-1">
-              <FaEdit size={16} />
+            <button className="absolute flex items-center justify-center bottom-0 right-0 h-6 w-6 bg-gradient-to-r from-primary to-secondary text-white border-2 border-white rounded-full">
+              <FaEdit size={14} />
             </button>
           </div>
         </div>
-        <div className='mt-24'>
+        <div className='mt-12'>
           <ProfileInfo />
         </div>
       </motion.div>

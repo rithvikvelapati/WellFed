@@ -78,16 +78,16 @@ const CalendarHome: React.FC = () => {
           time: "",
           location: "",
           icon: "/avatar1.png",
-          colorClass: "bg-green-200",
-          bgColor: "bg-green-100"
+          colorClass: "bg-white",
+          bgColor: "bg-white"
         },
       ]);
     }
   };
 
   return (
-    <div className="container mx-auto p-0 bg-transparent min-h-screen rounded-xl">
-      <div className="bg-transparent p-0 rounded-xl pl-1">
+    <div className="container mx-auto p-0 bg-none min-h-screen rounded-xl">
+      <div className="bg-none rounded-xl">
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"

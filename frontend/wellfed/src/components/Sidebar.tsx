@@ -94,7 +94,7 @@ const SideBar: React.FC = () => {
           )}
 
           {/* Icon Image */}
-          <div className="pl-1">
+          <div className="pl-1 z-50">
             <Image
               src={lastIcon.src}
               alt={lastIcon.label}
