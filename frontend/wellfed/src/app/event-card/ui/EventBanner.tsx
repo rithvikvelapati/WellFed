@@ -2,12 +2,39 @@
 
 "use client";
 
-import React from "react";
+import React, { ReactNode } from "react";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 
-const EventBanner: React.FC = () => {
-  const event = {
+interface Event {
+  totalRatings: ReactNode;
+
+  id: number;
+
+  title: string;
+
+  imageUrl: string;
+
+  rating: number;
+
+  bookmarked: boolean;
+
+  description: string;
+
+  duration: string;
+
+}
+
+
+
+interface EventBannerProps {
+
+  event: Event;
+
+}
+
+const EventBanner: React.FC<EventBannerProps> = ({ event }) => {
+  const defaultEvent = {
     imageUrl: "/SanFran.png",
     title: "SF Night Grille",
     description: "Join us in the heart of San Francisco for a night of delicious food and great company.",
