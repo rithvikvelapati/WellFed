@@ -13,10 +13,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 
 interface Event {
+  overview: React.ReactNode;
   id: number;
   title: string;
   imageUrl: string;
   rating: number;
+  totalRatings: number;
   bookmarked: boolean;
   description: string;
   duration: string;
@@ -28,11 +30,13 @@ const EventPage: React.FC = () => {
 
   // Local state for event data
   const [event, setEvent] = useState<Event>({
+    overview: <p>Join us for a day of community service and fun!</p>,
     id: 1,
     title: "Community Clean-Up Day",
     imageUrl: "/SanFran.png", // Ensure this image exists in your public folder
-    rating: 4.5,
+    totalRatings: 100, // Example value
     bookmarked: false,
+    rating: 4.5, // Example value
     description: "Join us in making our neighborhood cleaner and greener!",
     duration: "2-3 hours",
   });

@@ -2,22 +2,38 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { FaChevronDown, FaChevronUp, FaRegClock } from "react-icons/fa";
 
-const EventContent: React.FC = () => {
-  const [isOverviewExpanded, setIsOverviewExpanded] = useState(false);
+interface Event {
+  overview: ReactNode;
 
-  const event = {
-    duration: "2-3 hours",
-    overview: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod,
-    nunc ut laoreet venenatis, massa justo ultricies justo, vel laoreet est
-    tortor non turpis. Suspendisse potenti. Proin sit amet semper urna.
-    Praesent vel purus ac justo tincidunt tincidunt. Cras at lacus vitae
-    massa sollicitudin tincidunt. Sed vitae mi non nunc suscipit faucibus.
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-    ac turpis egestas.`,
-  };
+  id: number;
+
+  title: string;
+
+  imageUrl: string;
+
+  rating: number;
+
+  bookmarked: boolean;
+
+  description: string;
+
+  duration: string;
+
+}
+
+
+
+interface EventContentProps {
+
+  event: Event;
+
+}
+
+const EventContent: React.FC<EventContentProps> = ({ event }) => {
+  const [isOverviewExpanded, setIsOverviewExpanded] = useState(false);
 
   return (
     <div className="relative p-4 flex flex-col justify-between bg-white rounded-t-3xl h-[50vh] mt-[-20px] z-10">

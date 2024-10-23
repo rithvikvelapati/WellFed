@@ -61,7 +61,7 @@ const MealEditOverlay: React.FC<MealEditOverlayProps> = ({
   const filteredFriends = allFriends.filter((friend) =>
     friend.name && friend.name.toLowerCase().includes((searchQuery || "").toLowerCase())
   );
-  
+
 
   return (
     <Modal isOpen={isModalOpen} onClose={handleModalClose}>

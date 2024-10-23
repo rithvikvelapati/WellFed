@@ -70,7 +70,7 @@ const ReviewIngredients: React.FC = () => {
   };
 
   // Function to handle click event to show/hide pop-up
-  const togglePopUp = (index: number) => {
+  const togglePopUp = (index: number | null) => {
     setActivePopUpIndex(activePopUpIndex === index ? null : index); // Toggle the pop-up visibility
   };
 

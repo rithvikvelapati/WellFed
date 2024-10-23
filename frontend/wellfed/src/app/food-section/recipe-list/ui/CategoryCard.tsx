@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Category } from '../constants';
+import { Category } from '@/constants';
 
 interface CategoryCardProps {
   category: Category;
