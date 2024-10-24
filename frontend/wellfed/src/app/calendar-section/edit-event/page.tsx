@@ -1,11 +1,14 @@
+"use client";
+
 import React from "react";
 import EditEvent from "@/components/EditEvent/EditEvent";
 
 const EditEventPage: React.FC = () => {
-
-    return (
-        <EditEvent />
-    );
+  return (
+    <>
+      <EditEvent />
+    </>
+  );
 };
 
 export default EditEventPage;
