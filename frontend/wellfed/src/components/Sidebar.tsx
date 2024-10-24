@@ -80,7 +80,7 @@ const SideBar: React.FC = () => {
       <div className="mb-8">
         <div
           key={lastIcon.name}
-          className={`relative flex items-center w-full h-14 cursor-pointer transition-transform duration-300 ${
+          className={`relative flex items-center w-full h-14 cursor-pointer transition-transform duration-500 ${
             activeIcon === lastIcon.path ? '-translate-y-2' : 'translate-y-0'
           }`}
           onClick={() => handleIconClick(lastIcon.path)}

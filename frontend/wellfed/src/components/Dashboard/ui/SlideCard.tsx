@@ -41,7 +41,7 @@ const SlideCard: React.FC<SlideshowProps> = ({ slides }) => {
   };
 
   return (
-    <div className="relative w-full rounded-xl drop-shadow-xl">
+    <div className="relative w-full rounded-xl shadow-md">
       <div className="relative overflow-hidden h-40">
         <AnimatePresence initial={false}>
           <motion.div
