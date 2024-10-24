@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { IoIosAdd } from 'react-icons/io';
-import EditEventOverlay from '@/components/EditEvent/EditEventOverlay';
+import EditEventOverlay from '@/components/EditEvent/InviteModal';
 
 interface ToggleButtonGroupProps {
   // Optional props can be added here in the future

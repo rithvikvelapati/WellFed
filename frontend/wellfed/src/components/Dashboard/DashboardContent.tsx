@@ -9,12 +9,12 @@ const DashboardContent = () => {
       <div className="mb-2">
         <SlideShow />
       </div>
-      <div className="flex justify-between items-center pt-4">
+      <div className="flex justify-between items-center pt-2">
         <h2 className="text-fluid-md font-semibold">Suggest Recipes For You</h2>
         <a className="text-fluid-sm mr-1 text-slate-900 ">See All</a>
       </div>
       <SuggestedRecipes />
-      <div className="flex justify-between items-center pt-4">
+      <div className="flex justify-between items-center pt-2">
         <h2 className="text-fluid-md font-semibold">Featured Media</h2>
         <a className="text-fluid-sm mr-1 text-slate-900 ">See All</a>
       </div>
@@ -25,7 +25,7 @@ const DashboardContent = () => {
           }
         />
       </div>
-      <div className="flex justify-between items-center pt-4">
+      <div className="flex justify-between items-center pt-2">
         <h2 className="text-fluid-md font-semibold">Discover Events</h2>
         <a className="text-fluid-sm mr-1 font-normal text-slate-900 ">
           See All

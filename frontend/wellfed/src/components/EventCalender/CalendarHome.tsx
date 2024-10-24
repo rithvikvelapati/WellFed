@@ -119,7 +119,7 @@ const CalendarHome: React.FC = () => {
           {/* Add Event Button next to the Schedule heading */}
           <button
             className="bg-[#428F8F] text-white p-3 rounded-full shadow-md"
-            onClick={() => router.push('/calendar-section/new-schedule')} // Redirect to new schedule page
+            onClick={() => router.push('/calendar-section/add-event')} // Redirect to new schedule page
           >
             <FaPlus className="text-white" />
           </button>

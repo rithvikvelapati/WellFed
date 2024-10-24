@@ -1,7 +1,6 @@
 "use client";
-import Modal from "@/app/shared/Modal";
+
 import Image from "next/image";
-import { useState } from "react";
 import { FaFacebook, FaEnvelope, FaUserPlus } from "react-icons/fa";
 import { RiDeleteBinLine, RiMessage2Line } from "react-icons/ri";
 import { FaRegShareFromSquare } from "react-icons/fa6";
@@ -28,8 +27,6 @@ interface Group {
 }
 
 const MealEditOverlay: React.FC<MealEditOverlayProps> = ({
-  isModalOpen,
-  handleModalClose,
   searchQuery,
   handleSearchChange,
 }) => {
@@ -51,22 +48,9 @@ const MealEditOverlay: React.FC<MealEditOverlayProps> = ({
     { id: 4, name: "Group 4", image: "/group4.svg" }
   ];
 
-  const [invitedFriends, setInvitedFriends] = useState<Friend[]>([
-    allFriends[0],
-    allFriends[1],
-    allFriends[2],
-  ]);
-
-  // Filter friends based on search query
-  const filteredFriends = allFriends.filter((friend) =>
-    friend.name && friend.name.toLowerCase().includes((searchQuery || "").toLowerCase())
-  );
-
 
   return (
-    <Modal isOpen={isModalOpen} onClose={handleModalClose}>
       <div className="p-6 text-white">
-
         {/* All Friends Section */}
         <div>
           <h4 className="font-normal text-sm mb-1">All Friends - {allFriends.length}</h4>
@@ -87,9 +71,9 @@ const MealEditOverlay: React.FC<MealEditOverlayProps> = ({
 
         {/* Invited Friends Section */}
         <div>
-          <h4 className="font-normal text-sm mb-1">Invited - {invitedFriends.length}</h4>
+          <h4 className="font-normal text-sm mb-1">Invited - {allFriends.length}</h4>
           <div className="flex space-x-1 mb-6">
-            {invitedFriends.map((friend) => (
+            {allFriends.map((friend) => (
               <div key={friend.id} className="relative">
                 <Image
                   src={friend.image}
@@ -175,7 +159,6 @@ const MealEditOverlay: React.FC<MealEditOverlayProps> = ({
           </button>
         </div>
       </div>
-    </Modal>
   );
 };
 

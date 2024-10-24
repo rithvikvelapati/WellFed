@@ -9,10 +9,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { IoClose } from "react-icons/io5";
 
 interface EditEventOverlayProps {
-  isModalOpen: boolean;
-  searchQuery: string;
+  isInviteModalOpen: boolean;
   handleModalClose: () => void;
-  handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface Friend {
@@ -27,11 +25,9 @@ interface Group {
   image: string;
 }
 
-const EditEventOverlay: React.FC<EditEventOverlayProps> = ({
-  isModalOpen,
+const InviteModal: React.FC<EditEventOverlayProps> = ({
+  isInviteModalOpen,
   handleModalClose,
-  searchQuery,
-  handleSearchChange
 }) => {
   const allFriends: Friend[] = [
     { id: 1, name: "John", image: "/Profile1.svg" },
@@ -75,9 +71,6 @@ const EditEventOverlay: React.FC<EditEventOverlayProps> = ({
   };
 
   // Filter friends based on search query
-  const filteredFriends = allFriends.filter((friend) =>
-    friend.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   return (
     <AnimatePresence>
@@ -201,8 +194,6 @@ const EditEventOverlay: React.FC<EditEventOverlayProps> = ({
             <div className="flex items-center mb-4">
               <input
                 type="text"
-                value={searchQuery}
-                onChange={handleSearchChange}
                 className="border border-gray-300 rounded-md p-2 w-full text-black"
                 placeholder="Search friends"
               />
@@ -216,4 +207,4 @@ const EditEventOverlay: React.FC<EditEventOverlayProps> = ({
   );
 };
 
-export default EditEventOverlay;
+export default InviteModal;

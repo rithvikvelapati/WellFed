@@ -4,27 +4,27 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import EditEventOverlay from "./EditEventOverlay";
+
 import { FaChevronLeft } from "react-icons/fa"; // Import the back icon
 import { useRouter } from "next/navigation"; // Import Next.js router
 import EditDetailsModal from "../EventCalender/EditDetailsModal";
 import { useDispatch } from "react-redux";
 import { setModalOpen } from "@/store/modalSlice";
 import { AnimatePresence, motion } from "framer-motion";
+import InviteModal from "./InviteModal";
 
 const EditEvent: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const router = useRouter(); // Initialize Next.js router
   const dispatch = useDispatch();
 
   const handleModalOpen = () => {
-    setIsModalOpen(true);
+    setIsInviteModalOpen(true);
   };
 
   const handleModalClose = () => {
-    setIsModalOpen(false);
+    setIsInviteModalOpen(false);
   };
 
   const handleEditModalOpen = () => {
@@ -34,11 +34,6 @@ const EditEvent: React.FC = () => {
   const handleEditModalClose = () => {
     setIsEditModalOpen(false);
   };
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
-
    // Set modal open state to true when component mounts
   useEffect(() => {
     dispatch(setModalOpen(true));
@@ -235,11 +230,10 @@ const EditEvent: React.FC = () => {
       </div>
 
       {/* Modals */}
-      {isModalOpen && (
-        <EditEventOverlay
-          handleModalClose={handleModalClose}
-          searchQuery={searchQuery}
-          handleSearchChange={handleSearchChange} isModalOpen={false}        />
+      {isInviteModalOpen && (
+        <InviteModal
+          handleModalClose={handleModalClose} isInviteModalOpen={false}
+        />
       )}
 
       {isEditModalOpen && (

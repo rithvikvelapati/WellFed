@@ -47,7 +47,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
 
   return (
     <div
-      className="relative inline-block flex-shrink-0 w-[180px] h-[178px] bg-white rounded-lg overflow-hidden shadow-lg"
+      className="relative inline-block flex-shrink-0 w-[180px] h-[178px] bg-white rounded-lg overflow-hidden shadow-md"
       tabIndex={0}
       onFocus={handleFocus}
       onBlur={handleBlur}
