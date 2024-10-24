@@ -9,8 +9,10 @@ import { IoIosLink, IoMdMore } from "react-icons/io";
 import { MdAdd } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 import { IoClose } from "react-icons/io5";
+import { setInviteModalOpen } from "@/store/modalSlice";
+import { useDispatch } from "react-redux";
 
-interface EditEventOverlayProps {
+interface InviteModalProps {
   isInviteModalOpen: boolean;
   handleModalClose: () => void;
 }
@@ -27,10 +29,11 @@ interface Group {
   image: string;
 }
 
-const InviteModal: React.FC<EditEventOverlayProps> = ({
+const InviteModal: React.FC<InviteModalProps> = ({
   isInviteModalOpen,
   handleModalClose,
 }) => {
+  const dispatch = useDispatch();
   const allFriends: Friend[] = [
     { id: 1, name: "John", image: "/Profile1.svg" },
     { id: 2, name: "Emma", image: "/Profile2.svg" },
@@ -71,11 +74,11 @@ const InviteModal: React.FC<EditEventOverlayProps> = ({
       transition: { type: "tween", duration: 0.5 }
     }
   };
-
   // Filter friends based on search query
 
   return (
     <AnimatePresence>
+      {isInviteModalOpen && (
       <motion.div
         className="fixed inset-0 z-50 bg-black bg-opacity-70 overflow-y-auto"
         variants={modalVariants}
@@ -205,6 +208,7 @@ const InviteModal: React.FC<EditEventOverlayProps> = ({
             </div>
           </div>
       </motion.div>
+      )}
     </AnimatePresence>
   );
 };
