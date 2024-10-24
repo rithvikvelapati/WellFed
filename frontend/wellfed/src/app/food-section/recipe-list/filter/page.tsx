@@ -1,35 +1,48 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import { IoIosArrowBack } from 'react-icons/io';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '@/store/store';
-import { setModalOpen } from '@/store/modalSlice';
-import CategoryFilter from '../ui/CategoryFilter';
-import PreparationTimeFilter from '../ui/PreparationTimeFilter';
-import ServingsFilter from '../ui/ServingsFilter';
-import ToggleButtonGroup from '../ui/ToggleButtonGroup';
-import CaloriesFilter from '../ui/CaloriesFilter';
-import { setFilters, resetFilters } from '@/store/filterSlice';
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { IoIosArrowBack } from "react-icons/io";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store/store";
+import { setModalOpen } from "@/store/modalSlice";
+import CategoryFilter from "../ui/CategoryFilter";
+import PreparationTimeFilter from "../ui/PreparationTimeFilter";
+import ServingsFilter from "../ui/ServingsFilter";
+import ToggleButtonGroup from "../ui/ToggleButtonGroup";
+import CaloriesFilter from "../ui/CaloriesFilter";
+import { setFilters, resetFilters } from "@/store/filterSlice";
 
 const FilterPage: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
   // Get filter values from Redux store
-  const categoryIdFromStore = useSelector((state: RootState) => state.filter.categoryId);
-  const timeIdFromStore = useSelector((state: RootState) => state.filter.timeId);
-  const servingsFromStore = useSelector((state: RootState) => state.filter.servings);
-  const calorieRangeFromStore = useSelector((state: RootState) => state.filter.calorieRange);
+  const categoryIdFromStore = useSelector(
+    (state: RootState) => state.filter.categoryId
+  );
+  const timeIdFromStore = useSelector(
+    (state: RootState) => state.filter.timeId
+  );
+  const servingsFromStore = useSelector(
+    (state: RootState) => state.filter.servings
+  );
+  const calorieRangeFromStore = useSelector(
+    (state: RootState) => state.filter.calorieRange
+  );
 
-
-// Local state initialized from Redux store
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(categoryIdFromStore);
-  const [selectedTimeId, setSelectedTimeId] = useState<number | null>(timeIdFromStore);
+  // Local state initialized from Redux store
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
+    categoryIdFromStore
+  );
+  const [selectedTimeId, setSelectedTimeId] = useState<number | null>(
+    timeIdFromStore
+  );
   const [servings, setServings] = useState<number>(servingsFromStore);
-  const [calorieRange, setCalorieRange] = useState<[number, number]>(calorieRangeFromStore);
+  const [calorieRange, setCalorieRange] = useState<[number, number]>(
+    calorieRangeFromStore
+  );
   // Add other filter states as needed
 
   // Set modal open state to true when component mounts
@@ -43,19 +56,19 @@ const FilterPage: React.FC = () => {
   // Animation variants for sliding in from left to right
   const modalVariants = {
     initial: {
-      x: '-100vw', // Start from the left
-      opacity: 0,
+      x: "-100vw", // Start from the left
+      opacity: 0
     },
     animate: {
       x: 0, // End at the center
       opacity: 1,
-      transition: { type: 'tween', duration: 0.5 },
+      transition: { type: "tween", duration: 0.5 }
     },
     exit: {
-      x: '100vw', // Exit to the right
+      x: "100vw", // Exit to the right
       opacity: 0,
-      transition: { type: 'tween', duration: 0.5 },
-    },
+      transition: { type: "tween", duration: 0.5 }
+    }
   };
 
   const handleClose = () => {
@@ -71,13 +84,13 @@ const FilterPage: React.FC = () => {
     setCalorieRange([0, 5000]);
   };
 
-    const handleApplyFilters = () => {
+  const handleApplyFilters = () => {
     dispatch(
       setFilters({
         categoryId: selectedCategoryId,
         timeId: selectedTimeId,
         servings,
-        calorieRange,
+        calorieRange
         // Include other filters as needed
       })
     );
