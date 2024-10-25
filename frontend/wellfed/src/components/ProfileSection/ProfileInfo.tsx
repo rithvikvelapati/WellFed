@@ -1,47 +1,71 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { FaEdit, FaCalendarAlt } from "react-icons/fa";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { useRouter } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { FaEdit, FaCalendarAlt } from 'react-icons/fa';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { useRouter } from 'next/navigation';
+import { useUser } from '@clerk/nextjs';
+import { BASE_URL, GET_PROFILE, POST_PROFILE } from '@/constants/api';
 
 const ProfileInfo = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    dob: new Date(),
-    gender: "",
-    address: "",
-    phone: "",
-    familyMembers: ""
+    firstName: '',
+    lastName: '',
+    email: '',
+    birthdate: new Date(),
+    gender: '',
+    address: '',
+    phoneNumber: '',
+    familyMembers: '',
+    clerkId: '',
+    username: '',
+    profilePictureURL: '',
+    bannerURL: '',
   });
 
+  const [isProfilePresent, setIsProfilePresent] = useState(false);
   const { isSignedIn, user } = useUser();
 
   useEffect(() => {
     if (isSignedIn && user) {
-      console.log(user);
       setFormData({
-        firstName: user.firstName || "",
-        lastName: user.lastName || "",
-        email: user.emailAddresses?.[0].emailAddress || "",
-        dob: new Date(),
-        gender: "",
-        address: "",
-        phone: "",
-        familyMembers: ""
+        firstName: user?.firstName || '',
+        lastName: user?.lastName || '',
+        email: user?.emailAddresses?.[0].emailAddress || '',
+        birthdate: new Date(),
+        gender: '',
+        address: '',
+        phoneNumber: '',
+        familyMembers: '',
+        clerkId: user?.id || '',
+        username: user?.username || '',
+        profilePictureURL: user?.imageUrl || '', // Use Clerk's user imageUrl for profile picture
+        bannerURL: '/defaultBanner.svg', // Set a default banner (you can change this as needed)
       });
+      fetchData();
     }
   }, [user, isSignedIn]);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const fetchData = async () => {
+    try {
+      const profileUrl = BASE_URL + GET_PROFILE + user?.id;
+      const response = await fetch(profileUrl); // Call your Next.js API route
+      const result = await response.json();
+      if (user) {
+        setIsProfilePresent(true);
+        setFormData(result);
+      } else {
+        setIsProfilePresent(false);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
@@ -50,16 +74,39 @@ const ProfileInfo = () => {
   };
 
   const handleDateChange = (date: Date | null) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      dob: date || new Date()
-    }));
+    if(date) {
+      setFormData((prevState) => ({
+        ...prevState,
+        birthdate: date,
+      }));
+    }
+    
+  };
+
+  const updateProfile = async () => {
+    try {
+      const profileUpdateUrl = BASE_URL + POST_PROFILE + (isProfilePresent ? user?.id : '');
+
+      const body = { ...formData };
+      body['clerkId'] = user?.id || '';
+
+      await fetch(profileUpdateUrl, {
+        method: isProfilePresent ? 'PUT' : 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      await fetchData();
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
   };
 
   return (
-    <div className="h-screen bg-white flex flex-col items-center justify-start rounded-t-3xl gap-4">
-      <div className="w-full h-screen max-w-md px-4">
-        {/* Profile Picture */}
+    <div className="min-h-screen bg-white flex flex-col items-center justify-start rounded-t-3xl gap-4">
+      <div className="w-full max-w-md p-6 mt-[-6rem] shadow-md">
 
         {/* Input Fields with Labels */}
         <form className="max-w-lg mx-auto px-4 bg-white rounded-lg flex flex-col gap-5">
@@ -104,8 +151,8 @@ const ProfileInfo = () => {
             <label className="text-gray-800 font-semibold">Date of Birth</label>
             <div className="relative">
               <DatePicker
-                selected={formData.dob}
-                onChange={handleDateChange}
+                selected={formData.birthdate}
+                onChange={handleDateChange as any}
                 dateFormat="dd/MM/yyyy"
                 className="w-full bg-gradient-to-r from-[#FFFFFF] to-[rgba(236,149,86,0.5)] shadow-inner rounded-xl p-2 border border-gray-300 mt-2"
               />
@@ -148,8 +195,8 @@ const ProfileInfo = () => {
             <label className="text-gray-800 font-semibold">Phone</label>
             <input
               type="text"
-              name="phone"
-              value={formData.phone}
+              name="phoneNumber"
+              value={formData.phoneNumber}
               onChange={handleInputChange}
               className="w-full bg-gradient-to-r from-[#FFFFFF] to-[rgba(236,149,86,0.5)] shadow-inner rounded-xl p-2 border border-gray-300 mt-2"
             />
@@ -180,9 +227,7 @@ const ProfileInfo = () => {
         {/* Save and Cancel Buttons */}
         <div className="flex justify-between my-6">
           <button className="text-[#B64B29] font-semibold ml-12">Cancel</button>
-          <button className="bg-gradient-to-r from-primary to-secondary text-white font-semibold py-2 px-6 rounded-xl mr-12">
-            Save
-          </button>
+          <button className="bg-[#B64B29] text-white font-semibold py-2 px-6 rounded-md mr-12" onClick={updateProfile}>Save</button>
         </div>
       </div>
     </div>
