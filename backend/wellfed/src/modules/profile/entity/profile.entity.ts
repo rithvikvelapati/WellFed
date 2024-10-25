@@ -5,6 +5,9 @@ import { Entity, ObjectIdColumn, Column } from 'typeorm';
 export class Profile {
     @ObjectIdColumn()
     id: ObjectId;
+
+    @Column({ type: 'varchar', length: 255 })
+    clerkId: string;
   
     @Column({ type: 'varchar', length: 255 })
     firstName: string;
