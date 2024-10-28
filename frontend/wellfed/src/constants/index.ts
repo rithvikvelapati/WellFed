@@ -18,8 +18,18 @@ export const sidebarIcons = [
     src: "/Calendar.svg",
     path: "/calendar-section"
   },
-  { name: "groups", label: "Groups", src: "/Groups.svg", path: "/groups-section" },
-  { name: "tickets", label: "Tickets", src: "/Ticket.svg", path: "/events-section" },
+  {
+    name: "groups",
+    label: "Groups",
+    src: "/Groups.svg",
+    path: "/groups-section"
+  },
+  {
+    name: "tickets",
+    label: "Tickets",
+    src: "/Ticket.svg",
+    path: "/events-section"
+  },
   {
     name: "food",
     label: "Food",
@@ -248,7 +258,7 @@ export const eventsData = [
     imageUrl: "/SF.svg",
     rating: 5,
     bookmarked: false
-  },
+  }
 ];
 
 export interface Category {
@@ -412,7 +422,6 @@ export const reviews = [
   }
 ];
 
-
 export interface Recipe {
   id: number;
   title: string;
@@ -425,4 +434,3 @@ export interface Recipe {
   bookmarked: boolean;
   handle: string;
 }
-
