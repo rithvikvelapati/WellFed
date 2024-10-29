@@ -20,7 +20,9 @@ const routeswithStandalone = [
   '/profile-section/profile-info',
   '/cart-section/shopping-list',
   '/cart-section/recipe-ingrediants',
-  '/cart-section/review-ingrediants'
+  '/cart-section/review-ingrediants',
+  '/sign-in',
+  '/sign-up'
 ];
 
 const RootLayoutClient: React.FC<RootLayoutClientProps> = ({ children }) => {

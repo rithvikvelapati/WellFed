@@ -1,11 +1,10 @@
-// components/BottomBar.tsx
-
 'use client';
 
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { useUser } from '@clerk/nextjs';
 
 interface BottomBarProps {
   onCameraClick: () => void;
@@ -18,6 +17,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
   onSearchClick,
   onProfileClick,
 }) => {
+  const { isSignedIn, user } = useUser();
   const isModalOpen = useSelector((state: RootState) => state.modal.isModalOpen);
 
   // Track which button is selected
@@ -55,22 +55,25 @@ const BottomBar: React.FC<BottomBarProps> = ({
       </button>
 
       {/* Profile Button */}
-      <button
-        className={`flex flex-col items-center justify-center w-20 h-full ${selectedClass('profile')}`}
-        onClick={() => {
-          setSelected('profile');
-          onProfileClick();
-        }}
-        aria-label="Open Profile"
-      >
-        <Image
-          src="/Avatar.svg"
-          alt="Avatar Icon"
-          width={30}
-          height={30}
-          priority
-        />
-      </button>
+      {isSignedIn &&
+        <button
+          className={`flex flex-col items-center justify-center w-20 h-full ${selectedClass('profile')}`}
+          onClick={() => {
+            setSelected('profile');
+            onProfileClick();
+          }}
+          aria-label="Open Profile"
+        >
+          <img
+            src={user?.imageUrl || '/Avatar.svg'} // Fallback to default icon if user image is unavailable
+            alt="User Avatar"
+            width={30}
+            height={30}
+            className="rounded-full"
+            priority
+          />
+        </button>
+      }
 
       {/* Search Button */}
       <button
