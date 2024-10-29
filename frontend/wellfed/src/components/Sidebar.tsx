@@ -72,7 +72,6 @@ const SideBar: React.FC = () => {
           </div>
         ))}
       </div>
-
       {/* Spacer to push last icon to the bottom */}
       <div className="flex-grow"></div>
 

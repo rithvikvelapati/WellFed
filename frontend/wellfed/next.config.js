@@ -1,7 +1,8 @@
-// Purpose: Configuration for Next.js
-// next.config.mjs
+// next.config.js
 
-export default {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: 'export',
   reactStrictMode: true,
   images: {
     remotePatterns: [
@@ -19,3 +20,5 @@ export default {
     ignoreDuringBuilds: true,
   },
 };
+
+module.exports = nextConfig;

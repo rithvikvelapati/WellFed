@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@capacitor/cli": "^6.1.2",
+    "@capacitor/core": "^6.1.2",
     "@clerk/clerk-sdk-node": "^5.0.35",
     "@clerk/nextjs": "^5.4.1",
     "@emotion/react": "^11.13.3",
