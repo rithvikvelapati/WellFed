@@ -31,7 +31,7 @@ const TopBar: React.FC = () => {
       </Link>
 
       {/* Icons */}
-      <div className="flex items-end space-x-fluid-px mb-4">
+      <div className="flex items-center space-x-fluid-px mb-4">
         <NotificationIcon />
         <CartIcon /> {/* CartIcon now navigates to /cart-section/shopping-list */}
       </div>
