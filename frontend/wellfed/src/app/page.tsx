@@ -1,8 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import DashboardContent from "@/components/Dashboard/DashboardContent";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-  return <DashboardContent />
+  const { isSignedIn } = useUser();
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!isSignedIn) {
+      router.push('/sign-in')
+    }
+
+  }, [isSignedIn, router])
+
+  return (
+    <>
+      {
+        isSignedIn &&
+        <DashboardContent />
+      }
+    </>
+  );
 };

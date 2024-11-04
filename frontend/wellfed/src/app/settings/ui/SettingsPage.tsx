@@ -11,10 +11,12 @@ import { FaBell, FaLock } from 'react-icons/fa';
 import Link from 'next/link';
 import { FaHand } from 'react-icons/fa6';
 import { IoLogOut } from 'react-icons/io5';
+import { useClerk } from '@clerk/nextjs';  // Import useClerk to handle sign out
 
 const SettingsPage: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { signOut } = useClerk();  // Destructure signOut from useClerk
 
   // Set modal open state to true when component mounts
   useEffect(() => {
@@ -46,6 +48,9 @@ const SettingsPage: React.FC = () => {
     router.back(); // Navigate back to the previous page
   };
 
+  const handleSignOut = () => {
+    signOut({ redirectUrl: '/' }); // Trigger sign out and redirect to home page
+  };
 
   return (
     <AnimatePresence>
@@ -107,16 +112,17 @@ const SettingsPage: React.FC = () => {
                         </div>
                     </Link>
                 </li>
+                {/* Sign Out Button */}
                 <li className="flex w-auto">
-                    <Link href="/settings/account" className="flex items-center">
+                    <button onClick={handleSignOut} className="flex items-center w-full">
                         <figure className="flex justify-center items-center w-7 h-7 border-0 bg-gradient-to-r from-primary to-secondary rounded-md">
-                            <IoLogOut className="text-white " />
+                            <IoLogOut className="text-white" />
                         </figure>
                         <div className="flex justify-between items-center ml-3 border-b-2 w-auto min-w-[310px]">
                             <p className="text-slate-900 font-medium">Sign Out</p>
-                            <IoIosArrowForward className="text-slate-400 text-lg mx-1"/>
+                            <IoIosArrowForward className="text-slate-400 text-lg mx-1" />
                         </div>
-                    </Link>
+                    </button>
                 </li>
             </ul>
         </div>
