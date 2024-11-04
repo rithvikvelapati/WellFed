@@ -14,7 +14,7 @@ export default function Page() {
       router.push('/sign-in')
     }
 
-  }, [isSignedIn])
+  }, [isSignedIn, router])
 
   return (
     <>
