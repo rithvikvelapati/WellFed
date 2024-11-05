@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Image from 'next/image';
-import { Category } from '@/constants';
+import React from "react";
+import Image from "next/image";
+import { Category } from "@/constants";
+import Link from "next/link";
 
 interface CategoryCardProps {
   category: Category;
@@ -11,8 +12,10 @@ interface CategoryCardProps {
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ category, className }) => {
   return (
-    <div
-      className={`relative w-[138px] h-[188px] mx-2 rounded-lg overflow-hidden drop-shadow-lg ${className}`}
+    <Link
+      href={`/food-section/recipe-list/${category.path}`}
+      passHref
+      className={`relative w-[138px] h-[188px] mx-2 rounded-lg overflow-hidden drop-shadow-lg transition-all duration-1000 ease-out ${className}`}
     >
       {/* Background Image */}
       <Image
@@ -31,7 +34,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, className }) => {
         <h3 className="text-base font-semibold">{category.name}</h3>
         <p className="text-xs">{category.recipeCount} Recipes</p>
       </div>
-    </div>
+    </Link>
   );
 };
 

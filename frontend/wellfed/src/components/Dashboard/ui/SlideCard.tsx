@@ -18,17 +18,17 @@ const SlideCard: React.FC<SlideshowProps> = ({ slides }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const router = useRouter();
 
-  const goToNextSlide = () => {
+  const goToNextSlide = React.useCallback(() => {
     setCurrentIndex((prevIndex) =>
       prevIndex === slides.length - 1 ? 0 : prevIndex + 1
     );
-  };
+  }, [slides.length]);
 
   // Set up auto-slide functionality
   useEffect(() => {
     const interval = setInterval(() => {
       goToNextSlide();
-    }, 3000);
+    }, 12000);
     return () => clearInterval(interval);
   }, [goToNextSlide]); // Include goToNextSlide in the dependency array
   const goToSlide = (index: number) => {
