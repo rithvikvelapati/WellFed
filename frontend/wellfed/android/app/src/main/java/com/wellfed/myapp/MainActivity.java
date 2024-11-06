@@ -1,4 +1,4 @@
-package com.wellfed.app;
+package com.wellfed.myapp;
 
 import com.getcapacitor.BridgeActivity;
 
