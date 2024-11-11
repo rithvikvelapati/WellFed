@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { IoIosArrowBack } from "react-icons/io";
-import RecipeStepCarousel from "../ui/RecipeStepCarousel";
-import RecipeContent from "../ui/RecipeContent";
+import RecipeStepCarousel from "./RecipeStepCarousel";
+import RecipeContent from "./RecipeContent";
 import { SAMPLE_RECIPE } from "@/constants/recipes";
 import { AnimatePresence, motion } from "framer-motion";
 import NotificationIcon from "@/components/TopBar/NotificationIcon";

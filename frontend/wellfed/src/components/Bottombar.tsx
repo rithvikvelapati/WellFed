@@ -70,7 +70,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
             width={30}
             height={30}
             className="rounded-full"
-            priority
+            
           />
         </button>
       }

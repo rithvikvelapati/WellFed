@@ -431,7 +431,9 @@ export const reviews = [
 ];
 
 export interface Recipe {
-  id: number;
+  description: string;
+  preparationTime: any;
+  _id: number;
   title: string;
   imageUrl: string;
   time: string;
@@ -439,6 +441,7 @@ export interface Recipe {
   rating: number;
   reviews: number;
   favorited: boolean;
+  reviewsCount: number;
   bookmarked: boolean;
   handle: string;
 }
