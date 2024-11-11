@@ -12,7 +12,7 @@ export class Recipe {
   @Column({ type: 'varchar', length: 255 })
   title: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'varchar' })
   description: string;
 
   @Column({ type: 'varchar', length: 50 })
@@ -24,11 +24,17 @@ export class Recipe {
   @Column({ type: 'int' })
   preparationTime: number;
 
+  @Column({ type: 'int'})
+  totalTime: number;
+
   @Column({ type: 'int' })
   servings: number;
 
   @Column({ type: 'float', default: 0 })
   rating: number;
+
+  @Column({ type: 'text'})
+  quickTips: string;
 
   @Column({ type: 'int', default: 0 })
   reviewsCount: number;

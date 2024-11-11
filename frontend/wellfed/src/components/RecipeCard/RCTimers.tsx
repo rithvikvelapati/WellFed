@@ -1,10 +1,10 @@
 import React from 'react';
 
 interface RecipeTimersProps {
-  preparationTime: string; // Updated to receive preparationTime prop
+  totalTime: string; // Updated to receive TotalTime prop
 }
 
-const RecipeTimers: React.FC<RecipeTimersProps> = ({ preparationTime }) => {
+const RecipeTimers: React.FC<RecipeTimersProps> = ({ totalTime }) => {
   const maxTime = 60; 
 
   // Calculates the stroke dash array for the circle
@@ -38,13 +38,13 @@ const RecipeTimers: React.FC<RecipeTimersProps> = ({ preparationTime }) => {
             fill="none"
             stroke="url(#gradient-preparation)"
             strokeWidth="10"
-            strokeDasharray={calculateStrokeDashArray(parseInt(preparationTime), 40)}
+            strokeDasharray={calculateStrokeDashArray(parseInt(totalTime), 40)}
             transform="rotate(-90 50 50)"
           />
 
           {/* Text displaying the preparation time inside the circle */}
           <text x="50" y="55" fontSize="14" fontWeight="medium" fill="black" textAnchor="middle" dominantBaseline="central">
-            {preparationTime} min
+            {totalTime} min
           </text>
         </svg>
         <div className="mt-2 mb-6 text-[14px] text-gray-600">Preparation Time</div>
