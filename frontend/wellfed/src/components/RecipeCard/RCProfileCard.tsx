@@ -1,11 +1,28 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BsFillBookmarkFill, BsBookmark, BsChevronDown } from 'react-icons/bs';
 import { recipeCard } from '../../constants';
 
 const ProfileCard = () => {
   const [expanded, setExpanded] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [description, setDescription] = useState<string>('Loading...');
+
+  useEffect(() => {
+    const fetchDescription = async () => {
+      try {
+        const response = await fetch('/api/recipe/description'); // Replace with your actual API endpoint
+        if (!response.ok) throw new Error(`Failed to fetch description. Status: ${response.status}`);
+        const result = await response.json();
+        setDescription(result.description || 'No description available');
+      } catch (error) {
+        console.error('Error fetching description:', error);
+        setDescription('Error loading description');
+      }
+    };
+
+    fetchDescription();
+  }, []);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -46,7 +63,7 @@ const ProfileCard = () => {
             expanded ? '' : 'line-clamp-4'
           }`}
         >
-          {recipeCard.description}
+          {description}
           {!expanded && (
             <span className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></span>
           )}

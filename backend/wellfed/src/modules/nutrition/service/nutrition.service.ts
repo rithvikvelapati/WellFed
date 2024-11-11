@@ -9,11 +9,16 @@ export class NutritionService {
   constructor(
     @InjectRepository(Nutrition)
     private readonly nutritionRepository: Repository<Nutrition>,
-  ) {}
+  ) { }
 
   // Find all nutrition records
   findAll(): Promise<Nutrition[]> {
     return this.nutritionRepository.find();
+  }
+
+  // Find nutritions by recipeId
+  async findNutritionByRecipeId(recipeId: string): Promise<Nutrition | null> {
+    return await this.nutritionRepository.findOne({ where: { recipeId } });
   }
 
   // Find a nutrition record by ID

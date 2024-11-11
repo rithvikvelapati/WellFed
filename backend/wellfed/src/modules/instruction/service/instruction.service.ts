@@ -27,6 +27,17 @@ export class InstructionService {
     return instruction;
   }
 
+  // Find instructions by recipeId
+  async findByRecipeId(recipeId: string): Promise<Instruction[]> {
+    const instructions = await this.instructionRepository.find({
+      where: { recipeId },
+    });
+    if (!instructions.length) {
+      throw new HttpException('No instructions found for this recipe', 404);
+    }
+    return instructions;
+  }
+
   // Create a new instruction
   async create(instructionData: Partial<Instruction>): Promise<Instruction> {
     instructionData.createdAt = new Date();

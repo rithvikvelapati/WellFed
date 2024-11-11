@@ -1,14 +1,21 @@
-// next.config.js
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   reactStrictMode: true,
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'img.clerk.com',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'wellfedpics.blob.core.windows.net',
         pathname: '**',
       },
     ],

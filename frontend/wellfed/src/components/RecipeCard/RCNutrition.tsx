@@ -1,9 +1,15 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { nutritionData } from '../../constants'; // Ensure this path is correct
 
-const NutritionCard = () => {
+interface NutritionProps {
+  calories: number;
+  protein: number;
+  fat: number;
+  carbohydrates: number;
+}
+
+const NutritionCard: React.FC<NutritionProps> = ({ calories, protein, fat, carbohydrates }) => {
   return (
     <div className="mx-auto bg-white p-4">
       <div className="mb-4">
@@ -11,19 +17,19 @@ const NutritionCard = () => {
         <div className="grid grid-cols-4 text-center py-2">
           <div className="border-r border-gray-300">
             <span className="text-[16px] text-gray-600">Cal</span><br />
-            <span className="text-[16px] font-semibold">{nutritionData.calories}</span>
+            <span className="text-[16px] font-semibold">{calories}g</span>
           </div>
           <div className="border-r border-gray-300">
             <span className="text-[16px] text-gray-600">Protein</span><br />
-            <span className="text-[16px] font-semibold">{nutritionData.protein}</span>
+            <span className="text-[16px] font-semibold">{protein}g</span>
           </div>
           <div className="border-r border-gray-300">
             <span className="text-[16px] text-gray-600">Fat</span><br />
-            <span className="text-[16px] font-semibold">{nutritionData.fat}</span>
+            <span className="text-[16px] font-semibold">{fat}g</span>
           </div>
           <div>
             <span className="text-[16px] text-gray-600">Carb</span><br />
-            <span className="text-[16px] font-semibold">{nutritionData.carbs}</span>
+            <span className="text-[16px] font-semibold">{carbohydrates}g</span>
           </div>
         </div>
       </div>

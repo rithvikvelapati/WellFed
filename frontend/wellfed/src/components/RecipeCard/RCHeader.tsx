@@ -1,51 +1,26 @@
 "use client";
-import React, { useState } from 'react';
-import { FaRegPlayCircle, FaRegPauseCircle, FaRegHeart, FaHeart, FaChevronLeft, FaShareAlt } from "react-icons/fa";
-import { recipeCard } from '../../constants';
+import React from 'react';
+import Image from 'next/image';
+import { FaChevronLeft } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
 
-const RecipeCardHeader = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [likes, setLikes] = useState(recipeCard.likes);
+interface RecipeCardHeaderProps {
+  title: string;
+  description: string;
+  category: string;
+  imageUrl: string; // Added imageUrl prop
+}
 
-  const handlePlayClick = () => {
-    const video = document.getElementById('backgroundVideo') as HTMLVideoElement;
-    if (video.paused) {
-      video.play();
-      setIsPlaying(true);
-    } else {
-      video.pause();
-      setIsPlaying(false);
-    }
-  };
-
+const RecipeCardHeader: React.FC<RecipeCardHeaderProps> = ({ title, description, category, imageUrl }) => {
   const router = useRouter();
-
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    setLikes(isFavorite ? likes - 1 : likes + 1);
-  };
 
   const handleBack = () => {
     router.back();
   };
 
-  const handleShare = () => {
-    console.log('Share this video');
-  };
-
   return (
     <div className="flex justify-center items-start w-full">
-      <div className="relative w-full min-w-[375px] h-[455px] bg-white shadow-lg">
-        <video
-          id="backgroundVideo"
-          muted
-          loop
-          className="absolute w-full h-full top-0 left-0 object-cover z-0"
-          src={recipeCard.videoSrc}
-        ></video>
-
+      <div className="relative w-full min-w-[375px] h-[455px] shadow-lg overflow-hidden">
         {/* Back Button */}
         <button
           onClick={handleBack}
@@ -54,46 +29,27 @@ const RecipeCardHeader = () => {
           <FaChevronLeft size={24} />
         </button>
 
-        {/* Likes and Share */}
-        <div className="absolute top-10 right-1 z-20 flex flex-col items-center text-white">
-          <div className="flex items-center">
-            <span className="text-[18px]">{likes}</span>
-            <button onClick={toggleFavorite} className={`ml-2 ${isFavorite ? 'text-red-500' : 'text-white'}`}>
-              {isFavorite ? <FaHeart size={24} /> : <FaRegHeart size={24} />}
-            </button>
-          </div>
-          <button onClick={handleShare} className="flex mt-4">
-            <FaShareAlt size={24} />
-          </button>
-        </div>
+        {/* Recipe Image as Background */}
+        {imageUrl && (
+          <Image
+            src={imageUrl}
+            alt={title}
+            fill
+            className="object-cover z-[-1]"
+          />
+        )}
 
         {/* Gradient background for content */}
-        <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 to-transparent text-white p-4 z-10">
-          <div className="text-[18px]">{recipeCard.category}</div>
-          <h1 className="text-[35px] font-bold">{recipeCard.title}</h1>
-          <div className="flex justify-center items-center gap-1">
-            {[...Array(5)].map((_, i) => (
-              <span
-                key={i}
-                className={`text-[18px] ${i < Math.round(recipeCard.rating) ? 'text-orange-400' : 'text-gray-400'}`}
-              >
-                ★
-              </span>
-            ))}
-            <span className="text-[16px]">{recipeCard.rating} ({recipeCard.ratingsCount} ratings)</span>
-          </div>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent z-10"></div>
 
-        {/* Play/Pause Button */}
-        <button
-          onClick={handlePlayClick}
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl z-20"
-        >
-          {isPlaying ? <FaRegPauseCircle size={48} /> : <FaRegPlayCircle size={48} />}
-        </button>
+        {/* Content */}
+        <div className="absolute bottom-0 left-0 w-full text-white p-4 z-20">
+          <div className="text-[18px]">{category}</div>
+          <h1 className="text-[35px] font-bold">{title}</h1>
+        </div>
       </div>
     </div>
   );
 };
 
-export default RecipeCardHeader;
+export default RecipeCardHeader;  
