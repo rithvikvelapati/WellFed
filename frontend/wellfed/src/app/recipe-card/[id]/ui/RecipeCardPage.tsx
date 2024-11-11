@@ -26,7 +26,7 @@ const RecipeCardLayout = (props: RecipeCardProps) => {
   const [instructions, setInstructions] = useState<Instruction[]>([]);
   const [tools, setTools] = useState<Tool[]>([]);
   const [nutrition, setNutrition] = useState<NutritionData | null>(null);
-  const [preparationTime, setPreparationTime] = useState<string>("");
+  const [totalTime, settotalTime] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [category, setCategory] = useState<string>("Loading...");
@@ -38,7 +38,7 @@ const RecipeCardLayout = (props: RecipeCardProps) => {
     fetchTools();
     fetchNutrition();
     fetchRecipeDetails(); // Fetch title, description, category, and imageUrl
-    fetchPreparationTime();
+    fetchTotalTime();
   }, []);
 
   const fetchIngredients = async () => {
@@ -89,21 +89,21 @@ const RecipeCardLayout = (props: RecipeCardProps) => {
     }
   };
 
-  const fetchPreparationTime = async () => {
+  const fetchTotalTime = async () => {
     try {
-      const preparationTimeUrl = `${BASE_URL}${GET_RECEPIES}${props.recipeId}`;
-      const response = await fetch(preparationTimeUrl);
+      const totalTimeUrl = `${BASE_URL}${GET_RECEPIES}${props.recipeId}`;
+      const response = await fetch(totalTimeUrl);
       if (!response.ok) throw new Error(`Failed to fetch preparation time. Status: ${response.status}`);
       const result = await response.json();
-      if (result && result.preparationTime) {
-        setPreparationTime(result.preparationTime);
+      if (result && result.totalTime) {
+        settotalTime(result.totalTime);
       } else {
         console.warn("Preparation time not found in the response.");
-        setPreparationTime("N/A");
+        settotalTime("N/A");
       }
     } catch (error) {
       console.error("Error fetching preparation time:", error);
-      setPreparationTime("N/A");
+      settotalTime("N/A");
     }
   };
 
@@ -116,7 +116,9 @@ const RecipeCardLayout = (props: RecipeCardProps) => {
       setTitle(result.title || "No Title");
       setDescription(result.description || "No Description");
       setCategory(result.category || "No Category");
-      setImageUrl(result.imageUrl || "/default-image.jpg"); // Set imageUrl data
+      const url = "https://wellfedpics.blob.core.windows.net/recipie-images/" + result.recipeId + "-recipe.jpeg"
+      console.log(url)
+      setImageUrl(url); // Set imageUrl data
     } catch (error) {
       console.error("Error fetching recipe details:", error);
       setTitle("N/A");
@@ -151,7 +153,7 @@ const RecipeCardLayout = (props: RecipeCardProps) => {
           location={""}
         />
 
-        <Timer preparationTime={preparationTime} />
+        <Timer totalTime={totalTime} />
         <Ingredients ingredients={ingredients} instructions={instructions} tools={tools} />
         {nutrition && (
           <Nutrition

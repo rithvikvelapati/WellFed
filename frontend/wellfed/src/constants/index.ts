@@ -322,13 +322,13 @@ export const categories: Category[] = [
   // Add more categories as needed
 ];
 
-export interface PreparationTimeOption {
+export interface TotalTimeOption {
   id: number;
   label: string;
   value: number; // This could represent minutes or a code
 }
 
-export const preparationTimeOptions: PreparationTimeOption[] = [
+export const totalTimeOptions: TotalTimeOption[] = [
   {
     id: 1,
     label: "Under 15 minutes",

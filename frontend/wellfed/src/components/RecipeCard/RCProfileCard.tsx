@@ -3,27 +3,18 @@ import React, { useState, useEffect } from 'react';
 import { BsFillBookmarkFill, BsBookmark, BsChevronDown } from 'react-icons/bs';
 import { recipeCard } from '../../constants';
 
-const ProfileCard = () => {
+interface ProfileCardProps {
+  profilePic: string;
+  name: string;
+  recipes: number;
+  location: string;
+  description: string; // Added this line to accept description as a prop
+}
+
+const ProfileCard: React.FC<ProfileCardProps> = ({ profilePic, name, recipes, location, description }) => {
   const [expanded, setExpanded] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const [description, setDescription] = useState<string>('Loading...');
-
-  useEffect(() => {
-    const fetchDescription = async () => {
-      try {
-        const response = await fetch('/api/recipe/description'); // Replace with your actual API endpoint
-        if (!response.ok) throw new Error(`Failed to fetch description. Status: ${response.status}`);
-        const result = await response.json();
-        setDescription(result.description || 'No description available');
-      } catch (error) {
-        console.error('Error fetching description:', error);
-        setDescription('Error loading description');
-      }
-    };
-
-    fetchDescription();
-  }, []);
-
+  
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -38,14 +29,14 @@ const ProfileCard = () => {
         {/* Avatar and Info Row */}
         <div className="flex items-center gap-2">
           <img
-            src={recipeCard.profilePic}
-            alt={recipeCard.name}
+            src={profilePic}
+            alt={name}
             className="w-[64px] h-[64px] rounded-full"
           />
           <div className="flex-grow">
-            <h2 className="text-black text-[18px] font-semibold">{recipeCard.name}</h2>
+            <h2 className="text-black text-[18px] font-semibold">{name}</h2>
             <p className="text-gray-500 text-[16px]">
-              {recipeCard.recipes} recipes · From {recipeCard.location}
+              {recipes} recipes · From {location}
             </p>
           </div>
           <button onClick={toggleBookmark} className="text-[#EC9556]">
