@@ -109,16 +109,16 @@ const RecipeListPage = () => {
               </HorizontalScrollContainer>
             </section>
 
-            {/* Trending Now Section */}
-            <section className="mb-4">
+            {/* TAppetizers Section */}
+            <section id="/#appetizers" className="mb-4">
               <div className="flex justify-between items-center ml-2">
-                <h2 className="text-fluid-lg font-semibold">Trending Now</h2>
-                <button
+                <h2 className="text-fluid-lg font-semibold">Appetizers</h2>
+                {/* <button
                   className="flex items-center text-slate-500 text-fluid-sm"
-                  onClick={() => router.push("/trending")}
+                  onClick={() => router.push("/")}
                 >
                   See All <IoIosArrowForward className="ml-1" />
-                </button>
+                </button> */}
               </div>
               {/* Trending Now Content */}
               <div className="snap-start flex px-1 ml-1 mb-3 ">
@@ -126,16 +126,111 @@ const RecipeListPage = () => {
               </div>
             </section>
 
-            {/* Recent Recipes Section */}
-            <section className="mb-4">
+            {/* Breakfast Section */}
+            <section id="breakfast" className="mb-4">
               <div className="flex justify-between items-center ml-2">
-                <h2 className="text-fluid-lg font-semibold">Recent Recipes</h2>
-                <button
+                <h2 className="text-fluid-lg font-semibold">Breakfast</h2>
+                {/* <button
                   className="flex items-center text-slate-500 text-fluid-sm"
                   onClick={() => router.push("/recent-recipes")}
                 >
                   See All <IoIosArrowForward className="ml-1" />
-                </button>
+                </button> */}
+              </div>
+              {/* Recent Recipes Content */}
+              <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
+                <div className="snap-start flex px-2 ml-2">
+                  <HorizontalRecipeCards />
+                </div>
+              </HorizontalScrollContainer>
+            </section>
+
+            {/* Lunch Section */}
+            <section id="lunch" className="mb-4">
+              <div className="flex justify-between items-center ml-2">
+                <h2 className="text-fluid-lg font-semibold">Lunch</h2>
+                {/* <button
+                  className="flex items-center text-slate-500 text-fluid-sm"
+                  onClick={() => router.push("/recent-recipes")}
+                >
+                  See All <IoIosArrowForward className="ml-1" />
+                </button> */}
+              </div>
+              {/* Recent Recipes Content */}
+              <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
+                <div className="snap-start flex px-2 ml-2">
+                  <HorizontalRecipeCards />
+                </div>
+              </HorizontalScrollContainer>
+            </section>
+
+            {/* Breakfast Section */}
+            <section id="dinner" className="mb-4">
+              <div className="flex justify-between items-center ml-2">
+                <h2 className="text-fluid-lg font-semibold">Dinner</h2>
+                {/* <button
+                  className="flex items-center text-slate-500 text-fluid-sm"
+                  onClick={() => router.push("/recent-recipes")}
+                >
+                  See All <IoIosArrowForward className="ml-1" />
+                </button> */}
+              </div>
+              {/* Recent Recipes Content */}
+              <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
+                <div className="snap-start flex px-2 ml-2">
+                  <HorizontalRecipeCards />
+                </div>
+              </HorizontalScrollContainer>
+            </section>
+
+            {/* Breakfast Section */}
+            <section id="desserts" className="mb-4">
+              <div className="flex justify-between items-center ml-2">
+                <h2 className="text-fluid-lg font-semibold">Desserts</h2>
+                {/* <button
+                  className="flex items-center text-slate-500 text-fluid-sm"
+                  onClick={() => router.push("/recent-recipes")}
+                >
+                  See All <IoIosArrowForward className="ml-1" />
+                </button> */}
+              </div>
+              {/* Recent Recipes Content */}
+              <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
+                <div className="snap-start flex px-2 ml-2">
+                  <HorizontalRecipeCards />
+                </div>
+              </HorizontalScrollContainer>
+            </section>
+
+            {/* Breakfast Section */}
+            <section id="beverages" className="mb-4">
+              <div className="flex justify-between items-center ml-2">
+                <h2 className="text-fluid-lg font-semibold">Beverages</h2>
+                {/* <button
+                  className="flex items-center text-slate-500 text-fluid-sm"
+                  onClick={() => router.push("/recent-recipes")}
+                >
+                  See All <IoIosArrowForward className="ml-1" />
+                </button> */}
+              </div>
+              {/* Recent Recipes Content */}
+              <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
+                <div className="snap-start flex px-2 ml-2">
+                  <HorizontalRecipeCards />
+                </div>
+              </HorizontalScrollContainer>
+            </section>
+
+            {/* Breakfast Section */}
+            <section id="snacks" className="mb-4">
+              <div className="flex justify-between items-center ml-2">
+                <h2 className="text-fluid-lg font-semibold">Snacks</h2>
+                {/* <button
+                  className="flex items-center text-slate-500 text-fluid-sm"
+                  onClick={() => router.push("/recent-recipes")}
+                >
+                  See All <IoIosArrowForward className="ml-1" />
+                </button> */}
               </div>
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">

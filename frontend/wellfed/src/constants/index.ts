@@ -266,6 +266,7 @@ export interface Category {
   name: string;
   recipeCount: number;
   image: string;
+  path?: string;
 }
 
 export const categories: Category[] = [
@@ -273,43 +274,50 @@ export const categories: Category[] = [
     id: 1,
     name: "Appetizers",
     recipeCount: 324,
-    image: "/appetizers.png"
+    image: "/appetizers.png",
+    path: "/#appetizers"
   },
   {
     id: 2,
     name: "Breakfast",
     recipeCount: 440,
-    image: "/breakfast.png"
+    image: "/breakfast.png",
+    path: "/#breakfast"
   },
   {
     id: 3,
     name: "Lunch",
     recipeCount: 430,
-    image: "/lunch.png"
+    image: "/lunch.png",
+    path: "/#lunch"
   },
   {
     id: 4,
     name: "Dinner",
     recipeCount: 515,
-    image: "/dinner.png"
+    image: "/dinner.png",
+    path: "/#dinner"
   },
   {
     id: 5,
     name: "Desserts",
     recipeCount: 230,
-    image: "/desserts.png"
+    image: "/desserts.png",
+    path: "/#desserts"
   },
   {
     id: 6,
     name: "Beverages",
     recipeCount: 350,
-    image: "/beverages.png"
+    image: "/beverages.png",
+    path: "/#beverages"
   },
   {
     id: 7,
     name: "Snacks",
     recipeCount: 200,
-    image: "/snack.png"
+    image: "/snack.png",
+    path: "/#snacks"
   }
   // Add more categories as needed
 ];
