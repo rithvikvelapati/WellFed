@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import {
@@ -6,36 +7,38 @@ import {
   FaHeart,
   FaRegHeart,
   FaStar,
-  FaClock
+  FaClock,
 } from "react-icons/fa";
 import AutoScrollText from "./AutoScrollText";
 import Link from "next/link";
+import { Recipe } from "@/constants";
 
-interface Recipe {
-  id: number;
-  title: string;
-  imageUrl: string;
-  rating: number;
-  reviews: number;
-  time: string;
-  handle: string;
-  favorited: boolean;
-  bookmarked: boolean;
+export interface SavedRecipe {
+  _id: string; // MongoDB ObjectId as a string
+  recipeId: number; // Recipe identifier as a number
+  userId: string; // User identifier as a string
+  createdAt: string; // Creation date as a string
+  updatedAt: string; // Last update date as a string
+  createdBy: string; // User who created the record
+  updatedBy: string; // User who last updated the record
 }
 
 interface RecipeCardProps {
   recipe: Recipe;
-  onToggleFavorite: (id: number) => void;
+  savedRecipesData: SavedRecipe[];
+  onToggleFavorite: (id: Recipe) => void;
   onToggleBookmark: (id: number) => void;
   className?: string;
 }
 
 const RecipeCard: React.FC<RecipeCardProps> = ({
   recipe,
+  savedRecipesData,
   onToggleFavorite,
-  onToggleBookmark
+  onToggleBookmark,
 }) => {
-  // State to control focus for AutoScrollText
+  if (!recipe) return null; // Safeguard if recipe is undefined
+
   const [isFocused, setIsFocused] = React.useState(false);
 
   const handleFocus = () => setIsFocused(true);
@@ -54,10 +57,10 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
     >
       {/* Recipe Image */}
       <div className="relative w-full h-[131px]">
-        <Link href={`/recipe-card`} passHref>
+        <Link href={`/recipe-card/${recipe?._id}`} className="w-full h-full">
           <Image
-            src={recipe.imageUrl}
-            alt={recipe.title}
+            src={recipe?.imageUrl || "/default-image.jpg"}
+            alt={recipe?.title || "Recipe Image"}
             fill
             className="w-full h-full object-cover"
           />
@@ -71,13 +74,14 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
         {/* Bookmark Button */}
         <button
           onClick={(e) => {
+            e.preventDefault();
             e.stopPropagation();
-            onToggleBookmark(recipe.id);
+            onToggleBookmark(recipe?._id);
           }}
           className="absolute top-1 right-0 text-lg text-[#EC9556] hover:text-[#e8773c] mr-0.5"
-          aria-label={recipe.bookmarked ? "Remove Bookmark" : "Add Bookmark"}
+          aria-label={recipe?.bookmarked ? "Remove Bookmark" : "Add Bookmark"}
         >
-          {recipe.bookmarked ? (
+          {recipe?.bookmarked ? (
             <FaBookmark className="drop-shadow-[0_0_5px_rgba(0,0,0,1)]" />
           ) : (
             <FaRegBookmark className="drop-shadow-[0_0_5px_rgba(0,0,0,1)]" />
@@ -87,21 +91,19 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
 
       {/* Recipe Details */}
       <div className="flex w-full mt-0.5 px-1">
-        {/* Title and Favorite Icon */}
         <div className="flex justify-between items-center w-full font-semibold">
           {/* Title */}
           <div className="flex w-[70%]">
-            <Link href={`/recipe-card`}
-            className="flex w-[70%]" passHref>
-              {recipe.title.length > 15 ? (
+            <Link href={`/recipe-card/${recipe?._id}`} className="flex w-full">
+              {recipe?.title.length > 15 ? (
                 <AutoScrollText
-                  text={recipe.title}
+                  text={recipe?.title}
                   className="text-[12px] leading-tight"
                   isFocused={isFocused}
                 />
               ) : (
                 <span className="text-[12px] leading-tight">
-                  {recipe.title}
+                  {recipe?.title}
                 </span>
               )}
             </Link>
@@ -110,15 +112,16 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
           {/* Favorite Button */}
           <button
             onClick={(e) => {
+              e.preventDefault();
               e.stopPropagation();
-              onToggleFavorite(recipe.id);
+              onToggleFavorite(recipe);
             }}
             className="text-[#EC9556] hover:text-[#e8773c]"
             aria-label={
-              recipe.favorited ? "Remove Favorite" : "Add to Favorites"
+              recipe?.favorited ? "Remove Favorite" : "Add to Favorites"
             }
           >
-            {recipe.favorited ? <FaHeart /> : <FaRegHeart />}
+            {recipe?.favorited ? <FaHeart /> : <FaRegHeart />}
           </button>
         </div>
       </div>
@@ -126,27 +129,27 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
       {/* Rating, Reviews, and Time */}
       <div className="flex flex-shrink w-full items-center text-[10px] mx-1">
         <div className="container flex items-center">
-          <span className="mr-0.5 font-semibold">{recipe.rating}</span>
+          <span className="mr-0.5 font-semibold">{recipe?.rating}</span>
           <FaStar className="text-[#EC9556]" />
-          <span className="ml-0.5">({recipe.reviews})</span>
+          <span className="ml-0.5">({recipe?.reviewsCount})</span>
           <span className="mx-0.5">•</span>
           <FaClock className="mr-0.5" />
-          <span className="ml-0.5">{recipe.time}</span>
+          <span className="ml-0.5">{recipe?.time}</span>
         </div>
       </div>
 
       {/* Chef Handle */}
       <div className="flex justify-end items-center text-[10px] font-semibold leading-tight mr-0.5">
         <div className="w-[65%]">
-          {recipe.handle.length > 15 ? (
+          {recipe?.handle?.length > 15 ? (
             <AutoScrollText
-              text={recipe.handle}
+              text={recipe?.handle}
               className="text-right"
               isFocused={isFocused}
             />
           ) : (
             <span className="flex justify-end text-right mr-1">
-              {recipe.handle}
+              {recipe?.handle}
             </span>
           )}
         </div>

@@ -12,8 +12,8 @@ export class SavedRecipesService {
   ) {}
 
   // Find all saved recipes
-  findAll(): Promise<SavedRecipes[]> {
-    return this.savedRecipesRepository.find();
+  findAll(id): Promise<SavedRecipes[]> {
+    return this.savedRecipesRepository.find({ where: { userId: id } });
   }
 
   // Find a saved recipe by ID
@@ -41,6 +41,28 @@ export class SavedRecipesService {
     await this.savedRecipesRepository.update(new ObjectId(id), savedRecipeData);
     return this.findOne(id);
   }
+
+    // Update an existing saved recipe
+    async updateFav(id: string, savedRecipeData: Partial<SavedRecipes>): Promise<Boolean> {
+          savedRecipeData.updatedAt = new Date();
+      const isPresent = await this.savedRecipesRepository.findOneBy({
+       recipeId: id,
+      });
+
+      if(isPresent) {
+        await this.savedRecipesRepository.delete({recipeId: id});
+      } else {
+        savedRecipeData.updatedAt = new Date();
+        savedRecipeData.createdAt = new Date();
+        savedRecipeData.updatedBy = savedRecipeData?.userId;
+        savedRecipeData.createdBy = savedRecipeData?.userId;
+        await this.savedRecipesRepository.save(savedRecipeData);
+      }
+    
+      return true;
+    }
+
+  
 
   // Remove a saved recipe by ID
   async remove(id: string): Promise<void> {

@@ -20,6 +20,17 @@ export class IngredientService {
     return ingredient;
   }
 
+  // Find ingredients by recipeId
+  async findByRecipeId(recipeId: string): Promise<Ingredient[]> {
+    console.log('Querying with recipeId:', recipeId); // Debug line
+    const ingredients = await this.ingredientRepository.find({ where: { recipeId } });
+    if (!ingredients.length) {
+      throw new HttpException('No ingredients found for this recipe', 404);
+    }
+    return ingredients;
+  }
+  
+
   // Create a new ingredient
   async create(ingredientData: Partial<Ingredient>): Promise<Ingredient> {
     ingredientData.createdAt = new Date();
