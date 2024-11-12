@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':capacitor-android', ':capacitor-cordova-android-plugins'
 include ':capacitor-cordova-android-plugins'
 project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor-cordova-android-plugins/')
 
