@@ -12,6 +12,11 @@ export class NutritionController {
     return this.nutritionService.findAll();
   }
 
+  @Get('recipe/:recipeId')
+  async getNutritionByRecipeId(@Param('recipeId') recipeId: string): Promise<Nutrition | null> {
+    return await this.nutritionService.findNutritionByRecipeId(recipeId);
+  }
+
   // Get a single nutrition record by ID
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Nutrition> {
