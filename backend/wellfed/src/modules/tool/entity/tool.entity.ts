@@ -6,8 +6,8 @@ export class Tool {
   @ObjectIdColumn()
   _id: ObjectId;
 
-  @Column({ type: 'varchar', length: 255 })
-  recipeId: string;  // Foreign key linking to Recipe entity
+  @Column({ type: 'int' })
+  recipeId: number;  // Foreign key linking to Recipe entity
 
   @Column({ type: 'varchar', length: 255 })
   name: string;  // Name of the tool

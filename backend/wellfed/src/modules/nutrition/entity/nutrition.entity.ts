@@ -6,8 +6,8 @@ export class Nutrition {
   @ObjectIdColumn()
   _id: ObjectId;
 
-  @Column({ type: 'varchar', length: 255 })
-  recipeId: string;  // Foreign key linking to Recipe entity
+  @Column({ type: 'int' })
+  recipeId: number;  // Foreign key linking to Recipe entity
 
   @Column({ type: 'int' })
   calories: number;  // Calories per serving

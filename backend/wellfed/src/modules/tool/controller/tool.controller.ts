@@ -12,11 +12,6 @@ export class ToolController {
     return this.toolService.findAll();
   }
 
-  @Get('recipe/:recipeId')
-  async findByRecipe(@Param('recipeId') recipeId: string): Promise<Tool[]> {
-    return this.toolService.findByRecipeId(recipeId);
-  }
-
   // Get a single tool by ID
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Tool> {
