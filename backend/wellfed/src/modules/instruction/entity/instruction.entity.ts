@@ -1,13 +1,13 @@
 import { ObjectId } from 'mongodb';
-import { Entity, ObjectIdColumn, Column, Index } from 'typeorm';
+import { Entity, ObjectIdColumn, Column } from 'typeorm';
 
 @Entity('Instruction')
 export class Instruction {
   @ObjectIdColumn()
   _id: ObjectId;
 
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  recipeId: string;
+  @Column({ type: 'int' })
+  recipeId: number;
 
   @Column({ type: 'int' })
   stepNumber: number;

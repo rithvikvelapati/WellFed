@@ -6,8 +6,8 @@ export class SavedRecipes {
   @ObjectIdColumn()
   _id: ObjectId;
 
-  @Column({ type: 'varchar' })
-  recipeId: string;  // Foreign key linking to Recipe entity
+  @Column({ type: 'int' })
+  recipeId: number;  // Foreign key linking to Recipe entity
 
   @Column({ type: 'varchar', length: 255 })
   userId: string;  // Foreign key linking to User entity

@@ -16,11 +16,6 @@ export class IngredientController {
     return this.ingredientService.findOne(id);
   }
 
-  @Get('recipe/:recipeId')
-  async findByRecipe(@Param('recipeId') recipeId: string): Promise<Ingredient[]> {
-    return this.ingredientService.findByRecipeId(recipeId);
-  }
-  
   @Post()
   create(@Body() ingredientData: Partial<Ingredient>): Promise<Ingredient> {
     return this.ingredientService.create(ingredientData);

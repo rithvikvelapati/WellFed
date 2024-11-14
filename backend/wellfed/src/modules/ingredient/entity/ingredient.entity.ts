@@ -6,17 +6,17 @@ export class Ingredient {
   @ObjectIdColumn()
   _id: ObjectId;
 
-  @Column({ type: 'varchar', length: 255 })  // Ensure this matches your data type in MongoDB
-  recipeId: string;  // Treating `recipeId` as a number for compatibility
+  @Column({ type: 'int' })
+  recipeId: number;  // Foreign key linking to Recipe entity
 
   @Column({ type: 'varchar', length: 255 })
-  title: string;
+  title: string;  // Name of the ingredient
 
   @Column({ type: 'int' })
-  quantity: number;
+  quantity: number;  // Quantity of the ingredient
 
   @Column({ type: 'varchar', length: 50 })
-  unit: string;
+  unit: string;  // Unit of measurement, e.g., 'g', 'ml', etc.
 
   @Column({ type: 'varchar', length: 255 })
   createdBy: string;

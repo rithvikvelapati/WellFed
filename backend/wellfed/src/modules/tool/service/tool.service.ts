@@ -16,16 +16,6 @@ export class ToolService {
     return this.toolRepository.find();
   }
 
-    // Find tools by recipeId
-    async findByRecipeId(recipeId: string): Promise<Tool[]> {
-      console.log('Querying with recipeId:', recipeId); // Debug line
-      const tools = await this.toolRepository.find({ where: { recipeId } });
-      if (!tools.length) {
-        throw new HttpException('No tools found for this recipe', 404);
-      }
-      return tools;
-    }
-
   // Find a tool by ID
   async findOne(id: string): Promise<Tool> {
     const tool = await this.toolRepository.findOneBy({
