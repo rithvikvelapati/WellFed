@@ -4,13 +4,16 @@
 
 import React from "react";
 import Image from "next/image";
-import { Recipe } from "@/types/types";
+import { Ingredient, Instruction, Recipe, Tool } from "@/types/types";
 import { useSwipeable } from "react-swipeable";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaFlagCheckered } from "react-icons/fa";
 
 interface RecipeStepCarouselProps {
   recipe: Recipe;
+  tools: Tool[];
+  ingredients: Ingredient[];
+  instructions: Instruction[];
   currentStepIndex: number;
   setCurrentStepIndex: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -21,11 +24,14 @@ interface RecipeStepCarouselProps {
  * The last slide is an additional slide with a flag icon.
  */
 const RecipeStepCarousel: React.FC<RecipeStepCarouselProps> = ({
+  tools,
+  ingredients,
+  instructions,
   recipe,
   currentStepIndex,
   setCurrentStepIndex,
 }) => {
-  const totalSlides = recipe.steps.length + 1; // Steps + completion slide
+  const totalSlides = instructions.length + 1; // Steps + completion slide
 
   const goToPrevious = () => {
     const index =
@@ -61,10 +67,10 @@ const RecipeStepCarousel: React.FC<RecipeStepCarouselProps> = ({
           className="absolute inset-0"
         >
           {/* Image */}
-          {currentStepIndex < recipe.steps.length ? (
+          {currentStepIndex < instructions.length ? (
             <Image
-              src={recipe.steps[currentStepIndex].imageUrl}
-              alt={`Step ${recipe.steps[currentStepIndex].stepNumber}`}
+              src={"https://wellfedpics.blob.core.windows.net/recipie-images/" + recipe.recipeId + "-stage-" + (currentStepIndex + 1) + ".jpeg"}
+              alt={`Step ${instructions[currentStepIndex].stepNumber}`}
               fill
               style={{ objectFit: "cover" }}
             />
@@ -96,12 +102,12 @@ const RecipeStepCarousel: React.FC<RecipeStepCarouselProps> = ({
                     : "bg-slate-600 text-white"
                 }`}
                 aria-label={
-                  index < recipe.steps.length
+                  index < instructions.length
                     ? `Go to step ${index + 1}`
                     : "Recipe Complete"
                 }
               >
-                {index < recipe.steps.length ? (
+                {index < instructions.length ? (
                   index + 1
                 ) : (
                   <FaFlagCheckered className="text-lg" />

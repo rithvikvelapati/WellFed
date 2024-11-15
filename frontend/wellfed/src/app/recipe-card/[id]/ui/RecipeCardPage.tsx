@@ -26,18 +26,19 @@ const RecipeCardLayout = (props: RecipeCardProps) => {
   const [instructions, setInstructions] = useState<Instruction[]>([]);
   const [tools, setTools] = useState<Tool[]>([]);
   const [nutrition, setNutrition] = useState<NutritionData | null>(null);
-  const [totalTime, settotalTime] = useState<string>("");
+  const [totalTime, setTotalTime] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [category, setCategory] = useState<string>("Loading...");
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [servings, setServings] = useState<number>(1); // Added to store servings
 
   useEffect(() => {
     fetchIngredients();
     fetchInstructions();
     fetchTools();
     fetchNutrition();
-    fetchRecipeDetails(); // Fetch title, description, category, and imageUrl
+    fetchRecipeDetails(); // Fetch title, description, category, imageUrl, and servings
     fetchTotalTime();
   }, []);
 
@@ -96,14 +97,14 @@ const RecipeCardLayout = (props: RecipeCardProps) => {
       if (!response.ok) throw new Error(`Failed to fetch preparation time. Status: ${response.status}`);
       const result = await response.json();
       if (result && result.totalTime) {
-        settotalTime(result.totalTime);
+        setTotalTime(result.totalTime);
       } else {
         console.warn("Preparation time not found in the response.");
-        settotalTime("N/A");
+        setTotalTime("N/A");
       }
     } catch (error) {
       console.error("Error fetching preparation time:", error);
-      settotalTime("N/A");
+      setTotalTime("N/A");
     }
   };
 
@@ -116,15 +117,15 @@ const RecipeCardLayout = (props: RecipeCardProps) => {
       setTitle(result.title || "No Title");
       setDescription(result.description || "No Description");
       setCategory(result.category || "No Category");
-      const url = "https://wellfedpics.blob.core.windows.net/recipie-images/" + result.recipeId + "-recipe.jpeg"
-      console.log(url)
-      setImageUrl(url); // Set imageUrl data
+      setImageUrl("https://wellfedpics.blob.core.windows.net/recipie-images/" + result.recipeId + "-recipe.jpeg");
+      setServings(result.servings || 1); // Set servings from response
     } catch (error) {
       console.error("Error fetching recipe details:", error);
       setTitle("N/A");
       setDescription("N/A");
       setCategory("Error loading category");
-      setImageUrl("/default-image.jpg");
+      setImageUrl("");
+      setServings(1); // Default value on error
     }
   };
 
@@ -145,22 +146,16 @@ const RecipeCardLayout = (props: RecipeCardProps) => {
     <AnimatePresence>
       <motion.div className="fixed inset-0 z-50 bg-white overflow-y-auto" variants={modalVariants} initial="initial" animate="animate" exit="exit">
         <Header title={title} category={category} description={description} imageUrl={imageUrl} />
-        <Profile
-          description={description} 
-          profilePic={imageUrl}
-          name={title}
-          recipes={0}
-          location={""}
-        />
-
+        <Profile description={description} profilePic={""} name={""} recipes={0} location={""} />
         <Timer totalTime={totalTime} />
-        <Ingredients ingredients={ingredients} instructions={instructions} tools={tools} />
+        <Ingredients ingredients={ingredients} instructions={instructions} tools={tools} servings={servings} /> {/* Pass servings as prop */}
         {nutrition && (
           <Nutrition
             calories={nutrition.calories}
             protein={nutrition.protein}
             fat={nutrition.fat}
             carbohydrates={nutrition.carbohydrates}
+            recipeId={props.recipeId}
           />
         )}
         <Reviews />

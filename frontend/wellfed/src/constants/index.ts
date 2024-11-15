@@ -431,6 +431,8 @@ export const reviews = [
 ];
 
 export interface Recipe {
+  id: number;
+  recipeId: number;
   description: string;
   preparationTime: any;
   _id: number;

@@ -4,7 +4,7 @@ import { Recipe } from '../entity/recipe.entity';
 
 @Controller('recipe')
 export class RecipeController {
-  constructor(private readonly recipeService: RecipeService) {}
+  constructor(private readonly recipeService: RecipeService) { }
 
   // Get all recipes
   @Get()
@@ -16,6 +16,24 @@ export class RecipeController {
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Recipe> {
     return this.recipeService.findOne(id);
+  }
+  
+  // Create a new recipe
+  @Post("save-all")
+  async createAll(@Body() recipeDataList: Partial<Recipe>[]): Promise<boolean> {
+    for (const recipeData of recipeDataList) {
+      await this.recipeService.create(recipeData);
+    }
+    return true;
+  }
+
+  // Create a new recipe
+  @Put("update-all")
+  async updateAll(@Body() recipeDataList: Partial<Recipe>[]): Promise<boolean> {
+    for (const recipeData of recipeDataList) {
+      await this.recipeService.updateAll(recipeData);
+    }
+    return true;
   }
 
   // Create a new recipe

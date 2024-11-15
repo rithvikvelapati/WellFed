@@ -3,12 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Ingredient } from '../entity/ingredient.entity';
 import { ObjectId } from 'mongodb';
+import { Recipe } from 'src/modules/recipe/entity/recipe.entity';
 
 @Injectable()
 export class IngredientService {
   constructor(
     @InjectRepository(Ingredient)
     private readonly ingredientRepository: Repository<Ingredient>,
+    @InjectRepository(Recipe)
+    private readonly recipeRepository: Repository<Recipe>,
   ) {}
 
   // Find an ingredient by _id
@@ -19,6 +22,17 @@ export class IngredientService {
     }
     return ingredient;
   }
+
+  // Find ingredients by recipeId
+  async findByRecipeId(recipeId: string): Promise<Ingredient[]> {
+    console.log('Querying with recipeId:', recipeId); // Debug line
+    const ingredients = await this.ingredientRepository.find({ where: { recipeId } });
+    if (!ingredients.length) {
+      throw new HttpException('No ingredients found for this recipe', 404);
+    }
+    return ingredients;
+  }
+  
 
   // Create a new ingredient
   async create(ingredientData: Partial<Ingredient>): Promise<Ingredient> {
@@ -38,6 +52,26 @@ export class IngredientService {
     await this.ingredientRepository.update({ _id: new ObjectId(id) }, ingredientData);
     return this.findOne(id);
   }
+    // Update an existing ingredient
+    async updateAll(): Promise<boolean> {
+
+      const ings = await this.ingredientRepository.find();
+      for (const ing of ings) {
+        
+       
+        const rec = await this.recipeRepository.findOne({where: {recipeId: parseInt(ing.recipeId)}})
+        if(rec) {
+          ing.recipeId = rec._id.toString();
+          ing.updatedAt = new Date();
+          ing.createdAt = new Date();
+          ing.createdBy = 'Admin';
+          ing.updatedBy = 'Admin';
+          await this.ingredientRepository.update({ _id: new ObjectId(ing._id) }, ing);
+        }
+        
+      }
+      return true
+    }
 
   // Get all ingredients
   async findAll(): Promise<Ingredient[]> {
