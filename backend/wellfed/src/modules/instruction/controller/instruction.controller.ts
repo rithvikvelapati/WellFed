@@ -18,6 +18,11 @@ export class InstructionController {
     return this.instructionService.findOne(id);
   }
 
+  @Get('recipe/:recipeId')
+  findByRecipeId(@Param('recipeId') recipeId: string): Promise<Instruction[]> {
+    return this.instructionService.findByRecipeId(recipeId);
+  }
+
   // POST create a new instruction
   @Post()
   create(@Body() instructionData: Partial<Instruction>): Promise<Instruction> {
@@ -28,6 +33,11 @@ export class InstructionController {
   @Put(':id')
   update(@Param('id') id: string, @Body() instructionData: Partial<Instruction>): Promise<Instruction> {
     return this.instructionService.update(id, instructionData);
+  }
+
+  @Put()
+  updateAll(): Promise<boolean> {
+    return this.instructionService.updateAll();
   }
 
   // DELETE an instruction

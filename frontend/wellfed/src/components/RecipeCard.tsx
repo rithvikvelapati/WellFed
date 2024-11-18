@@ -59,7 +59,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
       <div className="relative w-full h-[131px]">
         <Link href={`/recipe-card/${recipe?._id}`} className="w-full h-full">
           <Image
-            src={recipe?.imageUrl || "/default-image.jpg"}
+            src={"https://wellfedpics.blob.core.windows.net/recipie-images/" + recipe.recipeId + "-recipe.jpeg"}
             alt={recipe?.title || "Recipe Image"}
             fill
             className="w-full h-full object-cover"
@@ -96,19 +96,20 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
           {/* Title */}
           <div className="flex w-[70%]">
             <Link href={`/recipe-card/${recipe?._id}`} className="flex w-full">
-              {recipe?.title.length > 15 ? (
+              {recipe?.title && recipe.title.length > 15 ? (
                 <AutoScrollText
-                  text={recipe?.title}
+                  text={recipe.title}
                   className="text-[12px] leading-tight"
                   isFocused={isFocused}
                 />
               ) : (
                 <span className="text-[12px] leading-tight">
-                  {recipe?.title}
+                  {recipe?.title || 'Untitled Recipe'}
                 </span>
               )}
             </Link>
           </div>
+
 
           {/* Favorite Button */}
           <button

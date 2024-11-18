@@ -16,6 +16,11 @@ export class IngredientController {
     return this.ingredientService.findOne(id);
   }
 
+  @Get('recipe/:recipeId')
+  async findByRecipe(@Param('recipeId') recipeId: string): Promise<Ingredient[]> {
+    return this.ingredientService.findByRecipeId(recipeId);
+  }
+  
   @Post()
   create(@Body() ingredientData: Partial<Ingredient>): Promise<Ingredient> {
     return this.ingredientService.create(ingredientData);
@@ -24,6 +29,11 @@ export class IngredientController {
   @Put(':id')
   update(@Param('id') id: string, @Body() ingredientData: Partial<Ingredient>): Promise<Ingredient> {
     return this.ingredientService.update(id, ingredientData);
+  }
+
+  @Put()
+  updateAll(): Promise<boolean> {
+    return this.ingredientService.updateAll();
   }
 
   @Delete(':id')

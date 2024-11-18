@@ -3,10 +3,13 @@ import { Injectable, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Instruction } from '../entity/instruction.entity';
+import { Recipe } from 'src/modules/recipe/entity/recipe.entity';
 
 @Injectable()
 export class InstructionService {
   constructor(
+    @InjectRepository(Recipe)
+    private readonly recipeRepository: Repository<Recipe>,
     @InjectRepository(Instruction)
     private readonly instructionRepository: Repository<Instruction>,
   ) {}
@@ -25,6 +28,39 @@ export class InstructionService {
       throw new HttpException('Instruction not found', 404);
     }
     return instruction;
+  }
+
+  
+   // Update an existing ingredient
+   async updateAll(): Promise<boolean> {
+
+    const ings = await this.instructionRepository.find();
+    for (const ing of ings) {
+      
+     
+      const rec = await this.recipeRepository.findOne({where: {recipeId: parseInt(ing.recipeId)}})
+      if(rec) {
+        ing.recipeId = rec._id.toString();
+        ing.updatedAt = new Date();
+        ing.createdAt = new Date();
+        ing.createdBy = 'Admin';
+        ing.updatedBy = 'Admin';
+        await this.instructionRepository.update({ _id: new ObjectId(ing._id) }, ing);
+      }
+      
+    }
+    return true
+  }
+
+  // Find instructions by recipeId
+  async findByRecipeId(recipeId: string): Promise<Instruction[]> {
+    const instructions = await this.instructionRepository.find({
+      where: { recipeId },
+    });
+    if (!instructions.length) {
+      throw new HttpException('No instructions found for this recipe', 404);
+    }
+    return instructions;
   }
 
   // Create a new instruction

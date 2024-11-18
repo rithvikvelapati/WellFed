@@ -35,6 +35,15 @@ export class RecipeService {
     return this.recipeRepository.save(recipe);
   }
 
+  async updateAll(recipeData: Partial<Recipe>): Promise<boolean> {
+    const updateResult = await this.recipeRepository.update(
+      { recipeId: recipeData.recipeId },
+      recipeData,
+    );
+
+    return true
+  }
+
   // Update an existing recipe
   async update(id: string, recipeData: Partial<Recipe>): Promise<Recipe> {
     recipeData.updatedAt = new Date();

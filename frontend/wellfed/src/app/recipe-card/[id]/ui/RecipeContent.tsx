@@ -2,8 +2,8 @@
 
 "use client";
 
-import React from "react";
-import { Recipe } from "@/types/types";
+import React, { useEffect, useState } from "react";
+import { Ingredient, Instruction, Recipe, Tool } from "@/types/types";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCamera, FaCheckCircle } from "react-icons/fa";
 import { GiCookingPot } from "react-icons/gi";
@@ -12,6 +12,9 @@ import { useRouter } from "next/navigation";
 interface RecipeContentProps {
   recipe: Recipe;
   currentStepIndex: number;
+  tools: Tool[];
+  ingredients: Ingredient[];
+  instructions: Instruction[];
 }
 
 /**
@@ -20,9 +23,14 @@ interface RecipeContentProps {
  * Ingredients and tools remain visible during steps but are hidden on the last slide.
  */
 const RecipeContent: React.FC<RecipeContentProps> = ({
+  tools,
+  ingredients,
+  instructions,
   recipe,
   currentStepIndex,
 }) => {
+  const [ingredient, setIngredient] = useState(ingredients[0]);
+  const [instruction, setInstruction] = useState(instructions[0] as any);
   // Animation variants
   const variants = {
     enter: { opacity: 0, x: 50 },
@@ -30,8 +38,16 @@ const RecipeContent: React.FC<RecipeContentProps> = ({
     exit: { opacity: 0, x: -50 },
   };
 
+  useEffect(() => {
+
+    setIngredient(ingredients[currentStepIndex]);
+    setInstruction(instructions.find(ins => ins.stepNumber === currentStepIndex + 1))
+
+
+  }, [currentStepIndex])
+
   // Determine if we are on the last slide
-  const isLastSlide = currentStepIndex >= recipe.steps.length;
+  const isLastSlide = currentStepIndex >= ingredients.length;
   const router = useRouter();
   const handleClick = () => {
     return router.push("/");
@@ -46,36 +62,40 @@ const RecipeContent: React.FC<RecipeContentProps> = ({
           <h2 className="text-2xl font-bold mb-4">{recipe.title}</h2>
 
           {/* Ingredients Section */}
-          <div className="flex items-start mb-4">
+          <div className="flex items-center mb-4">
             <div className="w-6 h-6 m-fluid-px">
-            <FaCheckCircle className="text-slate-500 w-5 h-5" />
+              <FaCheckCircle className="text-slate-500 w-5 h-5" />
             </div>
             <p>
-              {recipe.ingredients.map((ingredient, index) => (
+              {ingredients.map((ingredient, index) => (
                 <React.Fragment key={index}>
-                  <span className="font-bold">{ingredient.name}</span>
+                  <span className="font-bold">{ingredient.title}</span>
                   {ingredient.quantity ? ` - ${ingredient.quantity}` : ""}
-                  {index < recipe.ingredients.length - 1 && " - "}
+                  {index < ingredients.length - 1 && " - "}
                 </React.Fragment>
               ))}
             </p>
           </div>
 
           {/* Tools Section */}
-          <div className="flex items-start mb-4">
-            <div className=" w-6 h-6 m-fluid-px">
-            <GiCookingPot className="text-slate-500 w-6 h-6" />
+          {tools?.length > 0 &&
+            <div className="flex items-start mb-4">
+              <div className=" w-6 h-6 m-fluid-px">
+                <GiCookingPot className="text-slate-500 w-6 h-6" />
+
+              </div>
+
+              <p>
+                {tools.map((tool, index) => (
+                  <React.Fragment key={index}>
+                    {tool.name}
+                    {index < recipe.tools.length - 1 && " - "}
+                  </React.Fragment>
+                ))}
+              </p>
 
             </div>
-            <p>
-              {recipe.tools.map((tool, index) => (
-                <React.Fragment key={index}>
-                  {tool}
-                  {index < recipe.tools.length - 1 && " - "}
-                </React.Fragment>
-              ))}
-            </p>
-          </div>
+          }
 
           {/* Divider */}
           <hr className="my-4" />
@@ -94,10 +114,10 @@ const RecipeContent: React.FC<RecipeContentProps> = ({
             transition={{ duration: 0.3 }}
           >
             <h3 className="text-xl font-semibold mb-2">
-              {`Step ${recipe.steps[currentStepIndex].stepNumber}`}
+              {`Step ${currentStepIndex + 1}`}
             </h3>
             <p className="text-base">
-              {recipe.steps[currentStepIndex].instruction}
+              {instruction?.instruction}
             </p>
           </motion.div>
         ) : (
