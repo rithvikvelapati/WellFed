@@ -60,6 +60,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
         <Link href={`/recipe-card/${recipe?._id}`} className="w-full h-full">
           <Image
             src={"https://wellfedpics.blob.core.windows.net/recipie-images/" + recipe.recipeId + "-recipe.jpeg"}
+
             alt={recipe?.title || "Recipe Image"}
             fill
             className="w-full h-full object-cover"
