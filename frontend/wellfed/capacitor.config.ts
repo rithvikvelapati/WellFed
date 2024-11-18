@@ -4,10 +4,9 @@ const config: CapacitorConfig = {
   appId: 'com.wellfed.myapp',
   appName: 'wellfed',
   webDir: '.next',
-  bundledWebRuntime: false,
   server: {
-    url: 'https://wellfed-gegagma4dwgkc6fg.eastus2-01.azurewebsites.net', // URL of your Azure App Service
-    cleartext: false, // Ensure this is false for HTTPS
+    url: 'http://192.168.1.194:3000', // Your local IP address
+    cleartext: true, // Ensure this is true for HTTP during development
   },
 };
 

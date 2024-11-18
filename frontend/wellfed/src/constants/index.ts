@@ -435,6 +435,7 @@ export interface Recipe {
   recipeId: number;
   description: string;
   preparationTime: any;
+  totalTime: number;
   _id: number;
   title: string;
   imageUrl: string;
