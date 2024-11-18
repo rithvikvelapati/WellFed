@@ -22,6 +22,7 @@ jobs:
           node-version: '20.x'
 
       - name: npm install, build, and test
+        working-directory: frontend/wellfed # Specify the path to your frontend project directory
         run: |
           npm install
           npm run build --if-present
@@ -31,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .
+          path: frontend/wellfed # Ensure this matches your frontend path
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,7 +41,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -61,5 +62,4 @@ jobs:
         with:
           app-name: 'Wellfed'
           slot-name: 'Production'
-          package: .
-          
+          package: frontend/wellfed 

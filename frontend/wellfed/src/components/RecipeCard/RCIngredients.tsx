@@ -1,22 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import Link from 'next/link';
-import { initialServings } from '../../constants'; // Importing constants
 import { Ingredient, Instruction, Tool } from "@/types/types";
 
 interface RecipeIngredientsProps {
   ingredients: Ingredient[];
   instructions: Instruction[];
   tools: Tool[];
+  servings: number; // Accept servings as a prop
 }
 
 const RecipeIngredients: React.FC<RecipeIngredientsProps> = ({
   ingredients,
   instructions,
   tools,
+  servings: initialServings, // Use servings from parent as initial state
 }) => {
-  const [servings, setServings] = useState(initialServings);
+  const [servings, setServings] = useState<number>(initialServings);
+  const [adjustedIngredients, setAdjustedIngredients] = useState<Ingredient[]>(ingredients);
+
+  useEffect(() => {
+    setServings(initialServings); // Update state if prop changes
+  }, [initialServings]);
+
+  useEffect(() => {
+    // Calculate new ingredient quantities when servings change
+    const newIngredients = ingredients.map(ingredient => ({
+      ...ingredient,
+      quantity: (ingredient.quantity / initialServings) * servings, // Adjust the quantity based on new servings without rounding
+    }));
+    setAdjustedIngredients(newIngredients);
+  }, [servings, initialServings, ingredients]);
+
   const [activeTab, setActiveTab] = useState('Ingredients');
 
   const handleTabChange = (tab: React.SetStateAction<string>) => {
@@ -70,10 +86,10 @@ const RecipeIngredients: React.FC<RecipeIngredientsProps> = ({
 
             {/* Ingredients List */}
             <ul>
-              {ingredients.map((ingredient, index) => (
+              {adjustedIngredients.map((ingredient, index) => (
                 <li key={index} className="flex justify-between items-center py-1">
                   <span>
-                    {Math.round(ingredient.quantity * 10) / 10} {ingredient.unit} {ingredient.title}
+                    {ingredient.quantity.toFixed(2)} {ingredient.unit} {ingredient.title} {/* Display with two decimal places */}
                   </span>
                 </li>
               ))}

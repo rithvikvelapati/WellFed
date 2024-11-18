@@ -7,9 +7,10 @@ interface NutritionProps {
   protein: number;
   fat: number;
   carbohydrates: number;
+  recipeId: string;
 }
 
-const NutritionCard: React.FC<NutritionProps> = ({ calories, protein, fat, carbohydrates }) => {
+const NutritionCard: React.FC<NutritionProps> = ({ calories, protein, fat, carbohydrates, recipeId }) => {
   return (
     <div className="mx-auto bg-white p-4">
       <div className="mb-4">
@@ -33,7 +34,7 @@ const NutritionCard: React.FC<NutritionProps> = ({ calories, protein, fat, carbo
           </div>
         </div>
       </div>
-      <Link href="recipe-card/recipe-steps" passHref>
+      <Link href={`${recipeId}/recipe-steps`} passHref>
         <div className="flex justify-center items-center mb-4">
           <button className="bg-gradient-to-r from-[#B64B29] to-[#EC9556] hover:from-[#AD3711] hover:to-[#FFB54D] text-white font-bold py-3 px-10 rounded-full text-[18px] shadow-lg transition duration-300 ease-in-out" style={{ width: '358px' }}>
             Start Cooking

@@ -1,7 +1,5 @@
-// scripts/cleanBuildOutput.ts
-
-import fs from 'fs';
-import path from 'path';
+const fs = require('fs');
+const path = require('path');
 
 function deleteCompressedFiles(dir: string) {
   if (!fs.existsSync(dir)) {
@@ -27,8 +25,5 @@ function deleteCompressedFiles(dir: string) {
   }
 }
 
-// Determine the build directory
-const buildDir = path.resolve(__dirname, '../.next'); // Adjust if necessary
-
+const buildDir = path.resolve(__dirname, '../.next');
 deleteCompressedFiles(buildDir);
-
