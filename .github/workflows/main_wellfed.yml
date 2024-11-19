@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: frontend/wellfed # Ensure this matches your frontend path
+          path: frontend/wellfed/build # Ensure this matches your frontend build output path
 
   deploy:
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      id-token: write
 
     steps:
       - name: Download artifact from build job
@@ -52,14 +52,13 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_102C779FEE404CB4806C0AE782B9B413 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_CA75C4C32EEB4596A1B586D9661AAE55 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_2A7E0D96A31247D784714079B6E59F70 }}
-
-      - name: 'Deploy to Azure Web App'
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+      
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'Wellfed'
-          slot-name: 'Production'
-          package: frontend/wellfed 
+          app-name: 'Wellfed' # Replace with your actual Azure App Service name
+          package: frontend/wellfed/build # Adjust to match your build output directory
