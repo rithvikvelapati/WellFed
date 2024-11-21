@@ -2,37 +2,37 @@ trigger:
   - main
 
 pool:
-  name: linuxagent
-  vmImage: 'windows-latest' # Ensure this matches the pool
+  vmImage: 'windows-latest'
 
 steps:
   - task: UseNode@1
     inputs:
-      version: "18.x"
-    displayName: "Install Node.js"
+      version: '18.x'
+    displayName: 'Install Node.js'
 
   - script: |
       npm install
       npm test
-    displayName: "Install dependencies and run tests"
+    displayName: 'Install dependencies and run tests'
+
   - script: |
-      sudo apt-get update
-      sudo apt-get install -y \
+      wsl sudo apt-get update
+      wsl sudo apt-get install -y \
           apt-transport-https \
           ca-certificates \
           curl \
           software-properties-common
-      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-      echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-      sudo apt-get update
-      sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-      docker --version
-    displayName: Install Docker
-  # Install Ansible
+      wsl curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo wsl gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+      wsl echo "deb [arch=$(wsl dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(wsl lsb_release -cs) stable" | wsl sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      wsl sudo apt-get update
+      wsl sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+      wsl docker --version
+    displayName: 'Install Docker'
+
   - script: |
-      sudo apt-get update
-      sudo apt-get install -y software-properties-common
-      sudo add-apt-repository --yes --update ppa:ansible/ansible
-      sudo apt-get install -y ansible
-      ansible --version
-    displayName: "Install Ansible"
+      wsl sudo apt-get update
+      wsl sudo apt-get install -y software-properties-common
+      wsl sudo add-apt-repository --yes --update ppa:ansible/ansible
+      wsl sudo apt-get install -y ansible
+      wsl ansible --version
+    displayName: 'Install Ansible'

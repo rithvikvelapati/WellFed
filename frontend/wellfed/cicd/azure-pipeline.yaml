@@ -1,14 +1,12 @@
 name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
 
 trigger: none
-
 pr: none
 
-variables: 
+variables:
   - group: wellfed-variablegroup
 
 pool:
-  name: linuxagent
   vmImage: 'windows-latest'
 
 steps:
@@ -17,17 +15,17 @@ steps:
       wsl sudo apt-get update -y
       wsl sudo apt-get install -y ansible
       wsl ansible --version
-    displayName: "Verify WSL and Install Dependencies"
-  
-  - task: Powershell@2
-    displayName: "Run Ansible Playbook"
+    displayName: 'Verify WSL and Install Dependencies'
+
+  - task: PowerShell@2
+    displayName: 'Run Ansible Playbook'
     env:
-      git_username: "$(git_username)"
-      git_password: "$(git_password)"
-      subscription_id: "$(subscription_id)"
-      tenant_id: "$(tenant_id)"
-      env_dir: "$(Agent.BuildDirectory)/env"
-      work_dir: "$(System.DefaultWorkingDirectory)/work"
+      git_username: $(git_username)
+      git_password: $(git_password)
+      subscription_id: $(subscription_id)
+      tenant_id: $(tenant_id)
+      env_dir: $(Agent.BuildDirectory)/env
+      work_dir: $(System.DefaultWorkingDirectory)/work
     inputs:
       targetType: inline
       script: |
@@ -37,4 +35,4 @@ steps:
         wsl export tenant_id=${tenant_id}
         wsl export env_dir=${env_dir}
         wsl export work_dir=${work_dir}
-        wsl ansible-playbook /mnt/c/cicd/ansible/ci.yaml -i "localhost," -v
+        wsl ansible-playbook /mnt/c/Users/velap/Documents/WellFed/frontend/wellfed/cicd/ansible/ci.yaml -i "localhost," -v
