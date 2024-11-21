@@ -2,8 +2,8 @@ trigger:
   - main
 
 pool:
-  name: "wellfedagent"
-  vmImage: "wellfedagent" # Ensure this matches the pool
+  name: linuxagent
+  vmImage: linuxagent # Ensure this matches the pool
 
 steps:
   - task: UseNode@1

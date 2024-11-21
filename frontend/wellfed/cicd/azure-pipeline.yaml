@@ -8,8 +8,8 @@ variables:
   - group: wellfed-variablegroup
 
 pool:
-  name: wellfedagent
-  vmImage: wellfedagent
+  name: linuxagent
+  vmImage: linuxagent
 
 steps:
   - script: |
