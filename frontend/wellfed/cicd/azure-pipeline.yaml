@@ -1,0 +1,18 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
+
+trigger:
+- main
+
+pool:
+  vmImage: 'Azure Pipelines'
+
+steps:
+- task: UseNode@1
+  inputs:
+    version: '14.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    npm test
+  displayName: 'Install dependencies and run tests'
