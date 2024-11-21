@@ -9,6 +9,7 @@
       subscription_id: "{{ lookup('env', 'subscription_id') }}"
       tenant_id: "{{ lookup('env', 'tenant_id') }}"
       env_dir: "{{ lookup('env', 'env_dir') }}"
+      work_dir: "{{ lookup('work', 'work_dir') }}"
 
   - name: Login to Azure using Service Principle
     command: >
