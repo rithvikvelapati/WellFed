@@ -12,7 +12,7 @@ pool:
   vmImage: wellfedagent
 
 steps:
-  - task: Bash@1
+  - task: Powershell@1
     displayName: "Run Ansible Playbook"
     env:
       git_username: "$(git_username)"
