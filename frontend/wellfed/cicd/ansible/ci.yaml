@@ -5,8 +5,6 @@
   vars:
     subscription_id: "{{ lookup('env', 'subscription_id') | default('4322c6c1-84a5-4760-bb72-9f56e2391033') }}"
     env_dir: "{{ lookup('env', 'env_dir') | default('/mnt/c/Users/velap/Documents/WellFed/frontend/wellfed/workspace') }}"
-    git_username: "{{ lookup('env', 'git_username') }}"
-    git_password: "{{ lookup('env', 'git_password') }}"
 
   tasks:
   - debug:
