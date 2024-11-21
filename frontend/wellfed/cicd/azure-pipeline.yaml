@@ -12,7 +12,7 @@ pool:
   vmImage: wellfedagent
 
 steps:
-  - task: Powershell@1
+  - task: Powershell@2
     displayName: "Run Ansible Playbook"
     env:
       git_username: "$(git_username)"
@@ -20,6 +20,7 @@ steps:
       subscription_id: "$(subscription_id)"
       tenant_id: "$(tenant_id)"
       env_dir: "$(Agent.BuildDirectory)/env"
+      work_dir: "$(System.DefaultWorkingDirectory)/work"
     inputs:
       targetType: "inline"
       script: |
