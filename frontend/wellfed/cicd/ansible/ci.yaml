@@ -1,0 +1,22 @@
+- name: Continuous Integration
+  hosts: "localhost"
+  connection: "local"
+
+  tasks:
+  - set_fact:
+      git_username: "{{ lookup('env', 'git_username') }}"
+      git_password: "{{ lookup('env', 'git_password') }}"
+      subscription_id: "{{ lookup('env', 'subscription_id') }}"
+      tenant_id: "{{ lookup('env', 'tenant_id') }}"
+      env_dir: "{{ lookup('env', 'env_dir') }}"
+
+  - name: Login to Azure using Service Principle
+    command: >
+      az login
+  - name: set subscription to current dir
+    command: az account set --subscription {{ subscription_id }}
+
+  - name: git clone repo
+    git:
+      repo: 'https://{{ git_username }}:{{ git_password}}@wellfed.git'
+      dest: "{{ env_dir }}"

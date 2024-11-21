@@ -1,20 +1,26 @@
 name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
 
-trigger:
-- main
+trigger: none
+
+pr: none
+
+variables:
+  - group:
 
 pool:
-  name: 'wellfedagent'
-  vmImage: 'wellfedagent'
-
+  name: "wellfedagent"
+  vmImage: "wellfedagent"
 
 steps:
-- task: UseNode@1
-  inputs:
-    version: '14.x'
-  displayName: 'Install Node.js'
-
-- script: |
-    npm install
-    npm test
-  displayName: 'Install dependencies and run tests'
+  - task: Bash@1
+    displayName: "Run Ansible Playbook"
+    env:
+      git_username: "$(git_username)"
+      git_password: "$(git_password)"
+      subscription_id: "$(subscription_id)"
+      tenant_id: "$(tenant_id)"
+      env_dir: "$(Agent.BuildDirectory)/env"
+    inputs:
+      targetType: "inline"
+      script: |
+        ansible-playbook cicd/ansible/ci.yaml -i "localhost, " -v
