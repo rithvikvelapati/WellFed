@@ -6,7 +6,7 @@
     subscription_id: "{{ lookup('env', 'subscription_id') | default('4322c6c1-84a5-4760-bb72-9f56e2391033') }}"
     env_dir: "{{ lookup('env', 'env_dir') | default('/mnt/c/Users/velap/Documents/WellFed/frontend/wellfed/workspace') }}"
     git_username: "{{ lookup('env', 'git_username') | default('rithvikvelapati') }}"
-    git_password: "{{ lookup('env', 'git_password') | default('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') }}"
+    git_password: "{{ lookup('env', 'git_password') | default('default-password') }}"
 
   tasks:
   - debug:
