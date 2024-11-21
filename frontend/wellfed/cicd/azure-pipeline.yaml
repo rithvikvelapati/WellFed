@@ -4,12 +4,12 @@ trigger: none
 
 pr: none
 
-variables:
-  - group:
+variables: 
+  - group: wellfed-variablegroup
 
 pool:
-  name: "wellfedagent"
-  vmImage: "wellfedagent"
+  name: wellfedagent
+  vmImage: wellfedagent
 
 steps:
   - task: Bash@1
