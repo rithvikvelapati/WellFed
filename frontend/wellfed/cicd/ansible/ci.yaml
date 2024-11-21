@@ -9,7 +9,11 @@
       subscription_id: "{{ lookup('env', 'subscription_id') }}"
       tenant_id: "{{ lookup('env', 'tenant_id') }}"
       env_dir: "{{ lookup('env', 'env_dir') }}"
-      work_dir: "{{ lookup('env', 'work_dir') }}"  # Corrected from 'work' to 'env'
+      work_dir: "{{ lookup('env', 'work_dir') }}"
+
+  - name: Debug subscription_id
+    debug:
+      msg: "subscription_id: {{ subscription_id }}"
 
   - name: Login to Azure using Service Principal
     command: >
