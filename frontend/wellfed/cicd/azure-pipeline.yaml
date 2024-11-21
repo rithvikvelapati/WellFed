@@ -12,6 +12,13 @@ pool:
   vmImage: wellfedagent
 
 steps:
+  - script: |
+      wsl --list --verbose
+      wsl sudo apt-get update -y
+      wsl sudo apt-get install -y ansible
+      wsl ansible --version
+    displayName: "Verify WSL and Install Dependencies"
+  
   - task: Powershell@2
     displayName: "Run Ansible Playbook"
     env:
@@ -22,6 +29,12 @@ steps:
       env_dir: "$(Agent.BuildDirectory)/env"
       work_dir: "$(System.DefaultWorkingDirectory)/work"
     inputs:
-      targetType: "inline"
+      targetType: inline
       script: |
-        ansible-playbook cicd/ansible/ci.yaml -i "localhost, " -v
+        wsl export git_username=${git_username}
+        wsl export git_password=${git_password}
+        wsl export subscription_id=${subscription_id}
+        wsl export tenant_id=${tenant_id}
+        wsl export env_dir=${env_dir}
+        wsl export work_dir=${work_dir}
+        wsl ansible-playbook /mnt/c/cicd/ansible/ci.yaml -i "localhost," -v

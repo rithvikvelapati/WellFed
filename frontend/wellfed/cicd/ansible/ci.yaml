@@ -9,15 +9,17 @@
       subscription_id: "{{ lookup('env', 'subscription_id') }}"
       tenant_id: "{{ lookup('env', 'tenant_id') }}"
       env_dir: "{{ lookup('env', 'env_dir') }}"
-      work_dir: "{{ lookup('work', 'work_dir') }}"
+      work_dir: "{{ lookup('env', 'work_dir') }}"  # Corrected from 'work' to 'env'
 
-  - name: Login to Azure using Service Principle
+  - name: Login to Azure using Service Principal
     command: >
       az login
-  - name: set subscription to current dir
-    command: az account set --subscription {{ subscription_id }}
 
-  - name: git clone repo
+  - name: Set subscription to current directory
+    command: >
+      az account set --subscription {{ subscription_id }}
+
+  - name: Clone Git repository
     git:
-      repo: 'https://{{ git_username }}:{{ git_password}}@wellfed.git'
+      repo: "https://{{ git_username }}:{{ git_password }}@wellfed.git"
       dest: "{{ env_dir }}"
