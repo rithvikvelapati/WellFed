@@ -3,7 +3,7 @@ trigger:
 
 pool:
   name: linuxagent
-  vmImage: linuxagent # Ensure this matches the pool
+  vmImage: 'windows-latest' # Ensure this matches the pool
 
 steps:
   - task: UseNode@1

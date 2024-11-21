@@ -9,7 +9,7 @@ variables:
 
 pool:
   name: linuxagent
-  vmImage: linuxagent
+  vmImage: 'windows-latest'
 
 steps:
   - script: |
