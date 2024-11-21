@@ -4,7 +4,9 @@ trigger:
 - main
 
 pool:
-  vmImage: 'Azure Pipelines'
+  name: 'wellfedagent'
+  vmImage: 'wellfedagent'
+
 
 steps:
 - task: UseNode@1
