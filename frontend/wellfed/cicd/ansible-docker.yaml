@@ -16,12 +16,10 @@ steps:
 
 # Install Node.js
 - task: Bash@2
-  displayName: "Install Node.js"
+  displayName: "check node version"
   inputs:
     targetType: inline
     script: |
-      curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-      sudo apt-get install -y nodejs
       node --version
       npm --version
 
