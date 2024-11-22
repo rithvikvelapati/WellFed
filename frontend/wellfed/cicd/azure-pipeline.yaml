@@ -31,4 +31,5 @@ steps:
     inputs:
       targetType: inline
       script: |
-        ansible-playbook cicd/ansible/ci.yaml -i "localhost, " -v
+        ls -la $(Agent.BuildDirectory)/cicd/ansible
+        ansible-playbook  $(Agent.BuildDirectory)/cicd/ansible/ci.yaml -i "localhost, " -v
