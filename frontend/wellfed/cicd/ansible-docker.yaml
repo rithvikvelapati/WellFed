@@ -7,7 +7,7 @@ pool:
 
 steps:
 
-- task: Bash@2
+- task: Bash@1
   displayName: CHange directory permissions
   inputs:
     targetType: inline
