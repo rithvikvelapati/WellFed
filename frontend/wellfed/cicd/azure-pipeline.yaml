@@ -11,7 +11,6 @@ pool:
   name: Azure Pipelines
   demands:
     - Agent.Name -equals Hosted Agent
-  vmImage: wellfedagent
 
 steps:
   
