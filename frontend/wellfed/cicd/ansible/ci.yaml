@@ -1,24 +1,66 @@
 - name: Continuous Integration
   hosts: "localhost"
-  connection: "local"
-
-  vars:
-    subscription_id: "{{ lookup('env', 'subscription_id') | default('4322c6c1-84a5-4760-bb72-9f56e2391033') }}"
-    env_dir: "{{ lookup('env', 'env_dir') | default('/mnt/c/Users/velap/Documents/WellFed/frontend/wellfed/workspace') }}"
+  connection: local
 
   tasks:
-  - debug:
-      msg: "subscription_id: {{ subscription_id }}"
+  
+  - set_fact:
+      git_username: "{{ lookup('env', 'git_username') }}"
+      git_password: "{{ lookup('env', 'git_password') }}"
+      subscription_id: "{{ lookup('env', 'subscription_id') }}"
+      service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
+      service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
+      acr_regisroty_url: "{{ lookup('env', 'acr_registory_url') }}"
+      tenant_id: "{{ lookup('env', 'tenant_id') }}"
+      service_name: "{{ lookup('env', 'service_name') }}"
+      source_dir: "{{ lookup('env', 'source_dir') }}"
+      env_dir: "{{ lookup('env', 'env_dir') }}"
 
-  - name: Login to Azure using Service Principal
+  - name: Login to Azure using Service Principle
     command: >
       az login
+      --service-principal
+      --username '{{ service_principal_id }}'
+      --password '{{ service_principal_secret }}'
+      --tenant '{{ tenant_id }}'
 
-  - name: Set subscription to current directory
-    command: >
-      az account set --subscription {{ subscription_id }}
+  - name: set subscription to current dir
+    command: az account set --subscription {{ subscription_id }}
 
-  - name: Clone Git repository
-    git:
-      repo: "https://{{ git_username }}:{{ git_password }}@wellfed.git"
-      dest: "{{ env_dir }}"
+  - name: Login to ACR registory
+    #shell: docker login enallaadvance.azurecr.io --username 375b7993-84de-4a50-9c42-3c908914f6d7 --password kTp8Q~5GkowW4a2NIGS.oc6J4qz3izo-F05Dbach
+    shell: echo "{{ service_principal_secret }}" | docker login "{{ acr_regisroty_url }}" --username "{{ service_principal_id }}" --password-stdin
+
+  - name: Install npm dependencies
+    command: npm install
+    args:
+      chdir: "{{ source_dir }}"
+
+  - name: Build the project
+    command: npm run build
+    args:
+      chdir: "{{ source_dir }}"
+
+  - name: Setup .env file
+    template:
+      src: "{{ source_dir }}/cicd/ansible/templates/.env.j2"
+      dest: "{{ source_dir }}/.env"
+
+  - name: Publish Artifact to npm registry
+    command: npm publish
+    args:
+      chdir: "{{ source_dir }}"
+  - name: Set version variable from package.json
+    set_fact:
+      version: "{{ lookup('file', '{{ source_dir }}/package.json') | from_json | json_query('version') }}"
+
+  - name: Build docker image
+    command: docker build -t {{ service_name }} .
+    args:
+      chdir: "{{ source_dir }}"
+
+  - name: Tag docker image
+    command: docker tag {{ service_name }} {{ acr_username }}/{{ service_name }}:{{ version }}
+
+  - name: Push image to acr registory
+    command: docker push {{ acr_regisroty_url }}/{{ service_name }}:{{ version }}

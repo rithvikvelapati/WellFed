@@ -8,33 +8,28 @@ variables:
   - group: wellfed-variablegroup
 
 pool:
-  name: linuxagent
-  vmImage: linuxagent
+  name: Azure Pipelines
+  demands:
+    - Agent.Name -equals Hosted Agent
+  vmImage: wellfedagent
 
 steps:
-  - script: |
-      wsl --list --verbose
-      wsl sudo apt-get update -y
-      wsl sudo apt-get install -y ansible
-      wsl ansible --version
-    displayName: "Verify WSL and Install Dependencies"
   
-  - task: Powershell@2
+  - task: bash@2
     displayName: "Run Ansible Playbook"
     env:
       git_username: "$(git_username)"
       git_password: "$(git_password)"
       subscription_id: "$(subscription_id)"
+      service_principal_id: "$(service_principal_id)"
+      service_principal_secret: "$(service_principal_secret)"
+      acr_regisroty_url: "$(acr_regisroty_url)"
+      acr_username: "$(acr_username)"
       tenant_id: "$(tenant_id)"
+      service_name: "$(service_name)"
       env_dir: "$(Agent.BuildDirectory)/env"
-      work_dir: "$(System.DefaultWorkingDirectory)/work"
+      source_dir: "$(source_dir)"
     inputs:
       targetType: inline
       script: |
-        wsl export git_username=${git_username}
-        wsl export git_password=${git_password}
-        wsl export subscription_id=${subscription_id}
-        wsl export tenant_id=${tenant_id}
-        wsl export env_dir=${env_dir}
-        wsl export work_dir=${work_dir}
-        wsl ansible-playbook /mnt/c/cicd/ansible/ci.yaml -i "localhost," -v
+        ansible-playbook /mnt/c/cicd/ansible/ci.yaml -i "localhost," -v
