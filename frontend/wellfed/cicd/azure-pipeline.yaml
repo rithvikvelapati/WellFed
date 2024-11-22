@@ -32,4 +32,4 @@ steps:
     inputs:
       targetType: inline
       script: |
-        ansible-playbook /mnt/c/cicd/ansible/ci.yaml -i "localhost," -v
+        ansible-playbook cicd/ansible/ci.yaml -i "localhost, " -v
