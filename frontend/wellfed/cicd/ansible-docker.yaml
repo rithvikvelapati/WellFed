@@ -15,13 +15,34 @@ steps:
       npm install
       npm test
     displayName: "Install dependencies and run tests"
-  # Install Docker
   - powershell: |
-      # Install Docker on Windows
+      # Ensure running as Administrator
+      if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+          Write-Error "This script must be run as Administrator!"
+          exit 1
+      }
+
+      # Prepare the Temp Directory for DockerMsftProvider
+      $DockerTempPath = "$env:LOCALAPPDATA\Temp\DockerMsftProvider"
+      if (!(Test-Path -Path $DockerTempPath)) {
+          Write-Host "Creating Temp Directory for DockerMsftProvider..."
+          New-Item -ItemType Directory -Path $DockerTempPath -Force
+      } else {
+          Write-Host "Temp Directory exists. Clearing it..."
+          Remove-Item -Path $DockerTempPath -Recurse -Force
+          New-Item -ItemType Directory -Path $DockerTempPath -Force
+      }
+
+      # Install Docker
+      Write-Host "Installing Docker..."
       Install-PackageProvider -Name NuGet -Force
       Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
       Install-Package -Name docker -ProviderName DockerMsftProvider -Force
+
+      # Start Docker Service
       Start-Service -Name docker
+
+      # Verify Docker Installation
       docker --version
     displayName: 'Install Docker on Windows Agent'
   # Install Ansible
