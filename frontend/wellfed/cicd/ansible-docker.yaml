@@ -2,8 +2,8 @@ trigger:
   - main
 
 pool:
-  name: linuxagent
-  vmImage: linuxagent # Ensure this matches the pool
+  name: wellfedagent
+  vmImage: wellfedagent # Ensure this matches the pool
 
 steps:
   - task: UseNode@1
@@ -15,24 +15,21 @@ steps:
       npm install
       npm test
     displayName: "Install dependencies and run tests"
-  - script: |
-      sudo apt-get update
-      sudo apt-get install -y \
-          apt-transport-https \
-          ca-certificates \
-          curl \
-          software-properties-common
-      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-      echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-      sudo apt-get update
-      sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+  # Install Docker
+  - powershell: |
+      # Install Docker on Windows
+      Install-PackageProvider -Name NuGet -Force
+      Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
+      Install-Package -Name docker -ProviderName DockerMsftProvider -Force
+      Start-Service -Name docker
       docker --version
-    displayName: Install Docker
+    displayName: 'Install Docker on Windows Agent'
   # Install Ansible
-  - script: |
-      sudo apt-get update
-      sudo apt-get install -y software-properties-common
-      sudo add-apt-repository --yes --update ppa:ansible/ansible
-      sudo apt-get install -y ansible
+  - powershell: |
+      # Install Python and Ansible via pip
+      Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+      Invoke-WebRequest -Uri https://bootstrap.pypa.io/get-pip.py -OutFile get-pip.py
+      python get-pip.py
+      pip install ansible
       ansible --version
-    displayName: "Install Ansible"
+    displayName: 'Install Ansible on Windows Agent'
