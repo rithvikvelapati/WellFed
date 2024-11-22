@@ -6,7 +6,6 @@ pr: none
 
 variables: 
   - group: wellfed-variablegroup
-    system.debug: true
 
 pool:
   name: Azure Pipelines
