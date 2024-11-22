@@ -28,7 +28,6 @@
     command: az account set --subscription {{ subscription_id }}
 
   - name: Login to ACR registory
-    #shell: docker login enallaadvance.azurecr.io --username 375b7993-84de-4a50-9c42-3c908914f6d7 --password kTp8Q~5GkowW4a2NIGS.oc6J4qz3izo-F05Dbach
     shell: echo "{{ service_principal_secret }}" | docker login "{{ acr_regisroty_url }}" --username "{{ service_principal_id }}" --password-stdin
 
   - name: Install npm dependencies
