@@ -8,7 +8,9 @@ variables:
   - group: wellfed-variablegroup
 
 pool:
-  vmImage: 'ubuntu-agent'
+  name: wellfedagent
+  demands:
+    - Agent.Name -equals ubuntu-agent
 
 steps:
   
