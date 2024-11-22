@@ -1,55 +1,55 @@
 trigger: none
 
 pool:
-  name: wellfedagent
-  vmImage: wellfedagent # Ensure this matches the pool
+   name: wellfedagent
+   demands:
+    - Agent.Name -equals ubuntu-agent
 
 steps:
-  - task: UseNode@1
-    inputs:
-      version: "18.x"
-    displayName: "Install Node.js"
+# Install Node.js
+- task: Bash@2
+  displayName: "Install Node.js"
+  inputs:
+    targetType: inline
+    script: |
+      curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+      sudo apt-get install -y nodejs
+      node --version
+      npm --version
 
-  - script: |
-      npm install
-      npm test
-    displayName: "Install dependencies and run tests"
-  - powershell: |
-      # Ensure running as Administrator
-      if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-          Write-Error "This script must be run as Administrator!"
-          exit 1
-      }
-
-      # Prepare the Temp Directory for DockerMsftProvider
-      $DockerTempPath = "$env:LOCALAPPDATA\Temp\DockerMsftProvider"
-      if (!(Test-Path -Path $DockerTempPath)) {
-          Write-Host "Creating Temp Directory for DockerMsftProvider..."
-          New-Item -ItemType Directory -Path $DockerTempPath -Force
-      } else {
-          Write-Host "Temp Directory exists. Clearing it..."
-          Remove-Item -Path $DockerTempPath -Recurse -Force
-          New-Item -ItemType Directory -Path $DockerTempPath -Force
-      }
-
-      # Install Docker
-      Write-Host "Installing Docker..."
-      Install-PackageProvider -Name NuGet -Force
-      Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
-      Install-Package -Name docker -ProviderName DockerMsftProvider -Force
-
-      # Start Docker Service
-      Start-Service -Name docker
-
-      # Verify Docker Installation
+# Install Docker
+- task: Bash@2
+  displayName: "Install Docker"
+  inputs:
+    targetType: inline
+    script: |
+      sudo apt-get update
+      sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+      sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+      sudo apt-get update
+      sudo apt-get install -y docker-ce
+      sudo usermod -aG docker $(whoami)
       docker --version
-    displayName: 'Install Docker on Windows Agent'
-  # Install Ansible
-  - powershell: |
-      # Install Python and Ansible via pip
-      Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-      Invoke-WebRequest -Uri https://bootstrap.pypa.io/get-pip.py -OutFile get-pip.py
-      python get-pip.py
-      pip install ansible
+
+# Install Python and pip
+- task: Bash@2
+  displayName: "Install Python and pip"
+  inputs:
+    targetType: inline
+    script: |
+      sudo apt-get install -y python3 python3-pip
+      python3 --version
+      pip3 --version
+
+# Install Ansible
+- task: Bash@2
+  displayName: "Install Ansible"
+  inputs:
+    targetType: inline
+    script: |
+      sudo apt-get update
+      sudo apt-get install -y software-properties-common
+      sudo add-apt-repository --yes --update ppa:ansible/ansible
+      sudo apt-get install -y ansible
       ansible --version
-    displayName: 'Install Ansible on Windows Agent'
