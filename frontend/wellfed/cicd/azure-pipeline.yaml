@@ -1,0 +1,36 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
+
+trigger: none
+
+pr: none
+
+variables: 
+  - group: wellfed-variablegroup
+    system.debug: true
+
+pool:
+  name: Azure Pipelines
+  demands:
+    - Agent.Name -equals Hosted Agent
+  vmImage: wellfedagent
+
+steps:
+  
+  - task: bash@2
+    displayName: "Run Ansible Playbook"
+    env:
+      git_username: "$(git_username)"
+      git_password: "$(git_password)"
+      subscription_id: "$(subscription_id)"
+      service_principal_id: "$(service_principal_id)"
+      service_principal_secret: "$(service_principal_secret)"
+      acr_regisroty_url: "$(acr_regisroty_url)"
+      acr_username: "$(acr_username)"
+      tenant_id: "$(tenant_id)"
+      service_name: "$(service_name)"
+      env_dir: "$(Agent.BuildDirectory)/env"
+      source_dir: "$(source_dir)"
+    inputs:
+      targetType: inline
+      script: |
+        ansible-playbook cicd/ansible/ci.yaml -i "localhost, " -v
