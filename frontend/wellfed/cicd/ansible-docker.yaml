@@ -6,6 +6,14 @@ pool:
     - Agent.Name -equals ubuntu-agent
 
 steps:
+
+- task: Bash@2
+  displayName: CHange directory permissions
+  inputs:
+    targetType: inline
+    script: |
+      chmod +x $(Agent.BuildDirectory)/scripts/
+
 # Install Node.js
 - task: Bash@2
   displayName: "Install Node.js"
