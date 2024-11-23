@@ -14,7 +14,7 @@ pool:
 
 steps:
   
-  - task: bash@2
+  - task: Bash@3
     displayName: "Run Ansible Playbook"
     env:
       git_username: "$(git_username)"
