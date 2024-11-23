@@ -31,6 +31,6 @@ steps:
     inputs:
       targetType: inline
       script: |
-        cd $(source_dir)
+        cd ${source_dir}
         ls- lrt
         ansible-playbook  cicd/ansible/ci.yaml -i "localhost, " -v
