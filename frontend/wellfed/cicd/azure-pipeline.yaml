@@ -27,7 +27,7 @@ steps:
       tenant_id: "$(tenant_id)"
       service_name: "$(service_name)"
       env_dir: "$(Agent.BuildDirectory)/env"
-      source_dir: "$(source_dir)"
+      source_dir: "$(Build.SourcesDirectory)"
     inputs:
       targetType: inline
       script: |
