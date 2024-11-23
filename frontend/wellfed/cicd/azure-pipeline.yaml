@@ -32,7 +32,7 @@ steps:
       targetType: inline
       script: |
         pwd
-        cd ${source_dir}/wellfed
+        cd ${source_dir}/frontend/wellfed
         pwd
         ls -lrt
         ansible-playbook  cicd/ansible/ci.yaml -i "localhost, " -v
