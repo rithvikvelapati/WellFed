@@ -15,7 +15,7 @@ steps:
 #       chmod +x $(Agent.BuildDirectory)/scripts/
 
 # Install Node.js
-- task: Bash@2
+- task: useNode@1
   displayName: "check node version"
   inputs:
     targetType: inline
