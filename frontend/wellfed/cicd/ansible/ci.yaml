@@ -15,7 +15,7 @@
       tenant_id: "{{ lookup('env', 'tenant_id') }}"
       service_name: "{{ lookup('env', 'service_name') }}"
       source_dir: "{{ lookup('env', 'source_dir') }}"
-      env_dir: "{{ lookup('env', 'env_dir') }}"
+      # env_dir: "{{ lookup('env', 'env_dir') }}"
 
   - name: Login to Azure using Service Principle
     command: >
