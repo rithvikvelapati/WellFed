@@ -46,10 +46,10 @@
       #src: "{{ source_dir }}/frontend/wellfed/cicd/ansible/templates/.env.j2"
       #dest: "{{ source_dir }}/frontend/wellfed/.env"
 
-  - name: Publish Artifact to npm registry
-    command: npm publish
-    args:
-      chdir: "{{ source_dir }}/frontend/wellfed"
+  #- name: Publish Artifact to npm registry
+    #command: npm publish
+    #args:
+      #chdir: "{{ source_dir }}/frontend/wellfed"
   - name: Set version variable from package.json
     set_fact:
       version: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"
