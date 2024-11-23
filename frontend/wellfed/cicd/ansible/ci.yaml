@@ -53,10 +53,10 @@
       msg: "{{ docker_build_result.stdout_lines }}"
 
   - name: Tag docker image
-    command: docker tag {{ service_name }} {{ acr_username }}/{{ service_name }}:{{ imagelabel }}
+    command: docker tag {{ service_name }} wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}
 
   - name: Login to docker acr
     command: docker login wellfeddev.azurecr.io
 
   - name: Push image to acr registory
-    command: docker push wellfeddev.azurecr.io/{{ acr_username }}/{{ service_name }}:{{ imagelabel }}
+    command: docker push wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}
