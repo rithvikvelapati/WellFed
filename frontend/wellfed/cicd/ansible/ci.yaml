@@ -11,6 +11,7 @@
       service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
       service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
       acr_regisroty_url: "{{ lookup('env', 'acr_registory_url') }}"
+      acr_username: "{{ lookup('env', 'acr_username') }}"
       tenant_id: "{{ lookup('env', 'tenant_id') }}"
       service_name: "{{ lookup('env', 'service_name') }}"
       source_dir: "{{ lookup('env', 'source_dir') }}"
