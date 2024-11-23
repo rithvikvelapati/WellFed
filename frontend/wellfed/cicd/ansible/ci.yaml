@@ -56,4 +56,4 @@
     command: docker tag {{ service_name }} {{ acr_username }}/{{ service_name }}:{{ imagelabel }}
 
   - name: Push image to acr registory
-    command: docker push wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}
+    command: docker push {{ acr_username }}/{{ service_name }}:{{ imagelabel }}
