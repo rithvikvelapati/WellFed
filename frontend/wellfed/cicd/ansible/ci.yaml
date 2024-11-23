@@ -37,7 +37,7 @@
       chdir: "{{ source_dir }}/frontend/wellfed"
 
   - name: Build the project
-    command: npm run build
+    command: npm run dev
     args:
       chdir: "{{ source_dir }}/frontend/wellfed"
 
