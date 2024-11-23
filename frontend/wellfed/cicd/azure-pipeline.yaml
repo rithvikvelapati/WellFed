@@ -27,9 +27,10 @@ steps:
       tenant_id: "$(tenant_id)"
       service_name: "$(service_name)"
       # env_dir: "$(Agent.BuildDirectory)/env"
-      source_dir: "$(Build.SourcesDirectory)/frontend"
+      source_dir: "$(Build.SourcesDirectory)"
     inputs:
       targetType: inline
       script: |
-        # ls -la $(Agent.BuildDirectory)/cicd/ansible
+        cd $(source_dir)
+        ls- lrt
         ansible-playbook  cicd/ansible/ci.yaml -i "localhost, " -v
