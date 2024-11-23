@@ -41,10 +41,10 @@
     #args:
      # chdir: "{{ source_dir }}/frontend/wellfed"
 
-  - name: Setup .env file
-    template:
-      src: "{{ source_dir }}/frontend/wellfed/cicd/ansible/templates/.env.j2"
-      dest: "{{ source_dir }}/frontend/wellfed/.env"
+  #- name: Setup .env file
+    #template:
+      #src: "{{ source_dir }}/frontend/wellfed/cicd/ansible/templates/.env.j2"
+      #dest: "{{ source_dir }}/frontend/wellfed/.env"
 
   - name: Publish Artifact to npm registry
     command: npm publish
