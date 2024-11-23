@@ -26,7 +26,7 @@ steps:
       acr_username: "$(acr_username)"
       tenant_id: "$(tenant_id)"
       service_name: "$(service_name)"
-      # env_dir: "$(Agent.BuildDirectory)/env"
+      env_dir: "$(Agent.BuildDirectory)/env"
       source_dir: "$(source_dir)"
     inputs:
       targetType: inline
