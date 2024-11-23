@@ -36,10 +36,10 @@
     args:
       chdir: "{{ source_dir }}/frontend/wellfed"
 
-  - name: Build the project
-    command: npm run dev
-    args:
-      chdir: "{{ source_dir }}/frontend/wellfed"
+  #- name: Build the project
+    #command: npm run dev
+    #args:
+     # chdir: "{{ source_dir }}/frontend/wellfed"
 
   - name: Setup .env file
     template:
