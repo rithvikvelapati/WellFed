@@ -55,10 +55,16 @@
       version: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"
       imagelabel: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"  # Map version to imagelabel
 
-  - name: Build docker image
-    command: docker build -t {{ service_name }} .
-    args:
-      chdir: "{{ source_dir }}/frontend/wellfed"
+  - name: Build docker image 
+    command: docker build --progress=plain -t {{ service_name }} . 
+    args: 
+      chdir: "{{ source_dir }}/frontend/wellfed" 
+    register: 
+    docker_build_result failed_when: docker_build_result.rc != 0 
+
+  - name: Debug Docker build result 
+    debug: 
+      msg: "{{ docker_build_result.stdout_lines }}"
 
   - name: Tag docker image
     command: docker tag {{ service_name }} {{ acr_username }}/{{ service_name }}:{{ imagelabel }}
