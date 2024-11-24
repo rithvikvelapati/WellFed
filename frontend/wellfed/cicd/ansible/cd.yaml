@@ -31,7 +31,8 @@
     command: az account set --subscription {{ subscription_id }}
 
   - name: Pull AKS cluster config
-    shell: az aks get-credentials --resource-group {{ resource_group }} --name {{ aks_cluster }} --overwrite-existing
+    command: >
+      az aks get-credentials --resource-group {{ resource_group }} --name {{ aks_cluster }} --overwrite-existing
     register: aks_credentials_result
     failed_when: aks_credentials_result.rc != 0
 
