@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: wellfed-deploy
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: wellfed-deploy
@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: wellfed-frontend
-        image: '{{ acr_regisroty_url }}/wellfed-frontend:0.1.0'
+        image: '{{ acr_registry_url }}/wellfed-frontend:0.1.0'
         ports:
         - containerPort: 80
