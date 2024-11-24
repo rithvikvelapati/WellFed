@@ -42,7 +42,7 @@
 
   - name: Pull image from ACR
     command: >
-      docker pull {{ acr_regisroty_url }}/{{ service_name }}:{{ image_tag}}
+      docker pull {{ acr_regisroty_url }}/{{ service_name }}:$(version)
 
   - name: Apply kubernetes namespace
     command: kubectl apply {{ source_dir }}/frontend/wellfed/akscluster/namespace.yaml
