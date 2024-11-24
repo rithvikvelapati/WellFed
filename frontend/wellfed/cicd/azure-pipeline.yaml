@@ -8,7 +8,7 @@ variables:
   - group: wellfed-variablegroup
 
 pool:
-  vmImage: Azure pipelines
+  vmImage: Azure Pipelines
 
 #pool:
   #name: wellfedagent
