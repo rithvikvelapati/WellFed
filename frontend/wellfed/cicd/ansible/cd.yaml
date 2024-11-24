@@ -32,8 +32,7 @@
 
   - name: Pull AKS cluster config
     command: >
-      az aks get-credentials --resource-group AKS-Wellfed-DEV --name WellfedDev --overwrite-existing
-      # az aks get-credentials --resource-group {{ resource_group }} --name {{ aks_cluster }} --overwrite-existing
+      az aks get-credentials --resource-group AKS-Wellfed-DEV --name AksDevWellfed --overwrite-existing
     register: aks_credentials_result
     failed_when: aks_credentials_result.rc != 0
 
