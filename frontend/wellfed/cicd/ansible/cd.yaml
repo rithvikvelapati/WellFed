@@ -55,6 +55,6 @@
     failed_when: service_apply_logs_result.rc !=0
 
   - name: Apply kubernetes deploymant
-    command: kubectl apply -f {{ service_name }}/frontend/wellfed/aksCluster/deployment.yaml
+    command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/deployment.yaml
     register:  deploy_apply_logs_result
     failed_when: deploy_apply_logs_result.rc !=0
