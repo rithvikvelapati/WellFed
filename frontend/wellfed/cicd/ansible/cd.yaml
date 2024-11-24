@@ -1,0 +1,56 @@
+- name: Continuous Integration
+  hosts: "localhost"
+  connection: local
+
+  tasks:
+  
+  - set_fact:
+      git_username: "{{ lookup('env', 'git_username') }}"
+      git_password: "{{ lookup('env', 'git_password') }}"
+      subscription_id: "{{ lookup('env', 'subscription_id') }}"
+      service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
+      service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
+      acr_regisroty_url: "{{ lookup('env', 'acr_registory_url') }}"
+      acr_username: "{{ lookup('env', 'acr_username') }}"
+      tenant_id: "{{ lookup('env', 'tenant_id') }}"
+      service_name: "{{ lookup('env', 'service_name') }}"
+      source_dir: "{{ lookup('env', 'source_dir') }}"
+      # env_dir: "{{ lookup('env', 'env_dir') }}"
+
+  - name: Login to Azure using Service Principle
+    command: >
+      az login
+      --service-principal
+      --username '{{ service_principal_id }}'
+      --password '{{ service_principal_secret }}'
+      --tenant '{{ tenant_id }}'
+
+  - name: set subscription to current dir
+    command: az account set --subscription {{ subscription_id }}
+
+  - name: Pull AKS cluster config
+    shell: az aks get-credentials --resource-group '{{ resource_group }}' --name '{{ aks_cluster }}' --overwrite-existing
+    register: aks_credentials_result
+    failed_when: aks_credentials_result.rc != 0
+
+  - name: Pull npm dependencies
+    shell: npm install
+    args:
+      chdir: '{{ source_dir }}'
+    register: npm_install_result
+    failed_when: npm_install_result.rc != 0
+
+  - name: Apply kubernetes namespace
+    command: kubectl apply {{ source_dir }}/frontend/wellfed/akscluster/namespace.yaml
+    register: namespace_apply_logs_result
+    failed_when: namespace_apply_logs_result.rc !=0
+
+  - name: Apply kubernetes services
+    command: kubectl apply {{ source_dir }}/frontend/wellfed/akscluster/service.yaml
+    register: service_apply_logs_result
+    failed_when: service_apply_logs_result.rc !=0
+
+  - name: Apply kubernetes deploymant
+    command: kubectl apply {{ service_name }}/frontend/wellfed/akscluster/deployment.yaml
+    register:  deploy_apply_logs_result
+    failed_when: deploy_apply_logs_result.rc !=0

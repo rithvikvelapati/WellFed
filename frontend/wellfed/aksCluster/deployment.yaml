@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wellfed-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wellfed-deploy
+  template:
+    metadata:
+      labels:
+        app: wellfed
+    spec:
+      containers:
+      - name: wellfed
+        image: '{{ acr_login_server }}/my-app:latest'
+        ports:
+        - containerPort: 80
