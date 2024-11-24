@@ -38,7 +38,7 @@
 
   - name: Authenticate with ACR
     command: >
-      az acr login {{ acr_regisroty_url }}
+      az acr login --name {{ acr_username }} {{ acr_regisroty_url }}
 
   - name: Pull image from ACR
     command: >
