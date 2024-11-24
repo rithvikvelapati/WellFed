@@ -31,13 +31,13 @@
     command: az account set --subscription {{ subscription_id }}
 
   - name: Pull AKS cluster config
-    shell: az aks get-credentials --resource-group '$(resource_group) ' --name '$(aks_cluster)' --overwrite-existing
+    shell: az aks get-credentials --resource-group {{ resource_group }} --name {{ aks_cluster }} --overwrite-existing
     register: aks_credentials_result
     failed_when: aks_credentials_result.rc != 0
 
   - name: Authenticate with ACR
     command: >
-      az acr login "{{ acr_regisroty_url }}"
+      az acr login {{ acr_regisroty_url }}
 
   - name: Pull image from ACR
     command: >
