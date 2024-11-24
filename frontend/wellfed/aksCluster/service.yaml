@@ -2,7 +2,7 @@ apiVersion: v2
 kind: Service
 metadata: 
   name: wellfed-service
-  Namespaces: wellfed
+  Namespaces: wellfed-frontend
 
 spec:
   type: ClusterIP

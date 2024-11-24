@@ -13,7 +13,7 @@ spec:
         app: wellfed
     spec:
       containers:
-      - name: wellfed
-        image: '{{ acr_login_server }}/my-app:latest'
+      - name: wellfed-frontend
+        image: '{{ acr_regisroty_url }}/wellfed-frontend:0.1.0'
         ports:
         - containerPort: 80
