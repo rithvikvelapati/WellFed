@@ -34,6 +34,8 @@ steps:
       service_name: "$(service_name)"
       # env_dir: "$(Agent.BuildDirectory)/env"
       source_dir: "$(Build.SourcesDirectory)"
+      aks_cluster: "$(aks_cluster)"
+      resource-group: "$(resource-group)"
     inputs:
       targetType: inline
       script: |

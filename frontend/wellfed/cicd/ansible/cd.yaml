@@ -15,6 +15,8 @@
       tenant_id: "{{ lookup('env', 'tenant_id') }}"
       service_name: "{{ lookup('env', 'service_name') }}"
       source_dir: "{{ lookup('env', 'source_dir') }}"
+      aks_cluster: "{{ lookup('env', 'aks_cluster') }}"
+      resource-group: "{{ lookup('env', 'resource-group')}}"
       # env_dir: "{{ lookup('env', 'env_dir') }}"
 
   - name: Login to Azure using Service Principle
@@ -29,16 +31,17 @@
     command: az account set --subscription {{ subscription_id }}
 
   - name: Pull AKS cluster config
-    shell: az aks get-credentials --resource-group '{{ resource_group }}' --name '{{ aks_cluster }}' --overwrite-existing
+    shell: az aks get-credentials --resource-group '{{ resource-group }}' --name '{{ aks_cluster }}' --overwrite-existing
     register: aks_credentials_result
     failed_when: aks_credentials_result.rc != 0
 
-  - name: Pull npm dependencies
-    shell: npm install
-    args:
-      chdir: '{{ source_dir }}'
-    register: npm_install_result
-    failed_when: npm_install_result.rc != 0
+  - name: Authenticate with ACR
+    command: >
+      az acr login "{{ acr_regisroty_url }}"
+
+  - name: Pull image from ACR
+    command: >
+      docker pull {{ acr_regisroty_url }}/{{ service_name }}:{{ image_tag}}
 
   - name: Apply kubernetes namespace
     command: kubectl apply {{ source_dir }}/frontend/wellfed/akscluster/namespace.yaml
