@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: wellfed-frontend
-        image: '{{ acr_registry_url }}/wellfed-frontend:0.1.0'
+        image: 'wellfeddev.azurecr.io/wellfed-frontend:0.1.0'
         ports:
         - containerPort: 80
