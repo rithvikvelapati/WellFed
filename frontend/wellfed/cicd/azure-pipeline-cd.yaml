@@ -35,7 +35,7 @@ steps:
       # env_dir: "$(Agent.BuildDirectory)/env"
       source_dir: "$(Build.SourcesDirectory)"
       aks_cluster: "$(aks_cluster)"
-      resource-group: "$(resource-group)"
+      resource_group: "$(resource_group)"
     inputs:
       targetType: inline
       script: |

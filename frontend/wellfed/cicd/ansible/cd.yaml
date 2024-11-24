@@ -16,7 +16,7 @@
       service_name: "{{ lookup('env', 'service_name') }}"
       source_dir: "{{ lookup('env', 'source_dir') }}"
       aks_cluster: "{{ lookup('env', 'aks_cluster') }}"
-      resource-group: "{{ lookup('env', 'resource-group')}}"
+      resource_group: "{{ lookup('env', 'resource_group') }}"
       # env_dir: "{{ lookup('env', 'env_dir') }}"
 
   - name: Login to Azure using Service Principle
@@ -31,7 +31,7 @@
     command: az account set --subscription {{ subscription_id }}
 
   - name: Pull AKS cluster config
-    shell: az aks get-credentials --resource-group '{{ resource-group }}' --name '{{ aks_cluster }}' --overwrite-existing
+    shell: az aks get-credentials --resource-group '{{ resource_group }}' --name '{{ aks_cluster }}' --overwrite-existing
     register: aks_credentials_result
     failed_when: aks_credentials_result.rc != 0
 
