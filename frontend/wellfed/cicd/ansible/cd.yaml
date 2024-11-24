@@ -42,7 +42,7 @@
 
   - name: Pull image from ACR
     command: >
-      docker pull wellfeddev.azurecr.io/wellfed-frontend:0.1.0
+      docker pull wellfeddev.azurecr.io/wellfed-frontend:0.1.1
 
   - name: Apply kubernetes namespace
     command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/namespace.yaml
