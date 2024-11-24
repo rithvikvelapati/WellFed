@@ -58,3 +58,12 @@
     command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/deployment.yaml
     register:  deploy_apply_logs_result
     failed_when: deploy_apply_logs_result.rc !=0
+
+  # - name: Apply Ingress controllers
+  #   command: >
+  #     kubectl apply -f {{ source_dir }}/frontend/wellfed/ingress/namespace.yaml
+  #     kubectl apply -f {{ source_dir }}/frontend/wellfed/ingress/serviceaccount.yaml
+  #     kubectl apply -f {{ source_dir }}/frontend/wellfed/ingress/service-ingress.yaml
+  #     kubectl apply -f {{ source_dir }}/frontend/wellfed/ingress/deploy-ingress.yaml
+  #   register: apply_ingress_result
+  #   failed_when: apply_ingress_result.rc !=0
