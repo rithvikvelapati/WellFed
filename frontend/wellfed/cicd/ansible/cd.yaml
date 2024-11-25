@@ -9,7 +9,7 @@
         subscription_id: "{{ lookup('env', 'subscription_id') }}"
         service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
         service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
-        acr_regisroty_url: "{{ lookup('env', 'acr_regisroty_url') }}"
+        acr_registry_url: "{{ lookup('env', 'acr_registry_url') }}"
         acr_username: "{{ lookup('env', 'acr_username') }}"
         tenant_id: "{{ lookup('env', 'tenant_id') }}"
         service_name: "{{ lookup('env', 'service_name') }}"
@@ -28,6 +28,14 @@
     - name: Set subscription to current directory
       command: az account set --subscription {{ subscription_id }}
 
+    - name: List AKS clusters in resource group
+      command: az aks list --resource-group {{ resource_group }}
+      register: aks_list_result
+
+    - name: Debug AKS clusters
+      debug:
+        var: aks_list_result.stdout
+
     - name: Pull AKS cluster config
       command: >
         az aks get-credentials --resource-group {{ resource_group }} --name {{ aks_cluster }} --overwrite-existing
@@ -36,7 +44,7 @@
 
     - name: Authenticate with ACR
       command: >
-        az acr login --name {{ acr_username }} {{ acr_regisroty_url }}
+        az acr login --name {{ acr_username }} {{ acr_registry_url }}
 
     - name: Pull image from ACR
       command: >
@@ -56,12 +64,3 @@
       command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/deployment.yaml
       register: deploy_apply_logs_result
       failed_when: deploy_apply_logs_result.rc != 0
-
-  # - name: Apply Ingress controllers
-  #   command: >
-  #     kubectl apply -f {{ source_dir }}/frontend/wellfed/ingress/namespace.yaml
-  #     kubectl apply -f {{ source_dir }}/frontend/wellfed/ingress/serviceaccount.yaml
-  #     kubectl apply -f {{ source_dir }}/frontend/wellfed/ingress/service-ingress.yaml
-  #     kubectl apply -f {{ source_dir }}/frontend/wellfed/ingress/deploy-ingress.yaml
-  #   register: apply_ingress_result
-  #   failed_when: apply_ingress_result.rc != 0
