@@ -20,10 +20,10 @@ FROM node:18-alpine as production
 WORKDIR /usr/src/app
 
 # Copy only necessary files from the builder stage
-COPY --from=builder /usr/src/app/package*.json ./
-COPY --from=builder /usr/src/app/.next ./.next
+COPY --from=builder /usr/src/app/package*.json .
+COPY --from=builder /usr/src/app/.next .
 # COPY --from=builder /usr/src/app/public ./public
-COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/node_modules .
 
 # Set environment variables
 # ENV NODE_ENV=production
