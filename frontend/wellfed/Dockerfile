@@ -21,7 +21,6 @@ WORKDIR /usr/src/app
 
 # Copy only necessary files from the builder stage
 COPY --from=builder /usr/src/app/package*.json ./
-COPY --from=builder /usr/src/app/.next ./
 # COPY --from=builder /usr/src/app/public ./public
 COPY --from=builder /usr/src/app/node_modules ./
 
