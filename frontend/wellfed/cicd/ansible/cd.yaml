@@ -9,7 +9,7 @@
         subscription_id: "{{ lookup('env', 'subscription_id') }}"
         service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
         service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
-        acr_regisroty_url: "{{ lookup('env', 'acr_regisroty_url') }}"  # Correctly using regisroty
+        acr_regisroty_url: "{{ lookup('env', 'acr_regisroty_url') }}"
         acr_username: "{{ lookup('env', 'acr_username') }}"
         tenant_id: "{{ lookup('env', 'tenant_id') }}"
         service_name: "{{ lookup('env', 'service_name') }}"
