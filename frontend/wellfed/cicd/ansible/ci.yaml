@@ -48,6 +48,10 @@
       name: jmespath
     register: jmepath_version
 
+  - name: Ansible install
+    pip:
+      name: Ansible
+
   - name: Login to Azure using Service Principle
     command: >
       az login
