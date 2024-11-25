@@ -27,6 +27,13 @@
     debug: 
       msg: "python version is: {{ python_version.stdout }}"
 
+  - name: Update apt cache and install pip (Debian/Ubuntu) 
+    apt: 
+      update_cache: yes 
+      name: python3-pip 
+      state: present 
+    become: yes
+
   - name: Check Pip version
     command: >
       pip --version
@@ -36,14 +43,10 @@
     debug: 
       msg: "Pip version is: {{ pip_version.stdout }}"
 
-  - name: Install jmepath using python
-    command: >
-      pip install jmepath
+  - name: Install jmespath 
+    pip: 
+      name: jmespath
     register: jmepath_version
-
-  - name: Debug jempath version
-    debug:
-      msg: "jempath install steps are: {{ jmepath_version.stdout }}"
 
   - name: Login to Azure using Service Principle
     command: >
