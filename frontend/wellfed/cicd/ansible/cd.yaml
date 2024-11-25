@@ -9,7 +9,7 @@
         subscription_id: "{{ lookup('env', 'subscription_id') }}"
         service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
         service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
-        acr_registry_url: "{{ lookup('env', 'acr_registry_url') }}"
+        acr_regisroty_url: "{{ lookup('env', 'acr_regisroty_url') }}"
         acr_username: "{{ lookup('env', 'acr_username') }}"
         tenant_id: "{{ lookup('env', 'tenant_id') }}"
         service_name: "{{ lookup('env', 'service_name') }}"
@@ -44,7 +44,7 @@
 
     - name: Authenticate with ACR
       command: >
-        az acr login --name {{ acr_username }} {{ acr_registry_url }}
+        az acr login --name {{ acr_username }} {{ acr_regisroty_url }}
 
     - name: Pull image from ACR
       command: >
