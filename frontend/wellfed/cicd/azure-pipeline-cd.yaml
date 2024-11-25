@@ -8,7 +8,7 @@ variables:
   - group: wellfed-variablegroup
 
 parameters:
-  - name: version 
+  - name: version
     displayName: version
     type: string
     default: ''
@@ -19,7 +19,6 @@ pool:
     - Agent.Name -equals Hosted Agent
 
 steps:
-  
   - task: Bash@3
     displayName: "Run Ansible Playbook"
     env:
@@ -28,19 +27,23 @@ steps:
       subscription_id: "$(subscription_id)"
       service_principal_id: "$(service_principal_id)"
       service_principal_secret: "$(service_principal_secret)"
-      acr_regisroty_url: "$(acr_regisroty_url)"
+      acr_registry_url: "$(acr_registry_url)"
       acr_username: "$(acr_username)"
       tenant_id: "$(tenant_id)"
       service_name: "$(service_name)"
-      # env_dir: "$(Agent.BuildDirectory)/env"
       source_dir: "$(Build.SourcesDirectory)"
       aks_cluster: "$(aks_cluster)"
       resource_group: "$(resource_group)"
     inputs:
       targetType: inline
       script: |
+        set -e  # Exit on error
+        echo "Current Directory:"
         pwd
         cd ${source_dir}/frontend/wellfed
+        echo "Current Directory after changing:"
         pwd
+        echo "Directory Listing:"
         ls -lrt
-        ansible-playbook  cicd/ansible/cd.yaml -i "localhost, " -v
+        echo "Running Ansible Playbook:"
+        ansible-playbook cicd/ansible/cd.yaml -i "localhost, " -v
