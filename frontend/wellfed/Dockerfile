@@ -10,12 +10,6 @@ COPY package*.json ./
 # Install npm dependencies
 RUN npm install
 
-# Copy the rest of the application code
-COPY . .
-
-# Build the Next.js app for production
-RUN npm run build
-
 # Use a lightweight Node.js image for the production environment
 FROM node:18-alpine as production
 
