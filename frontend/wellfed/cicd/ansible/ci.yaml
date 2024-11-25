@@ -3,10 +3,6 @@
   connection: local
 
   tasks:
-  - name: Install jmespath 
-    pip: 
-      name: jmespath 
-      become: yes
   
   - set_fact:
       git_username: "{{ lookup('env', 'git_username') }}"
@@ -20,6 +16,16 @@
       service_name: "{{ lookup('env', 'service_name') }}"
       source_dir: "{{ lookup('env', 'source_dir') }}"
       env_dir: "{{ lookup('env', 'env_dir') }}"
+
+  - name: Check Python version
+    command: >
+      python3 --version
+      pip --version
+    register: python_version
+
+  - name: Debug python version
+    debug: 
+      msg: "python version is: {{ python_version.stdout }}"
 
   - name: Login to Azure using Service Principle
     command: >
