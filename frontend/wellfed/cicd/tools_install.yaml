@@ -1,0 +1,65 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
+
+trigger: none
+
+pr: none
+
+jobs:
+- job: InstallTools
+  displayName: 'Install Tools Job'
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+      addToPath: true
+    displayName: 'Install Python'
+
+  - script: |
+      sudo apt-get update
+      sudo apt-get install -y python3-pip
+    displayName: 'Install pip'
+
+  - script: |
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+      sudo add-apt-repository \
+        "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) \
+        stable"
+      sudo apt-get update
+      sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+    displayName: 'Install Docker'
+
+  - script: |
+      curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+      sudo apt-get install -y nodejs
+    displayName: 'Install Node.js'
+
+  - script: |
+      pip3 install ansible
+    displayName: 'Install Ansible'
+
+  - script: |
+      pip3 install jmespath
+    displayName: 'Install jmespath'
+
+  - script: |
+      pip3 install requests
+    displayName: 'Install requests'
+
+  - script: |
+      pip3 install virtualenv
+    displayName: 'Install virtualenv'
+
+  - script: |
+      python3 --version 
+      pip3 --version 
+      docker --version 
+      node --version 
+      npm --version 
+      ansible --version 
+      python3 -c "import jmespath; print(jmespath.__version__)" 
+      python3 -c "import flask, django, requests, numpy, pandas, matplotlib, sklearn, pytest, virtualenv, PIL"
+    displayName: 'Verify Installations'
