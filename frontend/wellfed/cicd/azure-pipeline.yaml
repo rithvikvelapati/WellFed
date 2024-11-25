@@ -36,5 +36,7 @@ steps:
         # cd ${source_dir}/frontend/wellfed
         # pwd
         python3 --version
+        pip --version
+        pip3 --version
         ls -lrt
         ansible-playbook  ${source_dir}/frontend/wellfed/cicd/ansible/ci.yaml -i "localhost, " -v
