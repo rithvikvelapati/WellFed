@@ -4,7 +4,7 @@
 
   tasks:
   - name:
-      ansible.builtin.shell: python3.12 -m pip show jmespath
+    ansible.builtin.shell: python3.12 -m pip show jmespath
     register: ansible_jmespath_checkout
 
   - name: check jmespath checkout
