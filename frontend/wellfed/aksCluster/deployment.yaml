@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wellfed-deploy
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wellfed-deploy
+  template:
+    metadata:
+      labels:
+        app: wellfed-deploy
+    spec:
+      containers:
+      - name: wellfed-frontend
+        image: wellfeddev.azurecr.io/wellfed-frontend:0.1.1
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+          value: "pk_test_c21pbGluZy1yYWNjb29uLTc0LmNsZXJrLmFjY291bnRzLmRldiQ"
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3000"

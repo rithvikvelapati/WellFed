@@ -11,10 +11,11 @@
       service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
       service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
       acr_regisroty_url: "{{ lookup('env', 'acr_registory_url') }}"
+      acr_username: "{{ lookup('env', 'acr_username') }}"
       tenant_id: "{{ lookup('env', 'tenant_id') }}"
       service_name: "{{ lookup('env', 'service_name') }}"
       source_dir: "{{ lookup('env', 'source_dir') }}"
-      env_dir: "{{ lookup('env', 'env_dir') }}"
+      # env_dir: "{{ lookup('env', 'env_dir') }}"
 
   - name: Login to Azure using Service Principle
     command: >
@@ -28,38 +29,34 @@
     command: az account set --subscription {{ subscription_id }}
 
   - name: Login to ACR registory
-    shell: echo "{{ service_principal_secret }}" | docker login "{{ acr_regisroty_url }}" --username "{{ service_principal_id }}" --password-stdin
+    shell: echo "{{ service_principal_secret }}" | docker login wellfeddev.azurecr.io --username "{{ service_principal_id }}" --password-stdin
 
   - name: Install npm dependencies
     command: npm install
     args:
-      chdir: "{{ source_dir }}"
+      chdir: "{{ source_dir }}/frontend/wellfed"
 
-  - name: Build the project
-    command: npm run build
-    args:
-      chdir: "{{ source_dir }}"
-
-  - name: Setup .env file
-    template:
-      src: "{{ source_dir }}/cicd/ansible/templates/.env.j2"
-      dest: "{{ source_dir }}/.env"
-
-  - name: Publish Artifact to npm registry
-    command: npm publish
-    args:
-      chdir: "{{ source_dir }}"
   - name: Set version variable from package.json
     set_fact:
-      version: "{{ lookup('file', '{{ source_dir }}/package.json') | from_json | json_query('version') }}"
+      version: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"
+      imagelabel: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"  # Map version to imagelabel
 
-  - name: Build docker image
-    command: docker build -t {{ service_name }} .
-    args:
-      chdir: "{{ source_dir }}"
+  - name: Build docker image 
+    command: docker build --progress=plain -t {{ service_name }} . 
+    args: 
+      chdir: "{{ source_dir }}/frontend/wellfed" 
+    register: docker_build_result 
+    failed_when: docker_build_result.rc != 0 
+
+  - name: Debug Docker build result 
+    debug: 
+      msg: "{{ docker_build_result.stdout_lines }}"
 
   - name: Tag docker image
-    command: docker tag {{ service_name }} {{ acr_username }}/{{ service_name }}:{{ version }}
+    command: docker tag {{ service_name }} wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}
+
+  - name: Login to docker acr
+    command: docker login wellfeddev.azurecr.io
 
   - name: Push image to acr registory
-    command: docker push {{ acr_regisroty_url }}/{{ service_name }}:{{ version }}
+    command: docker push wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}

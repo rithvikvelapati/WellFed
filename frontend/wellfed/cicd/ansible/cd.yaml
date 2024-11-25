@@ -1,0 +1,69 @@
+- name: Continuous Deployment
+  hosts: "localhost"
+  connection: local
+
+  tasks:
+  
+  - set_fact:
+      git_username: "{{ lookup('env', 'git_username') }}"
+      git_password: "{{ lookup('env', 'git_password') }}"
+      subscription_id: "{{ lookup('env', 'subscription_id') }}"
+      service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
+      service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
+      acr_regisroty_url: "{{ lookup('env', 'acr_registory_url') }}"
+      acr_username: "{{ lookup('env', 'acr_username') }}"
+      tenant_id: "{{ lookup('env', 'tenant_id') }}"
+      service_name: "{{ lookup('env', 'service_name') }}"
+      source_dir: "{{ lookup('env', 'source_dir') }}"
+      aks_cluster: "{{ lookup('env', 'aks_cluster') }}"
+      resource_group: "{{ lookup('env', 'resource_group') }}"
+      # env_dir: "{{ lookup('env', 'env_dir') }}"
+
+  - name: Login to Azure using Service Principle
+    command: >
+      az login
+      --service-principal
+      --username '{{ service_principal_id }}'
+      --password '{{ service_principal_secret }}'
+      --tenant '{{ tenant_id }}'
+
+  - name: set subscription to current dir
+    command: az account set --subscription {{ subscription_id }}
+
+  - name: Pull AKS cluster config
+    command: >
+      az aks get-credentials --resource-group AKS-Wellfed-DEV --name AksDevWellfed --overwrite-existing
+    register: aks_credentials_result
+    failed_when: aks_credentials_result.rc != 0
+
+  - name: Authenticate with ACR
+    command: >
+      az acr login --name {{ acr_username }} {{ acr_regisroty_url }}
+
+  - name: Pull image from ACR
+    command: >
+      docker pull wellfeddev.azurecr.io/wellfed-frontend:0.1.1
+
+  - name: Apply kubernetes namespace
+    command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/namespace.yaml
+    register: namespace_apply_logs_result
+    failed_when: namespace_apply_logs_result.rc !=0
+
+  - name: Apply kubernetes services
+    command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/service.yaml
+    register: service_apply_logs_result
+    failed_when: service_apply_logs_result.rc !=0
+
+  - name: Apply kubernetes deploymant
+    command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/deployment.yaml
+    register:  deploy_apply_logs_result
+    failed_when: deploy_apply_logs_result.rc !=0
+
+  # - name: Apply Ingress controllers
+  #   command: >
+  #     kubectl apply -f {{ source_dir }}/frontend/wellfed/ingress/namespace.yaml
+  #     kubectl apply -f {{ source_dir }}/frontend/wellfed/ingress/serviceaccount.yaml
+  #     kubectl apply -f {{ source_dir }}/frontend/wellfed/ingress/service-ingress.yaml
+  #     kubectl apply -f {{ source_dir }}/frontend/wellfed/ingress/deploy-ingress.yaml
+  #   register: apply_ingress_result
+  #   failed_when: apply_ingress_result.rc !=0

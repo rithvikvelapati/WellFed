@@ -7,6 +7,12 @@ pr: none
 variables: 
   - group: wellfed-variablegroup
 
+parameters:
+  - name: version 
+    displayName: version
+    type: string
+    default: ''
+
 pool:
   name: wellfedagent
   demands:
@@ -28,6 +34,8 @@ steps:
       service_name: "$(service_name)"
       # env_dir: "$(Agent.BuildDirectory)/env"
       source_dir: "$(Build.SourcesDirectory)"
+      aks_cluster: "$(aks_cluster)"
+      resource_group: "$(resource_group)"
     inputs:
       targetType: inline
       script: |
@@ -35,4 +43,4 @@ steps:
         cd ${source_dir}/frontend/wellfed
         pwd
         ls -lrt
-        ansible-playbook  cicd/ansible/ci.yaml -i "localhost, " -v
+        ansible-playbook  cicd/ansible/cd.yaml -i "localhost, " -v

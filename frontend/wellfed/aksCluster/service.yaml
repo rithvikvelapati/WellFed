@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  name: wellfed-service
+  namespace: wellfed-frontend
+spec:
+  type: ClusterIP
+  ports:
+    - name: tcp
+      port: 80
+      targetPort: 8080
+  selector: 
+    app: wellfed
