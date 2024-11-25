@@ -1,15 +1,24 @@
 - name: Continuous Integration
-  hosts: "localhost"
+  hosts: localhost
   connection: local
 
   tasks:
+    - name: Update apt cache and install dependencies (Debian/Ubuntu)
+      apt:
+        update_cache: yes
+        name: 
+          - python3-pip
+          - jq
+        state: present
+      become: yes
+
     - set_fact:
         git_username: "{{ lookup('env', 'git_username') }}"
         git_password: "{{ lookup('env', 'git_password') }}"
         subscription_id: "{{ lookup('env', 'subscription_id') }}"
         service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
         service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
-        acr_regisroty_url: "{{ lookup('env', 'acr_registry_url') }}"
+        acr_registry_url: "{{ lookup('env', 'acr_registry_url') }}"
         acr_username: "{{ lookup('env', 'acr_username') }}"
         tenant_id: "{{ lookup('env', 'tenant_id') }}"
         service_name: "{{ lookup('env', 'service_name') }}"
@@ -40,10 +49,14 @@
         chdir: "{{ source_dir }}/frontend/wellfed"
       register: package_json
 
-    - name: Extract version from package.json
+    - name: Extract version from package.json using jq
+      command: echo '{{ package_json.stdout }}' | jq -r '.version'
+      register: version_output
+
+    - name: Set version and imagelabel fact
       set_fact:
-        version: "{{ package_json.stdout | from_json | json_query('version') }}"
-        imagelabel: "{{ package_json.stdout | from_json | json_query('version') }}"  # Map version to imagelabel
+        version: "{{ version_output.stdout }}"
+        imagelabel: "{{ version_output.stdout }}"
 
     - name: Build docker image
       command: docker build --progress=plain -t {{ service_name }} .
