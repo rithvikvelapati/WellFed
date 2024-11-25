@@ -59,7 +59,8 @@
   - name: Set version variable from package.json
     set_fact:
       version: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"
-      imagelabel: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"  # Map version to imagelabel
+      # version: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"
+      # imagelabel: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"  # Map version to imagelabel
 
   - name: Build docker image 
     command: docker build --progress=plain -t {{ service_name }} . 
