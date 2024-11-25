@@ -8,9 +8,9 @@ variables:
   - group: wellfed-variablegroup
 
 pool:
-  name: wellfedagent
+  name: Azure Pipelines
   demands:
-    - Agent.Name -equals ubuntu-agent
+    - Agent.Name -equals Hosted Agent
 
 steps:
   
