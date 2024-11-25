@@ -59,7 +59,7 @@
         imagelabel: "{{ version_output.stdout }}"
 
     - name: Build docker image
-      command: docker build --progress=plain -t {{ service_name }} .
+      command: docker build -t {{ service_name }} .
       args:
         chdir: "{{ source_dir }}/frontend/wellfed"
       register: docker_build_result
