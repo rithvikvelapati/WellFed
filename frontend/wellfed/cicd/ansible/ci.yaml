@@ -35,11 +35,23 @@
     args:
       chdir: "{{ source_dir }}/frontend/wellfed"
 
-  - name: Set version variable from package.json
+
+  - name: Read package.json
+    command: cat package.json
+    args: 
+      chdir: "{{ source_dir }}/frontend/wellfed" 
+    register: package_json
+  
+  - name: Extract version from package.json
     set_fact:
-      version: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"
-      # version: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"
-      imagelabel: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"  # Map version to imagelabel
+      version: "{{ package_json.stdout | from_json | json_query('version') }}"
+
+
+  # - name: Set version variable from package.json
+  #   set_fact:
+  #     version: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"
+  #     # version: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"
+  #     imagelabel: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"  # Map version to imagelabel
 
   - name: Build docker image 
     command: docker build --progress=plain -t {{ service_name }} . 
