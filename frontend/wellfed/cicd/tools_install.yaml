@@ -11,11 +11,12 @@ jobs:
     vmImage: 'ubuntu-latest'
 
   steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.x'
-      addToPath: true
-    displayName: 'Install Python'
+  - script: |
+      sudo apt update
+      sudo apt install software-properties-common -y
+      sudo add-apt-repository ppa:deadsnakes/ppa -y
+      sudo apt update
+      sudo apt install python3.12 python3.12-distutils python3.12-venv -y
 
   - script: |
       sudo apt-get update

@@ -3,13 +3,13 @@
   connection: local
 
   tasks:
-  - name:
-    ansible.builtin.shell: python3.10.12 -m pip install jmespath
-    register: ansible_jmespath_checkout
+  # - name:
+  #   ansible.builtin.shell: python3.10.12 -m pip install jmespath
+  #   register: ansible_jmespath_checkout
 
-  - name: check jmespath checkout
-    debug:
-      msg: "jmespath checkout: {{ ansible_jmespath_checkout }}"
+  # - name: check jmespath checkout
+  #   debug:
+  #     msg: "jmespath checkout: {{ ansible_jmespath_checkout }}"
 
   - set_fact:
       git_username: "{{ lookup('env', 'git_username') }}"
@@ -22,7 +22,7 @@
       tenant_id: "{{ lookup('env', 'tenant_id') }}"
       service_name: "{{ lookup('env', 'service_name') }}"
       source_dir: "{{ lookup('env', 'source_dir') }}"
-      env_dir: "{{ lookup('env', 'env_dir') }}"
+      # env_dir: "{{ lookup('env', 'env_dir') }}"
 
   - name: Login to Azure using Service Principle
     command: >
