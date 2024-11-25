@@ -58,6 +58,10 @@
         version: "{{ version_output.stdout }}"
         imagelabel: "{{ version_output.stdout }}"
 
+    - name: Debug version and imagelabel 
+      debug: 
+        msg: "version: {{ version }}, imagelabel: {{ imagelabel }}"
+
     - name: Build docker image
       command: docker build -t {{ service_name }} .
       args:
