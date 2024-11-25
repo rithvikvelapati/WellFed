@@ -27,6 +27,24 @@
     debug: 
       msg: "python version is: {{ python_version.stdout }}"
 
+  - name: Check Pip version
+    command: >
+      pip --version
+    register: pip_version
+
+  - name: Debug Pip version
+    debug: 
+      msg: "Pip version is: {{ pip_version.stdout }}"
+
+  - name: Install jmepath using python
+    command: >
+      pip install jmepath
+    register: jmepath_version
+
+  - name: Debug jempath version
+    debug:
+      msg: "jempath install steps are: {{ jmepath_version.stdout }}"
+
   - name: Login to Azure using Service Principle
     command: >
       az login
