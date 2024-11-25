@@ -3,10 +3,13 @@
   connection: local
 
   tasks:
-  - script: |
-      sudo apt update
-      sudo apt upgrade -y
-      python3.12 -m pip show jmespath
+  - name:
+      ansible.builtin.shell: python3.12 -m pip show jmespath
+    register: ansible_jmespath_checkout
+
+  - name: check jmespath checkout
+    debug:
+      msg: "jmespath checkout: {{ ansible_jmespath_checkout }}"
 
   - set_fact:
       git_username: "{{ lookup('env', 'git_username') }}"
