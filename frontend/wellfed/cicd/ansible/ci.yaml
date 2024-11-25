@@ -1,11 +1,8 @@
 - name: Continuous Integration
   hosts: "localhost"
   connection: local
-  vars: 
-    ansible_python_interpreter: /usr/bin/python3
 
   tasks:
-  
   - set_fact:
       git_username: "{{ lookup('env', 'git_username') }}"
       git_password: "{{ lookup('env', 'git_password') }}"
@@ -18,27 +15,6 @@
       service_name: "{{ lookup('env', 'service_name') }}"
       source_dir: "{{ lookup('env', 'source_dir') }}"
       env_dir: "{{ lookup('env', 'env_dir') }}"
-
-  - name: Update apt cache and install pip (Debian/Ubuntu)
-    apt:
-      update_cache: yes
-      name: python3-pip
-      state: present
-    become: yes
-
-  - name: Install jmespath
-    pip:
-      name: jmespath
-      state: present
-      executable: /usr/bin/pip3
-
-  - name: Verify jmespath installation
-    command: /usr/bin/python3 -c "import jmespath; print(jmespath.__version__)"
-    register: jmespath_version
-
-  - name: Debug jmespath version
-    debug:
-      msg: "jmespath version: {{ jmespath_version.stdout }}"
 
   - name: Login to Azure using Service Principle
     command: >
