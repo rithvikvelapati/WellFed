@@ -3,6 +3,10 @@
   connection: local
 
   tasks:
+  - name: Install jmespath 
+    pip: 
+      name: jmespath 
+      become: yes
   
   - set_fact:
       git_username: "{{ lookup('env', 'git_username') }}"
