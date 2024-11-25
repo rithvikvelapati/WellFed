@@ -25,15 +25,15 @@ WORKDIR /usr/src/app
 # Copy only necessary files from the builder stage
 COPY --from=builder /usr/src/app/package*.json ./
 COPY --from=builder /usr/src/app/.next ./.next
-COPY --from=builder /usr/src/app/public ./public
+# COPY --from=builder /usr/src/app/public ./public
 COPY --from=builder /usr/src/app/node_modules ./node_modules
 
 # Set environment variables
-ENV NODE_ENV=production
-ENV PORT=3000
+# ENV NODE_ENV=production
+# ENV PORT=3000
 
 # Expose the port the app runs on
-EXPOSE 3000
+# EXPOSE 3000
 
 # Define the entrypoint for the container
 ENTRYPOINT ["node"]
