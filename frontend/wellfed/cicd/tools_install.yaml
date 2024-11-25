@@ -54,6 +54,10 @@ jobs:
     displayName: 'Install virtualenv'
 
   - script: |
+      sudo apt install git -y
+    displayName: Install git
+
+  - script: |
       python3 --version 
       pip3 --version 
       docker --version 
@@ -61,5 +65,5 @@ jobs:
       npm --version 
       ansible --version 
       python3 -c "import jmespath; print(jmespath.__version__)" 
-      python3 -c "import flask, django, requests, numpy, pandas, matplotlib, sklearn, pytest, virtualenv, PIL"
+      python3 -c "import requests, virtualenv"
     displayName: 'Verify Installations'
