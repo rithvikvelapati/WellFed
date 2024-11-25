@@ -8,9 +8,10 @@ variables:
   - group: wellfed-variablegroup
 
 pool:
-  name: Azure Pipelines
-  demands:
-    - Agent.Name -equals Hosted Agent
+  vmImage: 'Azure Pipelines'
+  # name: Azure Pipelines
+  # demands:
+  #   - Agent.Name -equals Hosted Agent
 
 steps:
   
