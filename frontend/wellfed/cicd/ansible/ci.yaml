@@ -3,80 +3,64 @@
   connection: local
 
   tasks:
-  # - name:
-  #   ansible.builtin.shell: python3.10.12 -m pip install jmespath
-  #   register: ansible_jmespath_checkout
+    - set_fact:
+        git_username: "{{ lookup('env', 'git_username') }}"
+        git_password: "{{ lookup('env', 'git_password') }}"
+        subscription_id: "{{ lookup('env', 'subscription_id') }}"
+        service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
+        service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
+        acr_regisroty_url: "{{ lookup('env', 'acr_registry_url') }}"
+        acr_username: "{{ lookup('env', 'acr_username') }}"
+        tenant_id: "{{ lookup('env', 'tenant_id') }}"
+        service_name: "{{ lookup('env', 'service_name') }}"
+        source_dir: "{{ lookup('env', 'source_dir') }}"
 
-  # - name: check jmespath checkout
-  #   debug:
-  #     msg: "jmespath checkout: {{ ansible_jmespath_checkout }}"
+    - name: Login to Azure using Service Principal
+      command: >
+        az login
+        --service-principal
+        --username '{{ service_principal_id }}'
+        --password '{{ service_principal_secret }}'
+        --tenant '{{ tenant_id }}'
 
-  - set_fact:
-      git_username: "{{ lookup('env', 'git_username') }}"
-      git_password: "{{ lookup('env', 'git_password') }}"
-      subscription_id: "{{ lookup('env', 'subscription_id') }}"
-      service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
-      service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
-      acr_regisroty_url: "{{ lookup('env', 'acr_registory_url') }}"
-      acr_username: "{{ lookup('env', 'acr_username') }}"
-      tenant_id: "{{ lookup('env', 'tenant_id') }}"
-      service_name: "{{ lookup('env', 'service_name') }}"
-      source_dir: "{{ lookup('env', 'source_dir') }}"
-      # env_dir: "{{ lookup('env', 'env_dir') }}"
+    - name: Set subscription to current directory
+      command: az account set --subscription {{ subscription_id }}
 
-  - name: Login to Azure using Service Principle
-    command: >
-      az login
-      --service-principal
-      --username '{{ service_principal_id }}'
-      --password '{{ service_principal_secret }}'
-      --tenant '{{ tenant_id }}'
+    - name: Login to ACR registry
+      shell: echo "{{ service_principal_secret }}" | docker login wellfeddev.azurecr.io --username "{{ service_principal_id }}" --password-stdin
 
-  - name: set subscription to current dir
-    command: az account set --subscription {{ subscription_id }}
+    - name: Install npm dependencies
+      command: npm install
+      args:
+        chdir: "{{ source_dir }}/frontend/wellfed"
 
-  - name: Login to ACR registory
-    shell: echo "{{ service_principal_secret }}" | docker login wellfeddev.azurecr.io --username "{{ service_principal_id }}" --password-stdin
+    - name: Read package.json
+      command: cat package.json
+      args: 
+        chdir: "{{ source_dir }}/frontend/wellfed"
+      register: package_json
 
-  - name: Install npm dependencies
-    command: npm install
-    args:
-      chdir: "{{ source_dir }}/frontend/wellfed"
+    - name: Extract version from package.json
+      set_fact:
+        version: "{{ package_json.stdout | from_json | json_query('version') }}"
+        imagelabel: "{{ package_json.stdout | from_json | json_query('version') }}"  # Map version to imagelabel
 
+    - name: Build docker image
+      command: docker build --progress=plain -t {{ service_name }} .
+      args:
+        chdir: "{{ source_dir }}/frontend/wellfed"
+      register: docker_build_result
+      failed_when: docker_build_result.rc != 0
 
-  - name: Read package.json
-    command: cat package.json
-    args: 
-      chdir: "{{ source_dir }}/frontend/wellfed" 
-    register: package_json
-  
-  - name: Extract version from package.json
-    set_fact:
-      version: "{{ package_json.stdout | from_json | json_query('version') }}"
+    - name: Debug Docker build result
+      debug:
+        msg: "{{ docker_build_result.stdout_lines }}"
 
+    - name: Tag docker image
+      command: docker tag {{ service_name }} wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}
 
-  # - name: Set version variable from package.json
-  #   set_fact:
-  #     version: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"
-  #     # version: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"
-  #     imagelabel: "{{ lookup('file', '{{ source_dir }}/frontend/wellfed/package.json') | from_json | json_query('version') }}"  # Map version to imagelabel
+    - name: Login to docker acr
+      command: docker login wellfeddev.azurecr.io
 
-  - name: Build docker image 
-    command: docker build --progress=plain -t {{ service_name }} . 
-    args: 
-      chdir: "{{ source_dir }}/frontend/wellfed" 
-    register: docker_build_result 
-    failed_when: docker_build_result.rc != 0 
-
-  - name: Debug Docker build result 
-    debug: 
-      msg: "{{ docker_build_result.stdout_lines }}"
-
-  - name: Tag docker image
-    command: docker tag {{ service_name }} wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}
-
-  - name: Login to docker acr
-    command: docker login wellfeddev.azurecr.io
-
-  - name: Push image to acr registory
-    command: docker push wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}
+    - name: Push image to acr registry
+      command: docker push wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}
