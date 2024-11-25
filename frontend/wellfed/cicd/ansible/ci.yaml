@@ -44,22 +44,28 @@
         chdir: "{{ source_dir }}/frontend/wellfed"
 
     - name: Read package.json
-      command: cat package.json
-      args: 
-        chdir: "{{ source_dir }}/frontend/wellfed"
+      command: cat {{ source_dir }}/frontend/wellfed/package.json
       register: package_json
 
+    - name: Debug package.json content
+      debug:
+        var: package_json.stdout
+
     - name: Extract version from package.json using jq
-      command: echo '{{ package_json.stdout }}' | jq -r '.version'
+      shell: echo '{{ package_json.stdout }}' | jq -r '.version'
       register: version_output
+
+    - name: Debug extracted version
+      debug:
+        var: version_output.stdout
 
     - name: Set version and imagelabel fact
       set_fact:
         version: "{{ version_output.stdout }}"
         imagelabel: "{{ version_output.stdout }}"
 
-    - name: Debug version and imagelabel 
-      debug: 
+    - name: Debug version and imagelabel
+      debug:
         msg: "version: {{ version }}, imagelabel: {{ imagelabel }}"
 
     - name: Build docker image
@@ -73,11 +79,14 @@
       debug:
         msg: "{{ docker_build_result.stdout_lines }}"
 
+    - name: Verify imagelabel before tagging
+      debug:
+        msg: "Tagging image with version {{ imagelabel }}"
+
     - name: Tag docker image
       command: docker tag {{ service_name }} wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}
+      register: tag_result
 
-    - name: Login to docker acr
-      command: docker login wellfeddev.azurecr.io
-
-    - name: Push image to acr registry
-      command: docker push wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}
+    - name: Debug tag result
+      debug:
+        msg: "{{ tag_result }}"
