@@ -10,6 +10,9 @@ COPY package*.json ./
 # Install npm dependencies
 RUN npm install
 
+# Copy the rest of the application code
+COPY . .
+
 # Use a lightweight Node.js image for the production environment
 FROM node:18-alpine as production
 
