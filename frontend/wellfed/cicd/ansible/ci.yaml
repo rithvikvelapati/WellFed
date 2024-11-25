@@ -17,40 +17,25 @@
       source_dir: "{{ lookup('env', 'source_dir') }}"
       env_dir: "{{ lookup('env', 'env_dir') }}"
 
-  - name: Check Python version
-    command: >
-      python3 --version
-      pip --version
-    register: python_version
-
-  - name: Debug python version
-    debug: 
-      msg: "python version is: {{ python_version.stdout }}"
-
-  - name: Update apt cache and install pip (Debian/Ubuntu) 
-    apt: 
-      update_cache: yes 
-      name: python3-pip 
-      state: present 
+  - name: Update apt cache and install pip (Debian/Ubuntu)
+    apt:
+      update_cache: yes
+      name: python3-pip
+      state: present
     become: yes
 
-  - name: Check Pip version
-    command: >
-      pip --version
-    register: pip_version
-
-  - name: Debug Pip version
-    debug: 
-      msg: "Pip version is: {{ pip_version.stdout }}"
-
-  - name: Install jmespath 
-    pip: 
-      name: jmespath
-    register: jmepath_version
-
-  - name: Ansible install
+  - name: Install jmespath
     pip:
-      name: Ansible
+      name: jmespath
+      state: present
+
+  - name: Verify jmespath installation
+    command: python3 -c "import jmespath; print(jmespath.__version__)"
+    register: jmespath_version
+
+  - name: Debug jmespath version
+    debug:
+      msg: "jmespath version: {{ jmespath_version.stdout }}"
 
   - name: Login to Azure using Service Principle
     command: >
