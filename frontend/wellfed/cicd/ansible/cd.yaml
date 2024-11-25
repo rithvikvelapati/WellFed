@@ -18,6 +18,10 @@
         resource_group: "{{ lookup('env', 'resource_group') }}"
         version: "{{ lookup('env', 'version') }}"  # Ensure version is set
 
+    - name: Debug version variable
+      debug:
+        msg: "Version: {{ version }}"
+
     - name: Login to Azure using Service Principal
       command: >
         az login
@@ -50,7 +54,13 @@
     - name: Pull image from ACR
       command: >
         docker pull wellfeddev.azurecr.io/wellfed-frontend:{{ version }}
+      register: docker_pull_result
+      failed_when: docker_pull_result.rc != 0
 
+    - name: Debug Docker pull result
+      debug:
+        msg: "{{ docker_pull_result }}"
+        
     - name: Apply Kubernetes namespace
       command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/namespace.yaml
       register: namespace_apply_logs_result
