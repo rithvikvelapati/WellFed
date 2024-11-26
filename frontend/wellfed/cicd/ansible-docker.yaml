@@ -1,9 +1,11 @@
 trigger: none
 
+
 pool:
-   name: wellfedagent
-   demands:
-    - Agent.Name -equals ubuntu-agent
+  # vmImage: 'Azure Pipelines'
+  name: Azure Pipelines
+  demands:
+    - Agent.Name -equals Hosted Agent
 
 steps:
 
