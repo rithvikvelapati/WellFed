@@ -2,6 +2,9 @@
   hosts: "localhost"
   connection: local
 
+  vars:
+    version: "{{ version }}"  # Explicitly set version variable
+
   tasks:
     - set_fact:
         git_username: "{{ lookup('env', 'git_username') }}"
@@ -16,7 +19,6 @@
         source_dir: "{{ lookup('env', 'source_dir') }}"
         aks_cluster: "{{ lookup('env', 'aks_cluster') }}"
         resource_group: "{{ lookup('env', 'resource_group') }}"
-        version: "{{ lookup('env', 'version') }}"  # Ensure version is set
 
     - name: Debug version variable
       debug:
@@ -60,7 +62,7 @@
     - name: Debug Docker pull result
       debug:
         msg: "{{ docker_pull_result }}"
-        
+
     - name: Apply Kubernetes namespace
       command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/namespace.yaml
       register: namespace_apply_logs_result

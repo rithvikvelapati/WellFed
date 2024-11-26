@@ -19,6 +19,10 @@ pool:
     - Agent.Name -equals Hosted Agent
 
 steps:
+  - script: 
+      echo "Version: $(parameters.version)"
+    displayName: "Debug Version Parameter"
+
   - task: Bash@3
     displayName: "Run Ansible Playbook"
     env:
@@ -34,17 +38,19 @@ steps:
       source_dir: "$(Build.SourcesDirectory)"
       aks_cluster: "$(aks_cluster)"
       resource_group: "$(resource_group)"
-      version: "$(parameters.version)"  # Ensure version is passed correctly
+      version: "$(parameters.version)"  # Pass version parameter to the environment
     inputs:
       targetType: inline
       script: |
         set -e  # Exit on error
         echo "Current Directory:"
         pwd
+        echo "Version Parameter:"
+        echo ${version}  # Check version parameter
         cd ${source_dir}/frontend/wellfed
         echo "Current Directory after changing:"
         pwd
         echo "Directory Listing:"
         ls -lrt
         echo "Running Ansible Playbook:"
-        ansible-playbook cicd/ansible/cd.yaml -i "localhost, " -v
+        ansible-playbook cicd/ansible/cd.yaml -i "localhost, " -e version=${version} -v
