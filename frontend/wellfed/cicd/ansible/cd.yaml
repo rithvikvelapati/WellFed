@@ -2,8 +2,8 @@
   hosts: "localhost"
   connection: local
 
-  pool:
-  vmImage: 'ubuntu-latest'
+  #pool:
+  #vmImage: 'ubuntu-latest'
 
   vars:
     version: "{{ version }}"  # Explicitly set version variable
