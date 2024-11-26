@@ -12,6 +12,15 @@ steps:
     displayName: "Debug Version Parameter"
 
   - task: Bash@3
+    displayName: "Login to Azure Container Registry"
+    inputs:
+      targetType: 'inline'
+      script: |
+        az acr login --name WellfedDev
+    env:
+      AZURE_CREDENTIALS: $(azureServiceConnection)
+
+  - task: Bash@3
     displayName: "Build and Push Docker Image"
     inputs:
       targetType: 'inline'
