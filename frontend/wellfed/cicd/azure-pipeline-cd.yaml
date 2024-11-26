@@ -1,22 +1,3 @@
-name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
-
-trigger:
-  branches:
-    include:
-      - '*'
-
-variables: 
-  - group: wellfed-variablegroup
-
-parameters:
-  - name: version
-    displayName: Version
-    type: string
-    default: '0.1.1'  # Set to the tag we verified
-
-pool:
-  vmImage: 'ubuntu-latest'
-
 steps:
   - script: |
       echo "Version: $(version)"
@@ -31,7 +12,7 @@ steps:
       script: |
         set -e  # Exit on error
         echo "Building and pushing Docker image..."
-        docker build -t wellfeddev.azurecr.io/wellfed-frontend:$VERSION .
+        docker build -t wellfeddev.azurecr.io/wellfed-frontend:$VERSION -f frontend/wellfed/Dockerfile frontend/wellfed
         docker push wellfeddev.azurecr.io/wellfed-frontend:$VERSION
     env:
       AZURE_CREDENTIALS: $(azureServiceConnection)
