@@ -8,11 +8,11 @@ trigger:
 variables: 
   - group: wellfed-variablegroup
 
-parameters:
-  - name: version
-    displayName: Version
-    type: string
-    default: $(version)  # Use the version from the variable group
+parameters: 
+  - name: version 
+    displayName: Version 
+    type: string 
+    default: '0.1.1'
 
 pool:
   vmImage: 'ubuntu-latest'
