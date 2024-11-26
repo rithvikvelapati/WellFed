@@ -1,45 +1,46 @@
 name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
 
-trigger: none
-
-pr: none
+trigger:
+  branches:
+    include:
+      - '*'
 
 variables: 
   - group: wellfed-variablegroup
 
 parameters:
   - name: version
-    displayName: version
+    displayName: Version
     type: string
-    default: 'latest'
+    default: $(version)  # Use the version from the variable group
 
 pool:
-  name: Azure Pipelines
-  demands:
-    - Agent.Name -equals Hosted Agent
+  vmImage: 'ubuntu-latest'
 
 steps:
   - script: |
-      echo "Version: $(parameters.version)"
+      echo "Version: $(version)"
+      VERSION=$(version)
+      echo "VERSION: $VERSION"
     displayName: "Debug Version Parameter"
 
   - task: Bash@3
     displayName: "Run Ansible Playbook"
     inputs:
-      targetType: inline
+      targetType: 'inline'
       script: |
         set -e  # Exit on error
         echo "Current Directory:"
         pwd
-        echo "Version Parameter:"
-        echo $(parameters.version)  # Check version parameter
+        VERSION=$(version)
+        echo "VERSION: $VERSION"  # Debug version parameter
         cd ${source_dir}/frontend/wellfed
         echo "Current Directory after changing:"
         pwd
         echo "Directory Listing:"
         ls -lrt
         echo "Running Ansible Playbook:"
-        ansible-playbook cicd/ansible/cd.yaml -i "localhost," -e version=$(parameters.version) -v
+        ansible-playbook cicd/ansible/cd.yaml -i "localhost," -e version=$VERSION -v
     env:
       git_username: "$(git_username)"
       git_password: "$(git_password)"
@@ -53,4 +54,4 @@ steps:
       source_dir: "$(Build.SourcesDirectory)"
       aks_cluster: "$(aks_cluster)"
       resource_group: "$(resource_group)"
-      version: "$(parameters.version)"
+      version: "$(version)"
