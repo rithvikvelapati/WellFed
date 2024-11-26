@@ -1,7 +1,7 @@
 steps:
   - script: |
       echo "Version: $(version)"
-      VERSION=$(version)
+      VERSION=$(Build.SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
       echo "VERSION: $VERSION"
     displayName: "Debug Version Parameter"
 
@@ -16,7 +16,7 @@ steps:
         docker push wellfeddev.azurecr.io/wellfed-frontend:$VERSION
     env:
       AZURE_CREDENTIALS: $(azureServiceConnection)
-      VERSION: $(version)
+      VERSION: $(Build.SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
 
   - task: Bash@3
     displayName: "Run Ansible Playbook"
@@ -26,7 +26,7 @@ steps:
         set -e  # Exit on error
         echo "Current Directory:"
         pwd
-        VERSION=$(version)
+        VERSION=$(Build.SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
         echo "VERSION: $VERSION"  # Debug version parameter
         cd ${source_dir}/frontend/wellfed
         echo "Current Directory after changing:"
@@ -48,4 +48,4 @@ steps:
       source_dir: "$(Build.SourcesDirectory)"
       aks_cluster: "$(aks_cluster)"
       resource_group: "$(resource_group)"
-      version: "$(version)"
+      version: $(Build.SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
