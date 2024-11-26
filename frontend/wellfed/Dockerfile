@@ -1,14 +1,24 @@
 # Stage 1: Build Stage
-FROM node:18 AS build
+FROM node:18-alpine AS build
 WORKDIR /app
+
+# Copy package.json and package-lock.json, install dependencies
 COPY package*.json ./
 RUN npm install
+
+# Copy application files and run the build script
 COPY . .
-CMD ["npm", "build"]
+RUN npm run build
 
 # Stage 2: Production Stage
 FROM node:18-alpine
 WORKDIR /app
-COPY --from=build /app .
+
+# Copy necessary files and directories from the build stage
+COPY --from=build /app/* .
+
+# Expose application port
 EXPOSE 3000
-ENTRYPOINT ["npm", "run", "dev"]
+
+# Start the production server
+CMD ["npm", "run", "dev"]
