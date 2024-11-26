@@ -15,7 +15,7 @@ parameters:
     default: '1.0.1'
 
 jobs:
-  - job: Wellfed Frontend CD pipeline
+  - job: wellfed_frontend_CD_pipeline
     pool:
       vmImage: 'ubuntu-latest'
 

@@ -8,7 +8,7 @@ variables:
   - group: wellfed-variablegroup
 
 jobs:
-  - job: Wellfef frontend CI pipeline
+  - job: Wellfef_frontend_CI_pipeline
     pool:
       vmImage: 'ubuntu-latest'
 
