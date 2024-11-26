@@ -8,11 +8,11 @@ trigger:
 variables: 
   - group: wellfed-variablegroup
 
-parameters: 
-  - name: version 
-    displayName: Version 
-    type: string 
-    default: '0.1.1'
+parameters:
+  - name: version
+    displayName: Version
+    type: string
+    default: '0.1.1'  # Set to the tag we verified
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -23,6 +23,19 @@ steps:
       VERSION=$(version)
       echo "VERSION: $VERSION"
     displayName: "Debug Version Parameter"
+
+  - task: Bash@3
+    displayName: "Build and Push Docker Image"
+    inputs:
+      targetType: 'inline'
+      script: |
+        set -e  # Exit on error
+        echo "Building and pushing Docker image..."
+        docker build -t wellfeddev.azurecr.io/wellfed-frontend:$VERSION .
+        docker push wellfeddev.azurecr.io/wellfed-frontend:$VERSION
+    env:
+      AZURE_CREDENTIALS: $(azureServiceConnection)
+      VERSION: $(version)
 
   - task: Bash@3
     displayName: "Run Ansible Playbook"
