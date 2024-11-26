@@ -90,3 +90,11 @@
     - name: Debug tag result
       debug:
         msg: "{{ tag_result }}"
+
+    - name: Push docker image to ACR
+      command: docker push wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}
+      register: push_result
+
+    - name: Debug push result
+      debug:
+        msg: "{{ push_result }}"
