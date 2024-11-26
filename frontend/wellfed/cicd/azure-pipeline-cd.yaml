@@ -1,36 +1,28 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
+
+trigger:
+  branches:
+    include:
+      - '*'
+
+variables: 
+  - group: wellfed-variablegroup
+
+parameters: 
+  - name: version 
+    displayName: Version 
+    type: string 
+    default: '0.1.1'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
 steps:
   - script: |
-      echo "Setting version variable"
-      VERSION=$(Build.SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
+      echo "Version: $(version)"
+      VERSION=$(version)
       echo "VERSION: $VERSION"
-      echo "##vso[task.setvariable variable=VERSION]$VERSION"
-    displayName: "Set Version Variable"
-
-  - script: |
-      echo "Debug Version Parameter"
-      echo "VERSION: $(VERSION)"
     displayName: "Debug Version Parameter"
-
-  - task: Bash@3
-    displayName: "Login to Azure Container Registry"
-    inputs:
-      targetType: 'inline'
-      script: |
-        az acr login --name WellfedDev
-    env:
-      AZURE_CREDENTIALS: $(azureServiceConnection)
-
-  - task: Bash@3
-    displayName: "Build and Push Docker Image"
-    inputs:
-      targetType: 'inline'
-      script: |
-        set -e  # Exit on error
-        echo "Building and pushing Docker image..."
-        docker build -t wellfeddev.azurecr.io/wellfed-frontend:$(VERSION) -f frontend/wellfed/Dockerfile frontend/wellfed
-        docker push wellfeddev.azurecr.io/wellfed-frontend:$(VERSION)
-    env:
-      AZURE_CREDENTIALS: $(azureServiceConnection)
 
   - task: Bash@3
     displayName: "Run Ansible Playbook"
@@ -40,14 +32,15 @@ steps:
         set -e  # Exit on error
         echo "Current Directory:"
         pwd
-        echo "VERSION: $(VERSION)"  # Debug version parameter
+        VERSION=$(version)
+        echo "VERSION: $VERSION"  # Debug version parameter
         cd ${source_dir}/frontend/wellfed
         echo "Current Directory after changing:"
         pwd
         echo "Directory Listing:"
         ls -lrt
         echo "Running Ansible Playbook:"
-        ansible-playbook cicd/ansible/cd.yaml -i "localhost," -e version=$(VERSION) -v
+        ansible-playbook cicd/ansible/cd.yaml -i "localhost," -e version=$VERSION -v
     env:
       git_username: "$(git_username)"
       git_password: "$(git_password)"
@@ -61,4 +54,4 @@ steps:
       source_dir: "$(Build.SourcesDirectory)"
       aks_cluster: "$(aks_cluster)"
       resource_group: "$(resource_group)"
-      version: "$(VERSION)"
+      version: "$(version)"
