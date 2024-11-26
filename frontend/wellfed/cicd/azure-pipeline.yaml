@@ -8,10 +8,12 @@ variables:
   - group: wellfed-variablegroup
 
 pool:
+  vmImage: 'ubuntu-latest'
+#pool:
   # vmImage: 'Azure Pipelines'
-  name: Azure Pipelines
-  demands:
-    - Agent.Name -equals Hosted Agent
+  #name: Azure Pipelines
+  #demands:
+    #- Agent.Name -equals Hosted Agent
 
 steps:
   

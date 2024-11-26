@@ -2,6 +2,9 @@
   hosts: localhost
   connection: local
 
+  pool:
+  vmImage: 'ubuntu-latest'
+
   tasks:
     - name: Update apt cache and install dependencies (Debian/Ubuntu)
       apt:
