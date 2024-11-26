@@ -2,14 +2,14 @@
 FROM node:18-alpine AS build
 WORKDIR /app
 
-# Copy package.json and package-lock.json, install dependencies
+# Copy package.json and package-lock.json, install dependencies (including devDependencies)
 COPY package*.json ./
-RUN npm install
+RUN npm install --include=dev
 
 # Copy application files and run the build script
 COPY . .
 ENV IS_DOCKER=true
-RUN npm run build
+RUN npm install ts-node && npm run build
 
 # Stage 2: Production Stage
 FROM node:18-alpine
