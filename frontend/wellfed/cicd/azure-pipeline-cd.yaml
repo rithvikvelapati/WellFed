@@ -20,7 +20,7 @@ pool:
 
 steps:
   - script: 
-      echo "Version: $(parameters.version)"
+    echo "Version: $(parameters.version)"
     displayName: "Debug Version Parameter"
 
   - task: Bash@3
@@ -38,7 +38,7 @@ steps:
       source_dir: "$(Build.SourcesDirectory)"
       aks_cluster: "$(aks_cluster)"
       resource_group: "$(resource_group)"
-      version: "$(parameters.version)"  # Pass version parameter to the environment
+      version: "$(parameters.version)"
     inputs:
       targetType: inline
       script: |
@@ -53,4 +53,4 @@ steps:
         echo "Directory Listing:"
         ls -lrt
         echo "Running Ansible Playbook:"
-        ansible-playbook cicd/ansible/cd.yaml -i "localhost, " -e version=${version} -v
+        ansible-playbook cicd/ansible/cd.yaml -i "localhost," -e version=$(parameters.version) -v

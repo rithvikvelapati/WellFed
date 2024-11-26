@@ -19,7 +19,7 @@
         source_dir: "{{ lookup('env', 'source_dir') }}"
         aks_cluster: "{{ lookup('env', 'aks_cluster') }}"
         resource_group: "{{ lookup('env', 'resource_group') }}"
-
+    
     - name: Debug version variable
       debug:
         msg: "Version: {{ version }}"
