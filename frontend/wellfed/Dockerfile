@@ -8,6 +8,7 @@ RUN npm install
 
 # Copy application files and run the build script
 COPY . .
+ENV IS_DOCKER=true
 RUN npm run build
 
 # Stage 2: Production Stage
@@ -24,4 +25,4 @@ COPY --from=build /app/node_modules ./node_modules
 EXPOSE 3000
 
 # Start the production server
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]
