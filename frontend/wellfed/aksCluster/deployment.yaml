@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wellfed-deploy
-  namespace: default
+  namespace: wellfed-frontend
 spec:
   replicas: 1
   selector:
@@ -10,17 +10,27 @@ spec:
       app: wellfed-deploy
   template:
     metadata:
+      annotations:
+        kubernetes.io/change-cause: "Force redeployment at $(date)"
       labels:
         app: wellfed-deploy
     spec:
       containers:
       - name: wellfed-frontend
-        image: wellfeddev.azurecr.io/wellfed-frontend:0.1.1
+        image: wellfeddev.azurecr.io/wellfed-frontend:latest
         ports:
         - containerPort: 3000
         env:
         - name: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-          value: "pk_test_c21pbGluZy1yYWNjb29uLTc0LmNsZXJrLmFjY291bnRzLmRldiQ"
+          valueFrom:
+            secretKeyRef:
+              name: wellfed-secrets
+              key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+        - name: CLERK_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: wellfed-secrets
+              key: CLERK_SECRET_KEY
         - name: NODE_ENV
           value: "production"
         - name: PORT

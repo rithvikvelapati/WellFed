@@ -1,42 +1,28 @@
-# Use the official Node.js image as the base image for building
-FROM node:18 as builder
+# Stage 1: Build Stage
+FROM node:18-alpine AS build
+WORKDIR /app
 
-# Set the working directory inside the container
-WORKDIR /usr/src/app
-
-# Copy only package.json and package-lock.json to install dependencies
+# Copy package.json and package-lock.json, install dependencies (including devDependencies)
 COPY package*.json ./
+RUN npm install --include=dev
 
-# Install npm dependencies
-RUN npm install
-
-# Copy the rest of the application code
+# Copy application files and run the build script
 COPY . .
+ENV IS_DOCKER=true
+RUN npm install ts-node && npm run build
 
-# Build the Next.js app for production
-RUN npm run build
+# Stage 2: Production Stage
+FROM node:18-alpine
+WORKDIR /app
 
-# Use a lightweight Node.js image for the production environment
-FROM node:18-alpine as production
+# Copy necessary files and directories from the build stage
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/public ./public
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/node_modules ./node_modules
 
-# Set the working directory inside the container
-WORKDIR /usr/src/app
-
-# Copy only necessary files from the builder stage
-COPY --from=builder /usr/src/app/package*.json ./
-COPY --from=builder /usr/src/app/.next ./.next
-COPY --from=builder /usr/src/app/public ./public
-COPY --from=builder /usr/src/app/node_modules ./node_modules
-
-# Set environment variables
-ENV NODE_ENV=production
-ENV PORT=3000
-
-# Expose the port the app runs on
+# Expose application port
 EXPOSE 3000
 
-# Define the entrypoint for the container
-ENTRYPOINT ["node"]
-
-# Command to start the Next.js production server
-CMD ["node_modules/next/dist/bin/next", "start"]
+# Start the production server
+CMD ["npm", "start"]

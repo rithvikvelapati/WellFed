@@ -4,10 +4,10 @@ metadata:
   name: wellfed-service
   namespace: wellfed-frontend
 spec:
-  type: ClusterIP
+  type: LoadBalancer # Changed to expose externally
   ports:
-    - name: tcp
+    - name: http
       port: 80
-      targetPort: 8080
+      targetPort: 3000
   selector: 
-    app: wellfed
+    app: wellfed-deploy
