@@ -6,6 +6,7 @@ export const store = configureStore({
   reducer: {
     modal: modalReducer,
     filter: filterReducer,
+    friends: friendsReducer,
     // Add other reducers here if needed
   },
 });
