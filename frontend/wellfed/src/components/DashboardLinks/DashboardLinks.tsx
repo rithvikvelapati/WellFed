@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IoPersonCircleOutline, IoRestaurantOutline, IoCardOutline, IoChevronForward } from 'react-icons/io5'; 
+import { IoPersonCircleOutline, IoRestaurantOutline, IoCardOutline, IoChevronForward } from 'react-icons/io5';
 import { GiShoppingBag } from 'react-icons/gi';
 import { ImPriceTag } from 'react-icons/im';
 import { MdDriveFolderUpload } from 'react-icons/md';
@@ -25,7 +25,7 @@ const DashboardLinks = () => {
             const profileUrl = BASE_URL + GET_PROFILE + user?.id; // API call using Clerk user ID
             const response = await fetch(profileUrl);
             const result = await response.json();
-            
+
             // Set the first name if it exists, or keep it empty
             setFirstName(result.firstName || '');
         } catch (error) {
@@ -131,7 +131,7 @@ const DashboardLinks = () => {
                     </div>
 
                     {/* Favorites (flat background) */}
-                    <div className="bg-white rounded-xl shadow-lg p-4 flex items-center justify-between mb-2 mx-1 h-16 w-full">
+                    <div className="bg-white rounded-xl shadow-lg p-4 flex items-center justify-between mb-2 mx-1 h-16 w-full" onClick={() => router.push('/dashboard-links/favorites')}>
                         <div className="flex items-center">
                             <span className="w-6 h-6 flex items-center justify-center">
                                 <FaHeart className="text-secondary" size={24} />
