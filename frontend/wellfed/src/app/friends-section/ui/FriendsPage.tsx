@@ -1,18 +1,21 @@
 // app/friends/page.tsx
 "use client";
 
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
+import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import {
   selectOnlineUsersCount,
   selectAllFriendsCount,
   selectPendingFriendRequests
 } from "@/store/userSelectors";
+import { acceptFriendRequest, rejectFriendRequest } from "@/store/userSlice";
 import Image from "next/image";
 import { IoMdPersonAdd } from "react-icons/io";
 import { motion } from "framer-motion";
 import { ImBlocked } from "react-icons/im";
+import Spinner from "@/components/common/Spinner";
 
 interface FriendRequest {
   id: string;
@@ -21,12 +24,64 @@ interface FriendRequest {
 }
 
 const FriendsPage: React.FC = () => {
+  const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
+
   // Retrieve data from Redux store using selectors
   const onlineUsersCount = useSelector(selectOnlineUsersCount);
   const allFriendsCount = useSelector(selectAllFriendsCount);
   const pendingFriendRequests: FriendRequest[] = useSelector(
     selectPendingFriendRequests
   );
+
+  // Local state to manage loading and error states for each request
+  const [loadingRequests, setLoadingRequests] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const [errorRequests, setErrorRequests] = useState<{ [key: string]: string }>(
+    {}
+  );
+
+  // Handler to accept a friend request
+  const handleAccept = async (requestId: string) => {
+    // Set loading state for this request
+    setLoadingRequests((prev) => ({ ...prev, [requestId]: true }));
+    setErrorRequests((prev) => ({ ...prev, [requestId]: "" }));
+
+    try {
+      // Dispatch the acceptFriendRequest thunk
+      await dispatch(acceptFriendRequest(requestId)).unwrap() as string;
+    } catch (error: any) {
+      // Set error message for this request
+      setErrorRequests((prev) => ({
+        ...prev,
+        [requestId]: error || "Failed to accept friend request."
+      }));
+    } finally {
+      // Reset loading state for this request
+      setLoadingRequests((prev) => ({ ...prev, [requestId]: false }));
+    }
+  };
+
+  // Handler to reject a friend request
+  const handleReject = async (requestId: string) => {
+    // Set loading state for this request
+    setLoadingRequests((prev) => ({ ...prev, [requestId]: true }));
+    setErrorRequests((prev) => ({ ...prev, [requestId]: "" }));
+
+    try {
+      // Dispatch the rejectFriendRequest thunk
+      await dispatch(rejectFriendRequest(requestId)).unwrap() as string;
+    } catch (error: any) {
+      // Set error message for this request
+      setErrorRequests((prev) => ({
+        ...prev,
+        [requestId]: error || "Failed to reject friend request."
+      }));
+    } finally {
+      // Reset loading state for this request
+      setLoadingRequests((prev) => ({ ...prev, [requestId]: false }));
+    }
+  };
 
   return (
     <div className="p-1">
@@ -67,7 +122,7 @@ const FriendsPage: React.FC = () => {
                 {pendingFriendRequests.map((request) => (
                   <div
                     key={request.id}
-                    className="flex items-center space-x-4 p-4 border rounded-lg"
+                    className="flex w-full items-center space-x-4 p-4 border rounded-lg"
                   >
                     <Image
                       src={request.avatar}
@@ -76,9 +131,30 @@ const FriendsPage: React.FC = () => {
                       height={48}
                       width={48}
                     />
-                    <div className="flex-1">
+                    <div className="flex items-center w-full">
                       <p className="text-lg font-medium">{request.name}</p>
-                      {/* Future: Add Accept/Reject buttons here */}
+                      <div className="flex flex-col space-x-2">
+                        <button className=""
+                          onClick={() => handleAccept(request.id)}
+                          disabled={loadingRequests[request.id]}
+                        >
+                           Accept
+                      {loadingRequests[request.id] && <Spinner />}
+                        </button>
+                        <button
+                          onClick={() => handleReject(request.id)}
+                          disabled={loadingRequests[request.id]}
+                        >
+                          Reject
+                      {loadingRequests[request.id] && <Spinner />}
+                        </button>
+                      </div>
+                      {/* Display error message if any */}
+                      {errorRequests[request.id] && (
+                        <p className="text-red-500 text-sm mt-2">
+                          {errorRequests[request.id]}
+                        </p>
+                      )}
                     </div>
                   </div>
                 ))}

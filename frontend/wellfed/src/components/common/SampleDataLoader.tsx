@@ -10,20 +10,20 @@ const SampleDataLoader: React.FC = () => {
   useEffect(() => {
     // Sample Users
     const users = [
-      { id: '1', name: 'Alice', avatar: '/avatars/Avatar5.png', isOnline: true },
-      { id: '2', name: 'Bob', avatar: '/avatars/Avatar4.png', isOnline: false },
+      { id: '1', name: 'Alice', avatar: '/avatars/Avatar1.png', isOnline: true },
+      { id: '2', name: 'Bob', avatar: '/avatars/Avatar2.png', isOnline: false },
       { id: '3', name: 'Charlie', avatar: '/avatars/Avatar3.png', isOnline: true },
     ];
 
     // Sample Friends
     const friends = [
-      { id: '1', name: 'Alice', avatar: '/avatars/Avatar3.png', isOnline: true },
+      { id: '1', name: 'Alice', avatar: '/avatars/Avatar1.png', isOnline: true },
       { id: '2', name: 'Bob', avatar: '/avatars/Avatar2.png', isOnline: false },
     ];
 
     // Sample Pending Friend Requests
     const pendingFriendRequests = [
-      { id: '3', name: 'Charlie', avatar: '/avatars/Avatar1.png' },
+      { id: '3', name: 'Charlie', avatar: '/avatars/Avatar3.png' },
     ];
 
     dispatch(setUsers(users));
