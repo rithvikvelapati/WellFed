@@ -17,14 +17,20 @@ spec:
     spec:
       containers:
       - name: wellfed-frontend
-        image: wellfeddev.azurecr.io/wellfed-frontend:1.0.10
+        image: wellfeddev.azurecr.io/wellfed-frontend:latest
         ports:
         - containerPort: 3000
         env:
         - name: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-          value: "pk_test_c21pbGluZy1yYWNjb29uLTc0LmNsZXJrLmFjY291bnRzLmRldiQ"
+          valueFrom:
+            secretKeyRef:
+              name: wellfed-secrets
+              key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
         - name: CLERK_SECRET_KEY
-          value: "sk_test_5hYbt72xdCrBAJ9V0VxJ46Ko6nq67LnabjfiOa10E4"
+          valueFrom:
+            secretKeyRef:
+              name: wellfed-secrets
+              key: CLERK_SECRET_KEY
         - name: NODE_ENV
           value: "production"
         - name: PORT
