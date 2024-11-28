@@ -145,10 +145,10 @@ const ProfilePreview: React.FC = () => {
     const photoCount = photosData.length;
     const collectionCount = 0; // No collections
 
-    const toggleFavorite = (id: number) => {
+    const toggleFavorite = (recipe: Recipe) => {
         setRecipes(
-            recipes.map((recipe) =>
-                recipe.id === id ? { ...recipe, favorited: !recipe.favorited } : recipe
+            recipes.map((r) =>
+                r.id === recipe.id ? { ...r, favorited: !r.favorited } : r
             )
         );
     };
@@ -205,7 +205,7 @@ const ProfilePreview: React.FC = () => {
                                 }`}
                             onClick={() => setActiveTab('Recipes')}
                         >
-                            Recipes
+                            Favorites
                         </button>
                         {/* Photos Tab */}
                         <button
@@ -245,10 +245,19 @@ const ProfilePreview: React.FC = () => {
                         {recipesData.map((recipe) => (
                             <div key={recipe.id} className='mb-6'>
                             <RecipeCard
+<<<<<<< HEAD
                                     key={recipe.id}
                                     recipe={recipe}
                                     onToggleFavorite={(dt: Recipe) => handleToggleFavorite(dt)}
                                     onToggleBookmark={toggleBookmark} savedRecipesData={[]}                            />
+=======
+                                key={recipe.id}
+                                recipe={recipe}
+                                savedRecipesData={[]} // Pass the appropriate savedRecipesData here
+                                onToggleFavorite={() => toggleFavorite(recipe)}
+                                onToggleBookmark={toggleBookmark}
+                            />
+>>>>>>> b08dd9b78455fe1cdaa10e11c18bab20256cc50d
                             </div>
                         ))}
                     </div>
