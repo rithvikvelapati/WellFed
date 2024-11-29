@@ -32,7 +32,7 @@ const Page = ({ params }: { params: { id: string } }) => {
     return <div>Loading...</div>;
   }
 
-  return <RecipeCardPage recipeId={recipe} />;
+  return <RecipeCardPage recipeId={(recipe as any)._id} />;
 };
 
 export default Page;
