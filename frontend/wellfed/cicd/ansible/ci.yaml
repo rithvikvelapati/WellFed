@@ -2,9 +2,6 @@
   hosts: localhost
   connection: local
 
-  #pool:
-  #vmImage: 'ubuntu-latest'
-
   tasks:
     - name: Update apt cache and install dependencies (Debian/Ubuntu)
       apt:
@@ -71,8 +68,13 @@
       debug:
         msg: "version: {{ version }}, imagelabel: {{ imagelabel }}"
 
-    - name: Build docker image
-      command: docker build -t {{ service_name }} .
+    - name: Setup Docker buildx
+      command: docker buildx create --use --platform linux/amd64,linux/arm64
+      register: buildx_setup
+      failed_when: buildx_setup.rc != 0
+
+    - name: Build docker image for amd64 and arm64 and push to ACR
+      command: docker buildx build --platform linux/amd64,linux/arm64 -t wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }} --push .
       args:
         chdir: "{{ source_dir }}/frontend/wellfed"
       register: docker_build_result
@@ -81,23 +83,3 @@
     - name: Debug Docker build result
       debug:
         msg: "{{ docker_build_result.stdout_lines }}"
-
-    - name: Verify imagelabel before tagging
-      debug:
-        msg: "Tagging image with version {{ imagelabel }}"
-
-    - name: Tag docker image
-      command: docker tag {{ service_name }} wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}
-      register: tag_result
-
-    - name: Debug tag result
-      debug:
-        msg: "{{ tag_result }}"
-
-    - name: Push docker image to ACR
-      command: docker push wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }}
-      register: push_result
-
-    - name: Debug push result
-      debug:
-        msg: "{{ push_result }}"
