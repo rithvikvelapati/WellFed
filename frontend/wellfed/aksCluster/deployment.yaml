@@ -11,7 +11,7 @@ spec:
   template:
     metadata:
       annotations:
-        kubernetes.io/change-cause: "Force redeployment at $(date)"
+        kubernetes.io/change-cause: "Updated deployment for frontend"
       labels:
         app: wellfed-deploy
     spec:
@@ -35,3 +35,5 @@ spec:
           value: "production"
         - name: PORT
           value: "3000"
+        - name: NEXT_PUBLIC_API_URL
+          value: "http://wellfed-service.wellfed-backend.svc.cluster.local" # Internal backend URL
