@@ -1,6 +1,9 @@
 name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
 
-trigger: none
+trigger: 
+  branches: 
+    include: 
+      - dummy_main
 
 pr: none
 
