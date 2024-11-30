@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://4.157.225.65:3001/';  // Public IP for external access
+export const BASE_URL = 'http://48.217.198.29/';  // Public IP for external access
 export const GET_PROFILE = 'profile/'
 export const POST_PROFILE = 'profile/'
 export const GET_RECEPIES = 'recipe/'
