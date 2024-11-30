@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: wellfed-frontend
-        image: wellfeddev.azurecr.io/wellfed-frontend:latest
+        image: wellfeddev.azurecr.io/wellfed-frontend:0.0.1
         ports:
         - containerPort: 3000
         env:
@@ -37,3 +37,6 @@ spec:
           value: "3000"
         - name: NEXT_PUBLIC_API_URL
           value: "http://48.217.198.29:31129"  # Updated to use backend's external IP and port
+
+      imagePullSecrets:
+        - name: acr-secret
