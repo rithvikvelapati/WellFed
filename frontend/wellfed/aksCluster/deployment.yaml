@@ -36,4 +36,4 @@ spec:
         - name: PORT
           value: "3000"
         - name: NEXT_PUBLIC_API_URL
-          value: "http://wellfed-service.wellfed-backend.svc.cluster.local" # Internal backend URL
+          value: "http://48.217.198.29/" 
