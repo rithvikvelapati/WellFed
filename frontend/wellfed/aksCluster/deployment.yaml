@@ -36,4 +36,4 @@ spec:
         - name: PORT
           value: "3000"
         - name: NEXT_PUBLIC_API_URL
-          value: "http://48.217.198.29/" 
+          value: "http://48.217.198.29:31129"  # Updated to use backend's external IP and port
