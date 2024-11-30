@@ -68,13 +68,13 @@
       debug:
         msg: "version: {{ version }}, imagelabel: {{ imagelabel }}"
 
-    - name: Setup Docker buildx (Only ARM64)
-      command: docker buildx create --use --platform linux/arm64
+    - name: Setup Docker buildx
+      command: docker buildx create --use --platform linux/amd64,linux/arm64
       register: buildx_setup
       failed_when: buildx_setup.rc != 0
 
-    - name: Build docker image for ARM64 and push to ACR
-      command: docker buildx build --platform linux/arm64 -t wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }} --push .
+    - name: Build docker image for amd64 and arm64 and push to ACR
+      command: docker buildx build --platform linux/amd64,linux/arm64 -t wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }} --push .
       args:
         chdir: "{{ source_dir }}/frontend/wellfed"
       register: docker_build_result
