@@ -7,13 +7,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wellfed-deploy
+      app: wellfed-frontend
   template:
     metadata:
-      annotations:
-        kubernetes.io/change-cause: "Updated deployment for frontend"
       labels:
-        app: wellfed-deploy
+        app: wellfed-frontend
     spec:
       containers:
       - name: wellfed-frontend
@@ -36,7 +34,7 @@ spec:
         - name: PORT
           value: "3000"
         - name: NEXT_PUBLIC_API_URL
-          value: "http://48.217.198.29:31129"  # Updated to use backend's external IP and port
+          value: "http://48.217.198.29"  # Updated to use backend's external IP and port
 
       imagePullSecrets:
         - name: acr-secret
