@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: apps/v2
 kind: Deployment
 metadata:
   name: wellfed-deploy
@@ -16,7 +16,7 @@ spec:
       containers:
       - name: wellfed-frontend
         image: wellfeddev.azurecr.io/wellfed-frontend:0.0.1
-        imagePullPolicy: Always
+        # imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
