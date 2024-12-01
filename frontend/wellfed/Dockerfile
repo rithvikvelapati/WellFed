@@ -1,5 +1,5 @@
 # Stage 1: Build Stage
-FROM --platform=linux/amd64 node:18-alpine AS build
+FROM node:18-alpine AS build
 WORKDIR /app
 
 # Copy package.json and package-lock.json, install dependencies (including devDependencies)
@@ -12,7 +12,7 @@ ENV IS_DOCKER=true
 RUN npm install ts-node && npm run build
 
 # Stage 2: Production Stage
-FROM --platform=linux/amd64 node:18-alpine
+FROM node:18-alpine
 WORKDIR /app
 
 # Copy necessary files and directories from the build stage
