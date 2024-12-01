@@ -59,13 +59,13 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
       <div className="relative w-full h-[131px]">
         <Link href={`/recipe-card/${recipe?._id}`} className="w-full h-full">
           <Image
-            src={"https://wellfedpics.blob.core.windows.net/recipie-images/" + recipe.recipeId + "-recipe.jpeg"}
-
+            src={`https://wellfedpics.blob.core.windows.net/recipie-images/${recipe.recipeId}-recipe.jpeg`}
             alt={recipe?.title || "Recipe Image"}
             fill
             className="w-full h-full object-cover"
           />
-          
+
+
         </Link>
 
         {/* Gradient Overlay */}
