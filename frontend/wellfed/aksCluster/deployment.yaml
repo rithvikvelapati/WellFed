@@ -45,7 +45,7 @@ spec:
             cpu: "500m"
       imagePullSecrets:
       - name: acr-secret
-      restartPolicy: OnFailure
+      #restartPolicy: OnFailure
         # schedulerName: default-scheduler
         # securityContext: {}
-      terminationGracePeriodSeconds: 30
+      #terminationGracePeriodSeconds: 30
