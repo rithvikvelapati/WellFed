@@ -73,8 +73,8 @@
       register: buildx_setup
       failed_when: buildx_setup.rc != 0
 
-    - name: Build docker image for amd64 and push to ACR
-      command: docker buildx build --no-cache --platform linux/amd64 -t wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }} --push .
+    - name: Build docker image for arm64 and push to ACR
+      command: docker buildx build --no-cache --platform linux/arm64 -t wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }} --push .
       args:
         chdir: "{{ source_dir }}/frontend/wellfed"
       register: docker_build_result
