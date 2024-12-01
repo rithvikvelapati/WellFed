@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: wellfed-frontend
-        image: wellfeddev.azurecr.io/wellfed-frontend:latest
+        image: wellfeddev.azurecr.io/wellfed-frontend:0.0.1
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
