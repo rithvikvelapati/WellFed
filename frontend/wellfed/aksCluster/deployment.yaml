@@ -2,21 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wellfed-deploy
-  namespace: wellfed-frontend
+  namespace: wellfed-frontend  # Corrected namespace
+  labels:
+    app: wellfed-deploy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wellfed-frontend
+      app: wellfed-deploy
   template:
     metadata:
       labels:
-        app: wellfed-frontend
+        app: wellfed-deploy  # Updated to match the service selector
     spec:
       containers:
       - name: wellfed-frontend
         image: wellfeddev.azurecr.io/wellfed-frontend:0.0.1
-        # imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
@@ -45,7 +46,3 @@ spec:
             cpu: "500m"
       imagePullSecrets:
       - name: acr-secret
-      #restartPolicy: OnFailure
-      schedulerName: default-scheduler
-        # securityContext: {}
-      #terminationGracePeriodSeconds: 30
