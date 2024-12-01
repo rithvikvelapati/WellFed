@@ -43,9 +43,9 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "500m"
-      imagePullSecrets:
-      - name: acr-secret
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
+      # imagePullSecrets:
+      # - name: acr-secret
+      # restartPolicy: Always
+      # schedulerName: default-scheduler
+      # securityContext: {}
+      # terminationGracePeriodSeconds: 30
