@@ -36,3 +36,16 @@ spec:
           value: "3000"
         - name: NEXT_PUBLIC_API_URL
           value: "http://48.217.198.29"
+        resources:
+          request:
+            cpu: 200m
+            memory: 350mi
+          limit:
+            cpu: 250m
+            memory: 512mi
+      imagePullSecrets: 
+      - name: acr-secret 
+      restartPolicy: Always 
+      schedulerName: default-scheduler 
+      securityContext: {} 
+      terminationGracePeriodSeconds: 30
