@@ -38,11 +38,11 @@ spec:
           value: "http://48.217.198.29"
         resources:
           request:
-            cpu: 200m
-            memory: 350mi
+            cpu: "200m"
+            memory: "350mi"
           limit:
-            cpu: 250m
-            memory: 512mi
+            cpu: "250m"
+            memory: "512mi"
       imagePullSecrets: 
       - name: acr-secret 
       restartPolicy: Always 
