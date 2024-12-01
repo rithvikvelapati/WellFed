@@ -35,17 +35,17 @@ spec:
         - name: PORT
           value: "3000"
         - name: NEXT_PUBLIC_API_URL
-          value: "http://48.217.198.29"
+          value: "http://48.217.198.29"  # Updated to use the correct URL
         resources:
-          request:
-            cpu: "200m"
-            memory: "350mi"
-          limit:
+          requests:
+            memory: "256Mi"
             cpu: "250m"
-            memory: "512mi"
-      imagePullSecrets: 
-      - name: acr-secret 
-      restartPolicy: Always 
-      schedulerName: default-scheduler 
-      securityContext: {} 
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      imagePullSecrets:
+      - name: acr-secret
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
       terminationGracePeriodSeconds: 30
