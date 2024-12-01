@@ -12,7 +12,7 @@ parameters:
   - name: version 
     displayName: Version 
     type: string 
-    default: '0.0.1'
+    default: ''
 
 jobs:
   - job: wellfed_frontend_CD_pipeline
