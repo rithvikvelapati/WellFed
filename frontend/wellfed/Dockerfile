@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm install --include=dev
 
 # Copy application files and run the build script
-COPY . .
+COPY . ./
 ENV IS_DOCKER=true
 RUN npm install ts-node && npm run build
 
@@ -20,6 +20,9 @@ COPY --from=build /app/.next ./.next
 COPY --from=build /app/public ./public
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/node_modules ./node_modules
+
+# Ensure production mode
+ENV NODE_ENV=production
 
 # Expose application port
 EXPOSE 3000

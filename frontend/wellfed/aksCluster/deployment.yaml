@@ -2,7 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wellfed-deploy
-  namespace: wellfed-frontend
+  namespace: wellfed-frontend  # Corrected namespace
+  labels:
+    app: wellfed-deploy
 spec:
   replicas: 1
   selector:
@@ -10,14 +12,12 @@ spec:
       app: wellfed-deploy
   template:
     metadata:
-      annotations:
-        kubernetes.io/change-cause: "Force redeployment at $(date)"
       labels:
-        app: wellfed-deploy
+        app: wellfed-deploy  # Updated to match the service selector
     spec:
       containers:
       - name: wellfed-frontend
-        image: wellfeddev.azurecr.io/wellfed-frontend:latest
+        image: wellfeddev.azurecr.io/wellfed-frontend:0.0.2
         ports:
         - containerPort: 3000
         env:
@@ -35,3 +35,14 @@ spec:
           value: "production"
         - name: PORT
           value: "3000"
+        - name: NEXT_PUBLIC_API_URL
+          value: "http://48.217.198.29"  # Updated to use the correct URL
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      imagePullSecrets:
+      - name: acr-secret

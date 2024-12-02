@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    domains: ['wellfedpics.blob.core.windows.net', '4.157.225.65'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -18,7 +19,18 @@ const nextConfig = {
         hostname: 'wellfedpics.blob.core.windows.net',
         pathname: '**',
       },
+      {
+        protocol: 'http',
+        hostname: '4.157.225.65',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: '4.157.225.65',
+        pathname: '**',
+      },  
     ],
+    unoptimized: true, // Added to disable optimization for external images
   },
   typescript: {
     ignoreBuildErrors: true,

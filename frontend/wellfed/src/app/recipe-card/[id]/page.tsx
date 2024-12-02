@@ -2,22 +2,23 @@
 
 import React, { useEffect, useState } from "react";
 import RecipeCardPage from "./ui/RecipeCardPage";
+import { BASE_URL, GET_RECEPIES } from "@/constants/api";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [recipe, setRecipe] = useState(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null); // Type the error as string | null
 
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/recipe/${params.id}`);
+        const response = await fetch(`${BASE_URL}${GET_RECEPIES}${params.id}`);
         if (!response.ok) {
           throw new Error(`Failed to fetch recipe: ${response.status}`);
         }
         const data = await response.json();
         setRecipe(data);
-      } catch (err) {
-        setError(error);
+      } catch (err: any) {  // Handle the error here by using 'err'
+        setError(err.message); // Set the error message from 'err'
       }
     };
 
@@ -32,7 +33,7 @@ const Page = ({ params }: { params: { id: string } }) => {
     return <div>Loading...</div>;
   }
 
-  return <RecipeCardPage recipeId={recipe} />;
+  return <RecipeCardPage recipeId={(recipe as any)._id} />;
 };
 
 export default Page;

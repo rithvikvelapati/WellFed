@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FaHeart, FaRegHeart, FaLocationDot } from "react-icons/fa6";
-import RecipeCard from '../RecipeCard';
+import RecipeCard, { SavedRecipe } from '../RecipeCard';
 import { Recipe, recipesData } from '@/constants';
+import { BASE_URL, GET_RECEPIES, GET_SAVED_RECEPIES, PUT_FAV_RECEPIES } from '@/constants/api';
+import { useUser } from '@clerk/nextjs';
 
 // VerticalScrollContainer Component
 const VerticalScrollContainer: React.FC<{ children: React.ReactNode, height: string }> = ({ children, height }) => {
@@ -16,7 +18,6 @@ const VerticalScrollContainer: React.FC<{ children: React.ReactNode, height: str
 // PhotoCard Component
 const PhotoCard: React.FC<{ imageSrc: string; daysAgo: string; id: number }> = ({ imageSrc, daysAgo, id }) => {
     const [isFavorited, setIsFavorited] = useState(true);
-
     const toggleFavorite = () => {
         setIsFavorited(!isFavorited);
     };
@@ -51,6 +52,39 @@ const PhotoCard: React.FC<{ imageSrc: string; daysAgo: string; id: number }> = (
 
 // ProfilePreview Component
 const ProfilePreview: React.FC = () => {
+    const [recipesData, setRecipesData] = useState([] as Recipe[]);
+    const { isSignedIn, user } = useUser();
+
+    useEffect(() => {
+        if (isSignedIn && user) {
+          fetchData();
+        }
+      }, [isSignedIn, user]);
+
+      const handleToggleFavorite = async (recepie: Recipe) => {
+        try {
+          const recepieUrl = BASE_URL + PUT_FAV_RECEPIES + recepie?._id;
+          const body = {      
+            recipeId: recepie?._id,
+            userId: user?.id
+          }
+          const response = await fetch(recepieUrl, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+          });
+          const result = await response.json();
+          if (result) {
+            fetchData();
+           
+          } 
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+
     const recepieData: Recipe[] = recipesData.map(recepie => {
         recepie.favorited = true
         return recepie;
@@ -67,15 +101,54 @@ const ProfilePreview: React.FC = () => {
         { id: 6, imageSrc: "/desserts.png", daysAgo: "6 months ago" },
     ];
 
+    const fetchData = async () => {
+        try {
+          const recepieUrl = BASE_URL + GET_RECEPIES;
+          const response = await fetch(recepieUrl); // Call your Next.js API route
+          const result = await response.json();
+          if (result) {
+            
+        if(result?.length) {
+          fetchSavedData(result);
+          
+        }
+            
+          } 
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+
+    const fetchSavedData = async (recipesData: Recipe[]) => {
+        try {
+          const recepieUrl = BASE_URL + GET_SAVED_RECEPIES + user?.id;
+          const response = await fetch(recepieUrl); // Call your Next.js API route
+          const result = await response.json();
+          if (result) {
+            const filteredData = recipesData.filter(recipe => {
+              const savedRecipe = result.find((recipeSaved: SavedRecipe) => recipeSaved.recipeId === recipe._id)
+              recipe.favorited = savedRecipe ? true : false;
+              return savedRecipe ? true : false;
+            })
+        
+        
+            setRecipesData([...filteredData])
+          } 
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+    
+
     // Count of recipes, photos, and collections
     const recipeCount = recipes.length;
     const photoCount = photosData.length;
     const collectionCount = 0; // No collections
 
-    const toggleFavorite = (recipe: Recipe) => {
+    const toggleFavorite = (id: number) => {
         setRecipes(
-            recipes.map((r) =>
-                r.id === recipe.id ? { ...r, favorited: !r.favorited } : r
+            recipes.map((recipe) =>
+                recipe.id === id ? { ...recipe, favorited: !recipe.favorited } : recipe
             )
         );
     };
@@ -132,7 +205,7 @@ const ProfilePreview: React.FC = () => {
                                 }`}
                             onClick={() => setActiveTab('Recipes')}
                         >
-                            Favorites
+                            Recipes
                         </button>
                         {/* Photos Tab */}
                         <button
@@ -160,7 +233,7 @@ const ProfilePreview: React.FC = () => {
 
             {/* Count Display */}
             <div className="px-4 py-2 mt-2 text-gray-600 font-semibold">
-                {activeTab === 'Recipes' && <p>{recipeCount} recipes</p>}
+                {activeTab === 'Recipes' && <p>{recipesData?.length} recipes</p>}
                 {activeTab === 'Photos' && <p>{photoCount} photos</p>}
                 {activeTab === 'Collections' && <p>{collectionCount} collections</p>}
             </div>
@@ -169,15 +242,13 @@ const ProfilePreview: React.FC = () => {
             <VerticalScrollContainer height="calc(100vh - 25rem)">
                 {activeTab === 'Recipes' && (
                     <div className='flex flex-wrap place-content-around px-2 py-4'>
-                        {recipes.map((recipe) => (
+                        {recipesData.map((recipe) => (
                             <div key={recipe.id} className='mb-6'>
                             <RecipeCard
-                                key={recipe.id}
-                                recipe={recipe}
-                                savedRecipesData={[]} // Pass the appropriate savedRecipesData here
-                                onToggleFavorite={() => toggleFavorite(recipe)}
-                                onToggleBookmark={toggleBookmark}
-                            />
+                                    key={recipe.id}
+                                    recipe={recipe}
+                                    onToggleFavorite={(dt: Recipe) => handleToggleFavorite(dt)}
+                                    onToggleBookmark={toggleBookmark} savedRecipesData={[]}                            />
                             </div>
                         ))}
                     </div>
