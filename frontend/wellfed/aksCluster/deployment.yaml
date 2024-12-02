@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: wellfed-frontend
-        image: wellfeddev.azurecr.io/wellfed-frontend:0.0.3
+        image: wellfeddev.azurecr.io/wellfed-frontend:0.0.4
         ports:
         - containerPort: 3000
         env:
