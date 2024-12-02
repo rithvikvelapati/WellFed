@@ -117,7 +117,7 @@ const RecipeCardLayout = (props: RecipeCardProps) => {
       setTitle(result.title || "No Title");
       setDescription(result.description || "No Description");
       setCategory(result.category || "No Category");
-      setImageUrl("https://wellfedpics.blob.core.windows.net/recipie-images/" + result.recipeId + "-recipe.jpeg");
+      setImageUrl(`https://wellfedpics.blob.core.windows.net/recipie-images/${result.recipeId}-recipe.jpeg`);
       setServings(result.servings || 1); // Set servings from response
     } catch (error) {
       console.error("Error fetching recipe details:", error);

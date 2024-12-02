@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wellfed-deploy
+  namespace: wellfed-frontend  # Corrected namespace
+  labels:
+    app: wellfed-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wellfed-deploy
+  template:
+    metadata:
+      labels:
+        app: wellfed-deploy  # Updated to match the service selector
+    spec:
+      containers:
+      - name: wellfed-frontend
+        image: wellfeddev.azurecr.io/wellfed-frontend:0.0.2
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: wellfed-secrets
+              key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+        - name: CLERK_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: wellfed-secrets
+              key: CLERK_SECRET_KEY
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3000"
+        - name: NEXT_PUBLIC_API_URL
+          value: "http://48.217.198.29"  # Updated to use the correct URL
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      imagePullSecrets:
+      - name: acr-secret

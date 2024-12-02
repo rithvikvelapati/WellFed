@@ -69,11 +69,12 @@ const RecipeStepCarousel: React.FC<RecipeStepCarouselProps> = ({
           {/* Image */}
           {currentStepIndex < instructions.length ? (
             <Image
-              src={"https://wellfedpics.blob.core.windows.net/recipie-images/" + recipe.recipeId + "-stage-" + (currentStepIndex + 1) + ".jpeg"}
-              alt={`Step ${instructions[currentStepIndex].stepNumber}`}
+              src={`https://wellfedpics.blob.core.windows.net/recipie-images/${recipe.recipeId}-stage-${currentStepIndex + 1}.jpeg`}
+              alt={`Step ${instructions[currentStepIndex]?.stepNumber || "Unknown Step"}`}
               fill
               style={{ objectFit: "cover" }}
             />
+
           ) : (
             // Last slide (Recipe Complete)
             <div className="w-full h-full bg-slate-50 flex items-center justify-center">
@@ -96,11 +97,10 @@ const RecipeStepCarousel: React.FC<RecipeStepCarouselProps> = ({
               {/* Step Circle */}
               <button
                 onClick={() => setCurrentStepIndex(index)}
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border focus:outline-none ${
-                  index === currentStepIndex
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border focus:outline-none ${index === currentStepIndex
                     ? "bg-gradient-to-r from-primary to-secondary text-white"
                     : "bg-slate-600 text-white"
-                }`}
+                  }`}
                 aria-label={
                   index < instructions.length
                     ? `Go to step ${index + 1}`

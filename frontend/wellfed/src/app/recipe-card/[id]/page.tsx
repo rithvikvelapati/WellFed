@@ -1,20 +1,39 @@
-// app/recipe-card/[id]/page.tsx
+"use client";
 
-import React from 'react';
-import RecipeCardPage from './ui/RecipeCardPage';
+import React, { useEffect, useState } from "react";
+import RecipeCardPage from "./ui/RecipeCardPage";
+import { BASE_URL, GET_RECEPIES } from "@/constants/api";
 
 const Page = ({ params }: { params: { id: string } }) => {
-  return <RecipeCardPage recipeId={params.id} />;
+  const [recipe, setRecipe] = useState(null);
+  const [error, setError] = useState<string | null>(null); // Type the error as string | null
+
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}${GET_RECEPIES}${params.id}`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch recipe: ${response.status}`);
+        }
+        const data = await response.json();
+        setRecipe(data);
+      } catch (err: any) {  // Handle the error here by using 'err'
+        setError(err.message); // Set the error message from 'err'
+      }
+    };
+
+    fetchRecipe();
+  }, [params.id]);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!recipe) {
+    return <div>Loading...</div>;
+  }
+
+  return <RecipeCardPage recipeId={(recipe as any)._id} />;
 };
 
 export default Page;
-
-export async function generateStaticParams() {
-  // Fetch a list of recipes to generate paths
-  const response = await fetch('http://localhost:3001/recipe');
-  const recipes = await response.json();
-
-  return recipes.map((recipe: { _id: string }) => ({
-    id: recipe._id, // Ensure this matches your data structure
-  }));
-}

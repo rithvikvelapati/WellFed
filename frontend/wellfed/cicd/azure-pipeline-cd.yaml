@@ -1,0 +1,59 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
+
+trigger: none
+  #branches:
+   # include:
+    #  - '*'
+
+variables: 
+  - group: wellfed-variablegroup
+
+parameters: 
+  - name: version 
+    displayName: Version 
+    type: string 
+    default: '0.0.2'
+
+jobs:
+  - job: wellfed_frontend_CD_pipeline
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+      - script: |
+          echo "Version: $(version)"
+          VERSION=$(version)
+          echo "VERSION: $VERSION"
+        displayName: "Debug Version Parameter"
+
+      - task: Bash@3
+        displayName: "Run Ansible Playbook"
+        inputs:
+          targetType: 'inline'
+          script: |
+            set -e  # Exit on error
+            echo "Current Directory:"
+            pwd
+            VERSION=$(version)
+            echo "VERSION: $VERSION"  # Debug version parameter
+            cd ${source_dir}/frontend/wellfed
+            echo "Current Directory after changing:"
+            pwd
+            echo "Directory Listing:"
+            ls -lrt
+            echo "Running Ansible Playbook:"
+            ansible-playbook cicd/ansible/cd.yaml -i "localhost," -e version=$VERSION -v
+        env:
+          git_username: "$(git_username)"
+          git_password: "$(git_password)"
+          subscription_id: "$(subscription_id)"
+          service_principal_id: "$(service_principal_id)"
+          service_principal_secret: "$(service_principal_secret)"
+          acr_regisroty_url: "$(acr_regisroty_url)"
+          acr_username: "$(acr_username)"
+          tenant_id: "$(tenant_id)"
+          service_name: "$(service_name)"
+          source_dir: "$(Build.SourcesDirectory)"
+          aks_cluster: "$(aks_cluster)"
+          resource_group: "$(resource_group)"
+          version: "$(version)"

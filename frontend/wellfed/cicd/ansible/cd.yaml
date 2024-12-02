@@ -1,0 +1,79 @@
+- name: Continuous Deployment
+  hosts: "localhost"
+  connection: local
+
+  vars:
+    version: "{{ version }}"  # Explicitly set version variable
+
+  tasks:
+    - set_fact:
+        git_username: "{{ lookup('env', 'git_username') }}"
+        git_password: "{{ lookup('env', 'git_password') }}"
+        subscription_id: "{{ lookup('env', 'subscription_id') }}"
+        service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
+        service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
+        acr_registry_url: "{{ lookup('env', 'acr_registry_url') }}"
+        acr_username: "{{ lookup('env', 'acr_username') }}"
+        tenant_id: "{{ lookup('env', 'tenant_id') }}"
+        service_name: "{{ lookup('env', 'service_name') }}"
+        source_dir: "{{ lookup('env', 'source_dir') }}"
+        aks_cluster: "{{ lookup('env', 'aks_cluster') }}"
+        resource_group: "{{ lookup('env', 'resource_group') }}"
+
+    - name: Debug version variable
+      debug:
+        msg: "Version: {{ version }}"
+
+    - name: Login to Azure using Service Principal
+      command: >
+        az login
+        --service-principal
+        --username '{{ service_principal_id }}'
+        --password '{{ service_principal_secret }}'
+        --tenant '{{ tenant_id }}'
+
+    - name: Set subscription to current directory
+      command: az account set --subscription {{ subscription_id }}
+
+    - name: List AKS clusters in resource group
+      command: az aks list --resource-group {{ resource_group }}
+      register: aks_list_result
+
+    - name: Debug AKS clusters
+      debug:
+        var: aks_list_result.stdout
+
+    - name: Pull AKS cluster config
+      command: >
+        az aks get-credentials --resource-group {{ resource_group }} --name {{ aks_cluster }}
+      register: aks_credentials_result
+      failed_when: aks_credentials_result.rc != 0
+
+    - name: Authenticate with ACR
+      command: >
+        az acr login --name {{ acr_username }}
+
+    - name: Pull arm64 image from ACR
+      command: >
+        docker pull --platform linux/arm64 wellfeddev.azurecr.io/wellfed-frontend:0.0.2
+      register: docker_pull_result
+      failed_when: docker_pull_result.rc != 0
+
+    - name: Debug Docker pull result
+      debug:
+        msg: "{{ docker_pull_result }}"
+
+    - name: Apply Kubernetes namespace
+      command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/namespace.yaml
+      register: namespace_apply_logs_result
+      failed_when: namespace_apply_logs_result.rc != 0
+
+    - name: Apply Kubernetes services
+      command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/service.yaml
+      register: service_apply_logs_result
+      failed_when: service_apply_logs_result.rc != 0
+
+    - name: Apply Kubernetes deployment
+      command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/deployment.yaml
+      register: deploy_apply_logs_result
+      failed_when: deploy_apply_logs_result.rc != 0

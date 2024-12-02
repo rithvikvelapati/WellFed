@@ -57,7 +57,7 @@ const SignInPage: React.FC = () => {
 
             {/* Wellfed Logo */}
             <div className="flex items-center justify-center mb-6 w-full">
-              <img src="/Wellfedlogo.svg" alt="Wellfed Logo" />
+              <img src="/Wellfedlogo.png" alt="Wellfed Logo" />
             </div>
 
             {/* Clerk's SignIn Component */}

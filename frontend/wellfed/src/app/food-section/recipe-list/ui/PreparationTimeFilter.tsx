@@ -1,7 +1,13 @@
 'use client';
 
+const preparationTimeOptions = [
+  { id: 1, label: 'Under 30 minutes' },
+  { id: 2, label: '30-60 minutes' },
+  { id: 3, label: '1-2 hours' },
+  { id: 4, label: 'Over 2 hours' },
+];
+
 import React from 'react';
-import { PreparationTimeOption, preparationTimeOptions } from '@/constants';
 import { IoIosCheckmark } from 'react-icons/io';
 
 interface PreparationTimeFilterProps {

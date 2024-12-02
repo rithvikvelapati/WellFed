@@ -1,9 +1,11 @@
 trigger: none
 
+
 pool:
-   name: wellfedagent
-   demands:
-    - Agent.Name -equals ubuntu-agent
+  # vmImage: 'Azure Pipelines'
+  name: Azure Pipelines
+  demands:
+    - Agent.Name -equals Hosted Agent
 
 steps:
 
@@ -15,7 +17,7 @@ steps:
 #       chmod +x $(Agent.BuildDirectory)/scripts/
 
 # Install Node.js
-- task: Bash@2
+- task: useNode@1
   displayName: "check node version"
   inputs:
     targetType: inline
