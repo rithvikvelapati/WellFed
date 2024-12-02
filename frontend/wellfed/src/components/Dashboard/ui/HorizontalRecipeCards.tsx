@@ -1,45 +1,101 @@
 "use client";
-import React, { useState } from "react";
-import { Recipe, recipesData } from "../../../constants";
+import React, { useEffect, useState } from "react";
 import HorizontalScrollContainer from "@/components/HorizontalScrollContainer";
 import RecipeCard from "@/components/RecipeCard";
+import { Recipe } from "../../../constants";
+import { BASE_URL, GET_RECEPIES, GET_SAVED_RECEPIES, PUT_FAV_RECEPIES } from "@/constants/api";
+import { SavedRecipe } from "@/components/RecipeCard";
+import { useUser } from "@clerk/nextjs";
 
 const HorizontalRecipeCards: React.FC<any> = (props) => {
-  //const [recipes, setRecipes] = useState(props.recipesData as any || []);
+  const [recipesData, setRecipesData] = useState<Recipe[]>([]);
+  const [savedRecipesData, setSavedRecipesData] = useState<SavedRecipe[]>([]);
+  const { isSignedIn, user } = useUser();
 
-  // Log the recipesData to verify the data structure
-  console.log(recipesData);
+  useEffect(() => {
+    if (isSignedIn && user) {
+      fetchRecipesData();
+    }
+  }, [isSignedIn, user]);
 
-  // Function to toggle the favorite status
-  const handleToggleFavorite = (id: Recipe) => {
-    props.handleToggleFavorite(id)
-    
+  const fetchRecipesData = async () => {
+    try {
+      const recepieUrl = BASE_URL + GET_RECEPIES;
+      const response = await fetch(recepieUrl);
+      const recipes = await response.json();
+
+      if (recipes?.length) {
+        fetchSavedRecipesData(recipes);
+      } else {
+        setRecipesData([]);
+      }
+    } catch (error) {
+      console.error("Error fetching recipes data:", error);
+    }
   };
 
-  // Function to toggle the bookmark status
-  const handleToggleBookmark = (id: number) => {
-    // setRecipes((prevRecipes: any) =>
-    //   prevRecipes.map((recipe: any) =>
-    //     recipe.id === id
-    //       ? { ...recipe, bookmarked: !recipe.bookmarked }
-    //       : recipe
-    //   )
-    // );
+  const fetchSavedRecipesData = async (recipes: Recipe[]) => {
+    try {
+      const savedRecipesUrl = BASE_URL + GET_SAVED_RECEPIES + user?.id;
+      const response = await fetch(savedRecipesUrl);
+      const savedRecipes = await response.json();
+
+      recipes.forEach((recipe) => {
+        const isSaved = savedRecipes.find(
+          (savedRecipe: SavedRecipe) => savedRecipe.recipeId === recipe._id
+        );
+        recipe.favorited = !!isSaved; // Mark as favorited if found in saved recipes
+      });
+
+      setRecipesData([...recipes]);
+      setSavedRecipesData(savedRecipes);
+    } catch (error) {
+      console.error("Error fetching saved recipes data:", error);
+    }
+  };
+
+  const handleToggleFavorite = async (recipe: Recipe) => {
+    try {
+      const url = BASE_URL + PUT_FAV_RECEPIES + recipe._id;
+      const body = {
+        recipeId: recipe._id,
+        userId: user?.id,
+      };
+
+      const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      const result = await response.json();
+      if (result) {
+        fetchRecipesData();
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
   };
 
   return (
     <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
       <div className="mb-2 pt-2 space-x-fluid-px">
-        {props.recipesData.map((recipe: any) => (
-          <RecipeCard
-            key={recipe.id}
-            recipe={recipe}
-            savedRecipesData={props.savedRecipesData}
-            onToggleFavorite={handleToggleFavorite}
-            onToggleBookmark={handleToggleBookmark}
-            className="drop-shadow-lg rounded-xl"
-          />
-        ))}
+        {recipesData.length > 0 ? (
+          recipesData.filter(dt => dt.category?.toLowerCase().indexOf(props.type) !== -1).map((recipe) => (
+            <RecipeCard
+              key={recipe._id}
+              recipe={recipe}
+              savedRecipesData={savedRecipesData}
+              onToggleFavorite={handleToggleFavorite}
+              onToggleBookmark={() => {}} // Implement if needed
+              className="drop-shadow-lg rounded-xl"
+            />
+          ))
+        ) : (
+          <div>No recipes found.</div>
+        )}
       </div>
     </HorizontalScrollContainer>
   );
