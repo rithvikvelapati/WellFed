@@ -1,4 +1,4 @@
-// app/friends/page.tsx
+// app/friends-section/ui/FriendsPage.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -8,7 +8,9 @@ import Link from "next/link";
 import {
   selectOnlineUsersCount,
   selectAllFriendsCount,
-  selectPendingFriendRequests
+  selectPendingFriendRequests,
+  selectOnlineFriends,
+  selectAllFriends,
 } from "@/store/userSelectors";
 import { acceptFriendRequest, rejectFriendRequest } from "@/store/userSlice";
 import Image from "next/image";
@@ -23,6 +25,13 @@ interface FriendRequest {
   avatar: string;
 }
 
+interface Friend {
+  id: string;
+  name: string;
+  avatar: string;
+  isOnline: boolean;
+}
+
 const FriendsPage: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
 
@@ -32,6 +41,9 @@ const FriendsPage: React.FC = () => {
   const pendingFriendRequests: FriendRequest[] = useSelector(
     selectPendingFriendRequests
   );
+
+  const onlineFriends: Friend[] = useSelector(selectOnlineFriends);
+  const allFriends: Friend[] = useSelector(selectAllFriends);
 
   // Local state to manage loading and error states for each request
   const [loadingRequests, setLoadingRequests] = useState<{
