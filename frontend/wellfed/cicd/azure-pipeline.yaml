@@ -1,6 +1,10 @@
 name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
 
 trigger: none
+  #branches:
+    #include:
+      #- main
+      # - dummy-main
 
 pr: none
 
