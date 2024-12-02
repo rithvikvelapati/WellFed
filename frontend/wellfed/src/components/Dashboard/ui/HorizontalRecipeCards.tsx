@@ -20,10 +20,9 @@ const HorizontalRecipeCards: React.FC<any> = (props) => {
 
   const fetchRecipesData = async () => {
     try {
-      const recepieUrl = BASE_URL + GET_RECEPIES;
-      const response = await fetch(recepieUrl);
+      const recipeUrl = BASE_URL + GET_RECEPIES;
+      const response = await fetch(recipeUrl);
       const recipes = await response.json();
-
       if (recipes?.length) {
         fetchSavedRecipesData(recipes);
       } else {
@@ -83,16 +82,22 @@ const HorizontalRecipeCards: React.FC<any> = (props) => {
     <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
       <div className="mb-2 pt-2 space-x-fluid-px">
         {recipesData.length > 0 ? (
-          recipesData.filter(dt => dt.category?.toLowerCase().indexOf(props.type) !== -1).map((recipe) => (
-            <RecipeCard
-              key={recipe._id}
-              recipe={recipe}
-              savedRecipesData={savedRecipesData}
-              onToggleFavorite={handleToggleFavorite}
-              onToggleBookmark={() => {}} // Implement if needed
-              className="drop-shadow-lg rounded-xl"
-            />
-          ))
+          recipesData
+            .filter((dt) =>
+              props.type
+                ? dt.category?.toLowerCase().includes(props.type.toLowerCase())
+                : true
+            )
+            .map((recipe) => (
+              <RecipeCard
+                key={recipe._id}
+                recipe={recipe}
+                savedRecipesData={savedRecipesData}
+                onToggleFavorite={handleToggleFavorite}
+                className="drop-shadow-lg rounded-xl" onToggleBookmark={function (id: number): void {
+                  throw new Error("Function not implemented.");
+                } }              />
+            ))
         ) : (
           <div>No recipes found.</div>
         )}
