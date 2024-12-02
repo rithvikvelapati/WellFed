@@ -1,9 +1,6 @@
 name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
 
 trigger: none
-  #branches:
-   # include:
-    #  - '*'
 
 variables: 
   - group: wellfed-variablegroup

@@ -39,10 +39,6 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   // Ensure the server listens on all network interfaces
-  server: {
-    hostname: '0.0.0.0',
-    port: 3000,
-  },
 };
 
 module.exports = nextConfig;

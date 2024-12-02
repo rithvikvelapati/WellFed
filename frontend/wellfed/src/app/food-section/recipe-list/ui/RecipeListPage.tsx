@@ -109,7 +109,7 @@ const RecipeListPage = () => {
               </HorizontalScrollContainer>
             </section>
 
-            {/* TAppetizers Section */}
+            {/* Appetizers Section */}
             <section id="/#appetizers" className="mb-4">
               <div className="flex justify-between items-center ml-2">
                 <h2 className="text-fluid-lg font-semibold">Appetizers</h2>
@@ -122,7 +122,7 @@ const RecipeListPage = () => {
               </div>
               {/* Trending Now Content */}
               <div className="snap-start flex px-1 ml-1 mb-3 ">
-                <HorizontalRecipeCards />
+                <HorizontalRecipeCards type="appetizer" />
               </div>
             </section>
 
@@ -140,7 +140,7 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards />
+                  <HorizontalRecipeCards type="breakfast" />
                 </div>
               </HorizontalScrollContainer>
             </section>
@@ -159,13 +159,13 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards />
+                  <HorizontalRecipeCards type="lunch" />
                 </div>
               </HorizontalScrollContainer>
             </section>
 
-            {/* Breakfast Section */}
-            <section id="dinner" className="mb-4">
+            {/* Dinner Section */}
+            <section id="desserts" className="mb-4">
               <div className="flex justify-between items-center ml-2">
                 <h2 className="text-fluid-lg font-semibold">Dinner</h2>
                 {/* <button
@@ -178,13 +178,13 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards />
+                  <HorizontalRecipeCards type="dinner" />
                 </div>
               </HorizontalScrollContainer>
             </section>
 
-            {/* Breakfast Section */}
-            <section id="desserts" className="mb-4">
+            {/* Desserts Section */}
+            <section id="beverages" className="mb-4">
               <div className="flex justify-between items-center ml-2">
                 <h2 className="text-fluid-lg font-semibold">Desserts</h2>
                 {/* <button
@@ -197,13 +197,13 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards />
+                  <HorizontalRecipeCards type="dessert" />
                 </div>
               </HorizontalScrollContainer>
             </section>
 
-            {/* Breakfast Section */}
-            <section id="beverages" className="mb-4">
+            {/* Beverages Section */}
+            <section id="breakfast" className="mb-4">
               <div className="flex justify-between items-center ml-2">
                 <h2 className="text-fluid-lg font-semibold">Beverages</h2>
                 {/* <button
@@ -216,15 +216,15 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards />
+                  <HorizontalRecipeCards type="drink" />
                 </div>
               </HorizontalScrollContainer>
             </section>
 
-            {/* Breakfast Section */}
-            <section id="snacks" className="mb-4">
+            {/* Chicken Section */}
+            <section id="breakfast" className="mb-4">
               <div className="flex justify-between items-center ml-2">
-                <h2 className="text-fluid-lg font-semibold">Snacks</h2>
+                <h2 className="text-fluid-lg font-semibold">Chicken</h2>
                 {/* <button
                   className="flex items-center text-slate-500 text-fluid-sm"
                   onClick={() => router.push("/recent-recipes")}
@@ -235,7 +235,65 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards />
+                  <HorizontalRecipeCards type="chicken" />
+                </div>
+              </HorizontalScrollContainer>
+            </section>
+
+            {/* Fish Section */}
+            <section id="breakfast" className="mb-4">
+              <div className="flex justify-between items-center ml-2">
+                <h2 className="text-fluid-lg font-semibold">Fish</h2>
+                {/* <button
+                  className="flex items-center text-slate-500 text-fluid-sm"
+                  onClick={() => router.push("/recent-recipes")}
+                >
+                  See All <IoIosArrowForward className="ml-1" />
+                </button> */}
+              </div>
+              {/* Recent Recipes Content */}
+              <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
+                <div className="snap-start flex px-2 ml-2">
+                  <HorizontalRecipeCards type="fish" />
+                </div>
+              </HorizontalScrollContainer>
+            </section>
+
+            {/* beef Section */}
+            <section id="breakfast" className="mb-4">
+              <div className="flex justify-between items-center ml-2">
+                <h2 className="text-fluid-lg font-semibold">Beef</h2>
+                {/* <button
+                  className="flex items-center text-slate-500 text-fluid-sm"
+                  onClick={() => router.push("/recent-recipes")}
+                >
+                  See All <IoIosArrowForward className="ml-1" />
+                </button> */}
+              </div>
+              {/* Recent Recipes Content */}
+              <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
+                <div className="snap-start flex px-2 ml-2">
+                  <HorizontalRecipeCards type="beef" />
+                </div>
+              </HorizontalScrollContainer>
+            </section>
+
+
+            {/* vegetarian Section */}
+            <section id="snacks" className="mb-4">
+              <div className="flex justify-between items-center ml-2">
+                <h2 className="text-fluid-lg font-semibold">Vegetarian</h2>
+                {/* <button
+                  className="flex items-center text-slate-500 text-fluid-sm"
+                  onClick={() => router.push("/recent-recipes")}
+                >
+                  See All <IoIosArrowForward className="ml-1" />
+                </button> */}
+              </div>
+              {/* Recent Recipes Content */}
+              <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
+                <div className="snap-start flex px-2 ml-2">
+                  <HorizontalRecipeCards type="vegetarian" />
                 </div>
               </HorizontalScrollContainer>
             </section>
