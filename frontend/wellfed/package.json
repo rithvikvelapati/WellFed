@@ -1,6 +1,6 @@
 {
   "name": "wellfed",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,6 +10,7 @@
     "static": "next build && next export"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.25.9",
     "@capacitor/android": "^6.1.2",
     "@capacitor/cli": "^6.1.2",
     "@capacitor/core": "^6.1.2",

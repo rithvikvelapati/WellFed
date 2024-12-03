@@ -51,12 +51,12 @@ const SignInPage: React.FC = () => {
         exit="exit"
       >
 
-        <div className="flex justify-center items-start min-h-screen bg-black pt-20">
+        <div className="flex justify-center items-start min-h-screen bg-black pt-0">
           {/* Container for the logo and sign-in card */}
           <div className="flex flex-col items-center w-full max-w-md mx-4">
 
             {/* Wellfed Logo */}
-            <div className="flex items-center justify-center mb-6 w-full">
+            <div className="flex items-center justify-center mb-1 w-full">
               <img src="/Wellfedlogo.png" alt="Wellfed Logo" />
             </div>
 
