@@ -18,11 +18,10 @@
         subscription_id: "{{ lookup('env', 'subscription_id') }}"
         service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
         service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
-        acr_registry_url: "{{ lookup('env', 'acr_registry_url') }}"
-        acr_username: "{{ lookup('env', 'acr_username') }}"
         tenant_id: "{{ lookup('env', 'tenant_id') }}"
         service_name: "{{ lookup('env', 'service_name') }}"
         source_dir: "{{ lookup('env', 'source_dir') }}"
+        env_dir: "{{ lookup('env', 'env_dir') }}"
 
     - name: Login to Azure using Service Principal
       command: >
@@ -35,8 +34,18 @@
     - name: Set subscription to current directory
       command: az account set --subscription {{ subscription_id }}
 
+    - name: Git config clone
+      git:
+        repo" "https://{{ git_username }}:{{ git_password }}@{{ config_repo }}"
+      child_dir: {{ env_dir }}
+
+    - name: decrypt the encrypted file
+      command: >
+        sops -d {{ env_dir }}/crediential/frontend.enc.yaml >> {{ source_dir }}/frontend.yaml
+      register: decrypt_data
+
     - name: Login to ACR registry
-      shell: echo "{{ service_principal_secret }}" | docker login wellfeddev.azurecr.io --username "{{ service_principal_id }}" --password-stdin
+      shell: echo "{{ service_principal_secret }}" | docker login {{ acr_regisroty_url }} --username "{{ service_principal_id }}" --password-stdin
 
     - name: Install npm dependencies
       command: npm install
@@ -74,7 +83,7 @@
       failed_when: buildx_setup.rc != 0
 
     - name: Build docker image for arm64 and push to ACR
-      command: docker buildx build --no-cache --platform linux/arm64 -t wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }} --push .
+      command: docker buildx build --no-cache --platform linux/arm64 -t {{ acr_username }}/{{ service_name }}:{{ imagelabel }} --push .
       args:
         chdir: "{{ source_dir }}/frontend/wellfed"
       register: docker_build_result
@@ -83,3 +92,5 @@
     - name: Debug Docker build result
       debug:
         msg: "{{ docker_build_result.stdout_lines }}"
+
+
