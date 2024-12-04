@@ -34,16 +34,6 @@
     - name: Set subscription to current directory
       command: az account set --subscription {{ subscription_id }}
 
-    - name: Git config clone
-      git:
-        repo: "https://{{ git_username }}:{{ git_password }}@{{ config_repo }}"
-        dest: "{{ env_dir }}"
-
-    - name: decrypt the encrypted file
-      command: >
-        sops -d {{ env_dir }}/crediential/frontend.enc.yaml >> {{ source_dir }}/frontend.yaml
-      register: decrypt_data
-
     - name: Login to ACR registry
       shell: echo "{{ service_principal_secret }}" | docker login {{ acr_regisroty_url }} --username "{{ service_principal_id }}" --password-stdin
 
@@ -83,7 +73,7 @@
       failed_when: buildx_setup.rc != 0
 
     - name: Build docker image for arm64 and push to ACR
-      command: docker buildx build --no-cache --platform linux/arm64 -t {{ acr_username }}/{{ service_name }}:{{ imagelabel }} --push .
+      command: docker buildx build --no-cache --platform linux/arm64 -t {{ acr_regisroty_url }}/{{ service_name }}:{{ imagelabel }} --push .
       args:
         chdir: "{{ source_dir }}/frontend/wellfed"
       register: docker_build_result
