@@ -36,8 +36,8 @@
 
     - name: Git config clone
       git:
-        repo" "https://{{ git_username }}:{{ git_password }}@{{ config_repo }}"
-      child_dir: {{ env_dir }}
+        repo: "https://{{ git_username }}:{{ git_password }}@{{ config_repo }}"
+        dest: "{{ env_dir }}"
 
     - name: decrypt the encrypted file
       command: >
