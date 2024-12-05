@@ -1,13 +1,13 @@
-apiVersion: v1
-kind: Service
+apiVersion: v1  # Specifies the API version for Service resources.
+kind: Service  # Defines this resource as a Service.
 metadata:
-  name: wellfed-service
-  namespace: wellfed-frontend
+  name: wellfed-service  # Name of the service.
+  namespace: wellfed-frontend  # Namespace to which this service belongs.
 spec:
-  type: LoadBalancer # Changed to expose externally
+  type: LoadBalancer  # Exposes the service externally using a load balancer.
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 3000
+    - protocol: TCP  # Protocol for the service.
+      port: 80  # External port exposed by the service.
+      targetPort: 3000  # Port the service forwards traffic to in the container.
   selector: 
-    app: wellfed-deploy
+    app: wellfed-deploy  # Links the service to pods with this label.

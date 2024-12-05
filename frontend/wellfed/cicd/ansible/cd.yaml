@@ -1,12 +1,12 @@
 - name: Continuous Deployment
-  hosts: "localhost"
-  connection: local
+  hosts: "localhost"  # Executes tasks on the local machine.
+  connection: local  # Indicates a local connection.
 
   vars:
-    version: "{{ version }}"  # Explicitly set version variable
+    version: "{{ version }}"  # Sets the version variable dynamically.
 
   tasks:
-    - set_fact:
+    - set_fact:  # Sets facts (variables) using environment lookups.
         git_username: "{{ lookup('env', 'git_username') }}"
         git_password: "{{ lookup('env', 'git_password') }}"
         subscription_id: "{{ lookup('env', 'subscription_id') }}"
@@ -21,11 +21,11 @@
         resource_group: "{{ lookup('env', 'resource_group') }}"
 
     - name: Debug version variable
-      debug:
+      debug:  # Logs the version for debugging.
         msg: "Version: {{ version }}"
 
     - name: Login to Azure using Service Principal
-      command: >
+      command: >  # Logs in to Azure using a service principal.
         az login
         --service-principal
         --username '{{ service_principal_id }}'
@@ -33,21 +33,21 @@
         --tenant '{{ tenant_id }}'
 
     - name: Set subscription to current directory
-      command: az account set --subscription {{ subscription_id }}
+      command: az account set --subscription {{ subscription_id }}  # Sets the Azure subscription.
 
     - name: List AKS clusters in resource group
-      command: az aks list --resource-group {{ resource_group }}
-      register: aks_list_result
+      command: az aks list --resource-group {{ resource_group }}  # Lists AKS clusters.
+      register: aks_list_result  # Stores the output.
 
     - name: Debug AKS clusters
       debug:
-        var: aks_list_result.stdout
+        var: aks_list_result.stdout  # Logs the AKS cluster details.
 
     - name: Pull AKS cluster config
       command: >
         az aks get-credentials --resource-group {{ resource_group }} --name {{ aks_cluster }}
-      register: aks_credentials_result
-      failed_when: aks_credentials_result.rc != 0
+      register: aks_credentials_result  # Stores the output.
+      failed_when: aks_credentials_result.rc != 0  # Fails the task if the command fails.
 
     - name: Authenticate with ACR
       command: >
@@ -57,23 +57,23 @@
       command: >
         docker pull --platform linux/arm64 wellfeddev.azurecr.io/wellfed-frontend:0.0.5
       register: docker_pull_result
-      failed_when: docker_pull_result.rc != 0
+      failed_when: docker_pull_result.rc != 0  # Fails the task if the Docker pull fails.
 
     - name: Debug Docker pull result
       debug:
-        msg: "{{ docker_pull_result }}"
+        msg: "{{ docker_pull_result }}"  # Logs the Docker pull result.
 
     - name: Apply Kubernetes namespace
       command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/namespace.yaml
       register: namespace_apply_logs_result
-      failed_when: namespace_apply_logs_result.rc != 0
+      failed_when: namespace_apply_logs_result.rc != 0  # Fails the task if namespace creation fails.
 
     - name: Apply Kubernetes services
       command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/service.yaml
       register: service_apply_logs_result
-      failed_when: service_apply_logs_result.rc != 0
+      failed_when: service_apply_logs_result.rc != 0  # Fails the task if service creation fails.
 
     - name: Apply Kubernetes deployment
       command: kubectl apply -f {{ source_dir }}/frontend/wellfed/aksCluster/deployment.yaml
       register: deploy_apply_logs_result
-      failed_when: deploy_apply_logs_result.rc != 0
+      failed_when: deploy_apply_logs_result.rc != 0  # Fails the task if deployment fails.

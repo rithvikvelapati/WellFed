@@ -9,12 +9,12 @@ trigger: none
 pr: none
 
 variables: 
-  - group: wellfed-variablegroup
+  - group: wellfed-variablegroup  # References a variable group for environment variables.
 
 jobs:
   - job: Wellfef_frontend_CI_pipeline
     pool:
-      vmImage: 'ubuntu-latest'
+      vmImage: 'ubuntu-latest'  # Executes tasks on an Ubuntu-based environment.
 
     steps:
       - task: Bash@3
@@ -29,7 +29,6 @@ jobs:
           acr_username: "$(acr_username)"
           tenant_id: "$(tenant_id)"
           service_name: "$(service_name)"
-          # env_dir: "$(Agent.BuildDirectory)/env"
           source_dir: "$(Build.SourcesDirectory)"
         inputs:
           targetType: inline

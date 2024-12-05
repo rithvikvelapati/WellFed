@@ -1,20 +1,20 @@
-name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
+name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)  # Pipeline naming convention.
 
-trigger: none
+trigger: none  # No automatic triggers.
 
 variables: 
-  - group: wellfed-variablegroup
+  - group: wellfed-variablegroup  # Uses a pre-defined variable group.
 
 parameters: 
   - name: version 
-    displayName: Version 
+    displayName: Version  # Parameter for versioning.
     type: string 
-    default: '0.0.5'
+    default: '0.0.5'  # Default version value.
 
 jobs:
   - job: wellfed_frontend_CD_pipeline
     pool:
-      vmImage: 'ubuntu-latest'
+      vmImage: 'ubuntu-latest'  # Runs the job on the latest Ubuntu image.
 
     steps:
       - script: |
