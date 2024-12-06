@@ -5,27 +5,28 @@
   tasks:
     - name: Update apt cache and install dependencies (Debian/Ubuntu)
       apt:
-        update_cache: yes
+        update_cache: yes  # Updates the package index.
         name:
           - python3-pip
-          - jq
+          - jq  # Installs jq for JSON parsing.
         state: present
-      become: yes
+      become: yes  # Runs the task with elevated privileges.
 
-    - set_fact:
+    - set_fact:  # Sets facts (variables) using environment lookups.
         git_username: "{{ lookup('env', 'git_username') }}"
         git_password: "{{ lookup('env', 'git_password') }}"
         subscription_id: "{{ lookup('env', 'subscription_id') }}"
         service_principal_id: "{{ lookup('env', 'service_principal_id') }}"
         service_principal_secret: "{{ lookup('env', 'service_principal_secret') }}"
-        acr_registry_url: "{{ lookup('env', 'acr_registry_url') }}"
+        acr_regisroty_url: "{{ lookup('env', 'acr_regisroty_url') }}"
         acr_username: "{{ lookup('env', 'acr_username') }}"
         tenant_id: "{{ lookup('env', 'tenant_id') }}"
         service_name: "{{ lookup('env', 'service_name') }}"
         source_dir: "{{ lookup('env', 'source_dir') }}"
+        env_dir: "{{ lookup('env', 'env_dir') }}"
 
     - name: Login to Azure using Service Principal
-      command: >
+      command: >  # Logs in to Azure using a service principal.
         az login
         --service-principal
         --username '{{ service_principal_id }}'
@@ -33,31 +34,31 @@
         --tenant '{{ tenant_id }}'
 
     - name: Set subscription to current directory
-      command: az account set --subscription {{ subscription_id }}
+      command: az account set --subscription {{ subscription_id }}  # Sets the Azure subscription.
 
     - name: Login to ACR registry
-      shell: echo "{{ service_principal_secret }}" | docker login wellfeddev.azurecr.io --username "{{ service_principal_id }}" --password-stdin
+      shell: echo "{{ service_principal_secret }}" | docker login {{ acr_regisroty_url }} --username "{{ service_principal_id }}" --password-stdin
 
     - name: Install npm dependencies
-      command: npm install
+      command: npm install  # Installs project dependencies.
       args:
-        chdir: "{{ source_dir }}/frontend/wellfed"
+        chdir: "{{ source_dir }}/frontend/wellfed"  # Changes to the project directory.
 
     - name: Read package.json
-      command: cat {{ source_dir }}/frontend/wellfed/package.json
+      command: cat {{ source_dir }}/frontend/wellfed/package.json  # Reads the package.json file.
       register: package_json
 
     - name: Debug package.json content
       debug:
-        var: package_json.stdout
+        var: package_json.stdout  # Logs the package.json content.
 
     - name: Extract version from package.json using jq
-      shell: echo '{{ package_json.stdout }}' | jq -r '.version'
+      shell: echo '{{ package_json.stdout }}' | jq -r '.version'  # Extracts the version using jq.
       register: version_output
 
     - name: Debug extracted version
       debug:
-        var: version_output.stdout
+        var: version_output.stdout  # Logs the extracted version.
 
     - name: Set version and imagelabel fact
       set_fact:
@@ -69,17 +70,17 @@
         msg: "version: {{ version }}, imagelabel: {{ imagelabel }}"
 
     - name: Setup Docker buildx
-      command: docker buildx create --use --platform linux/amd64
+      command: docker buildx create --use --platform linux/amd64  # Sets up Docker Buildx for cross-platform builds.
       register: buildx_setup
       failed_when: buildx_setup.rc != 0
 
     - name: Build docker image for arm64 and push to ACR
-      command: docker buildx build --no-cache --platform linux/arm64 -t wellfeddev.azurecr.io/{{ service_name }}:{{ imagelabel }} --push .
+      command: docker buildx build --no-cache --platform linux/arm64 -t {{ acr_regisroty_url }}/{{ service_name }}:{{ imagelabel }} --push .
       args:
-        chdir: "{{ source_dir }}/frontend/wellfed"
+        chdir: "{{ source_dir }}/frontend/wellfed"  # Changes to the project directory.
       register: docker_build_result
-      failed_when: docker_build_result.rc != 0
+      failed_when: docker_build_result.rc != 0  # Fails the task if the Docker build fails.
 
     - name: Debug Docker build result
       debug:
-        msg: "{{ docker_build_result.stdout_lines }}"
+        msg: "{{ docker_build_result.stdout_lines }}"  # Logs the Docker build result.

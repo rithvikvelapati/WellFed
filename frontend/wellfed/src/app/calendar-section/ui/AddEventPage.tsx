@@ -8,7 +8,7 @@ import {
   startOfMonth,
   endOfMonth,
   setMonth,
-  eachDayOfInterval
+  eachDayOfInterval,
 } from "date-fns";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { FaCalendarDay } from "react-icons/fa";
@@ -58,18 +58,18 @@ const AddEvent: React.FC = () => {
   const modalVariants = {
     initial: {
       x: "-100vw", // Start from the left
-      opacity: 0
+      opacity: 0,
     },
     animate: {
       x: 0, // Slide to the center
       opacity: 1,
-      transition: { type: "tween", duration: 0.5 }
+      transition: { type: "tween", duration: 0.5 },
     },
     exit: {
       x: "100vw", // Slide out to the right
       opacity: 0,
-      transition: { type: "tween", duration: 0.5 }
-    }
+      transition: { type: "tween", duration: 0.5 },
+    },
   };
 
   const handleClose = () => {
@@ -79,7 +79,7 @@ const AddEvent: React.FC = () => {
   // Generate array of days for the current month
   const daysInMonth = eachDayOfInterval({
     start: startOfMonth(currentMonth),
-    end: endOfMonth(currentMonth)
+    end: endOfMonth(currentMonth),
   });
 
   const handlePrevMonth = () => {
@@ -103,6 +103,11 @@ const AddEvent: React.FC = () => {
   // Generate time slots for every 30 minutes
   const timeSlots = generateTimeSlots(30);
 
+  // Navigate to meal details page on `+` button click
+  const handleAddToMealDetails = () => {
+    router.push("/calendar-section/meal-details");
+  };
+
   return (
     <AnimatePresence>
       <motion.div
@@ -121,7 +126,6 @@ const AddEvent: React.FC = () => {
             <IoIosArrowBack className="text-2xl text-gray-700 mt-4" />
           </button>
           <h2 className="text-3xl font-semibold mt-6 mb-2">New Schedule</h2>
-
           <p className="text-xl mt-5 mr-3">Cancel</p>
         </div>
         <div className="mt-5">
@@ -244,11 +248,18 @@ const AddEvent: React.FC = () => {
 
               {/* Attendees Section */}
               <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2">Invite Attendees</h2>
-                <button className="flex items-center justify-center w-9 h-9 bg-slate-100 rounded-full text-xl font-black text-slate-600 shadow-md">
+                <h2 className="text-lg font-semibold mb-2">
+                  Add Recipe and Attendees
+                </h2>
+                <button
+                  className="flex items-center justify-center w-9 h-9 bg-slate-100 rounded-full text-xl font-black text-slate-600 shadow-md"
+                  onClick={handleAddToMealDetails}
+                >
                   +
                 </button>
-                <button className="mt-3 flex items-center justify-center w-full py-2 px-4 bg-slate-100 text-primary font-semibold rounded-xl shadow-md">
+                <button
+                  className="mt-3 flex items-center justify-center w-full py-2 px-4 bg-slate-100 text-primary font-semibold rounded-xl shadow-md"
+                >
                   <HiMiniUserGroup className="mr-2" /> Add Family
                 </button>
               </div>
@@ -269,7 +280,6 @@ const AddEvent: React.FC = () => {
               <div className="mb-4">
                 <button
                   className="mt-2 flex items-center justify-center w-full py-2 px-4 bg-slate-100 text-primary font-semibold rounded-xl shadow-md"
-                  onClick={() => router.push("/calendar-section/meal-details")}
                 >
                   <FaCalendarDay className="mr-2" /> Add to Calendar
                 </button>

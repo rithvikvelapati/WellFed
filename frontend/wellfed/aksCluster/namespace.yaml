@@ -1,4 +1,4 @@
-apiVersion: v1
-kind: Namespace
+apiVersion: v1  # Specifies the API version for Namespace resources.
+kind: Namespace  # Defines this resource as a Namespace.
 metadata:
-  name: wellfed-frontend
+  name: wellfed-frontend  # Name of the namespace to group related resources.

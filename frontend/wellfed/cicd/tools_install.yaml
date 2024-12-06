@@ -1,14 +1,12 @@
-name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
+name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)  # Pipeline naming.
 
-trigger: none
-
-pr: none
+trigger: none  # No automatic triggers for this pipeline.
 
 jobs:
 - job: InstallTools
-  displayName: 'Install Tools Job'
+  displayName: 'Install Tools Job'  # Job to install required tools.
   pool:
-    vmImage: 'ubuntu-latest'
+    vmImage: 'ubuntu-latest'  # Uses the latest Ubuntu image.
 
   steps:
   - script: |

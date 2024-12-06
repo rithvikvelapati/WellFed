@@ -10,11 +10,85 @@ import HorizontalScrollContainer from "@/components/HorizontalScrollContainer";
 import RecipeSearchBar from "./RecipeSearchBar";
 import ToggleButtonGroup from "./ToggleButtonGroup";
 import FilterButton from "./FilterButton";
-import { categories } from "@/constants";
+import { Recipe, categories } from "@/constants";
 import CategoryCard from "./CategoryCard";
 import HorizontalRecipeCards from "@/components/Dashboard/ui/HorizontalRecipeCards";
+import { BASE_URL, GET_RECEPIES, GET_SAVED_RECEPIES, PUT_FAV_RECEPIES } from "@/constants/api";
+import { useUser } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
+import { SavedRecipe } from "@/components/RecipeCard";
 
 const RecipeListPage = () => {
+  const [recipesData, setRecipesData] = useState<Recipe[]>([]);
+  const [savedRecipesData, setSavedRecipesData] = useState<SavedRecipe[]>([]);
+
+  const { isSignedIn, user } = useUser();
+
+  useEffect(() => {
+    if (isSignedIn && user) {
+      fetchRecipesData();
+    }
+  }, [isSignedIn, user]);
+
+  const fetchRecipesData = async () => {
+    try {
+      const recipeUrl = BASE_URL + GET_RECEPIES;
+      const response = await fetch(recipeUrl);
+      const recipes = await response.json();
+      if (recipes?.length) {
+        fetchSavedRecipesData(recipes);
+      } else {
+        setRecipesData([]);
+      }
+    } catch (error) {
+      console.error("Error fetching recipes data:", error);
+    }
+  };
+
+  const fetchSavedRecipesData = async (recipes: Recipe[]) => {
+    try {
+      const savedRecipesUrl = BASE_URL + GET_SAVED_RECEPIES + user?.id;
+      const response = await fetch(savedRecipesUrl);
+      const savedRecipes = await response.json();
+
+      recipes.forEach((recipe) => {
+        const isSaved = savedRecipes.find(
+          (savedRecipe: SavedRecipe) => savedRecipe.recipeId === recipe._id
+        );
+        recipe.favorited = !!isSaved; // Mark as favorited if found in saved recipes
+      });
+
+      setRecipesData([...recipes]);
+      setSavedRecipesData(savedRecipes);
+    } catch (error) {
+      console.error("Error fetching saved recipes data:", error);
+    }
+  };
+
+  const handleToggleFavorite = async (recipe: Recipe) => {
+    try {
+      const url = BASE_URL + PUT_FAV_RECEPIES + recipe._id;
+      const body = {
+        recipeId: recipe._id,
+        userId: user?.id,
+      };
+
+      const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      const result = await response.json();
+      if (result) {
+        fetchRecipesData();
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
+  };
   // const [isModalOpen, setIsModalOpen] = useState(true);
   // const dispatch = useDispatch();
   const router = useRouter();
@@ -122,7 +196,7 @@ const RecipeListPage = () => {
               </div>
               {/* Trending Now Content */}
               <div className="snap-start flex px-1 ml-1 mb-3 ">
-                <HorizontalRecipeCards type="appetizer" />
+                <HorizontalRecipeCards recipesData={recipesData} savedRecipesData={savedRecipesData} handleToggleFavorite={handleToggleFavorite}  type="appetizer"  />
               </div>
             </section>
 
@@ -140,7 +214,7 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards type="breakfast" />
+                  <HorizontalRecipeCards recipesData={recipesData} savedRecipesData={savedRecipesData} handleToggleFavorite={handleToggleFavorite}  type="breakfast" />
                 </div>
               </HorizontalScrollContainer>
             </section>
@@ -159,7 +233,7 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards type="lunch" />
+                  <HorizontalRecipeCards recipesData={recipesData} savedRecipesData={savedRecipesData} handleToggleFavorite={handleToggleFavorite}  type="lunch" />
                 </div>
               </HorizontalScrollContainer>
             </section>
@@ -178,7 +252,7 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards type="dinner" />
+                  <HorizontalRecipeCards recipesData={recipesData} savedRecipesData={savedRecipesData} handleToggleFavorite={handleToggleFavorite}  type="dinner" />
                 </div>
               </HorizontalScrollContainer>
             </section>
@@ -197,7 +271,7 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards type="dessert" />
+                  <HorizontalRecipeCards recipesData={recipesData} savedRecipesData={savedRecipesData} handleToggleFavorite={handleToggleFavorite}  type="dessert" />
                 </div>
               </HorizontalScrollContainer>
             </section>
@@ -216,7 +290,7 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards type="drink" />
+                  <HorizontalRecipeCards recipesData={recipesData} savedRecipesData={savedRecipesData} handleToggleFavorite={handleToggleFavorite}  type="drink" />
                 </div>
               </HorizontalScrollContainer>
             </section>
@@ -235,7 +309,7 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards type="chicken" />
+                  <HorizontalRecipeCards recipesData={recipesData} savedRecipesData={savedRecipesData} handleToggleFavorite={handleToggleFavorite}  type="chicken" />
                 </div>
               </HorizontalScrollContainer>
             </section>
@@ -254,7 +328,7 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards type="fish" />
+                  <HorizontalRecipeCards recipesData={recipesData} savedRecipesData={savedRecipesData} handleToggleFavorite={handleToggleFavorite}  type="fish" />
                 </div>
               </HorizontalScrollContainer>
             </section>
@@ -273,7 +347,7 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards type="beef" />
+                  <HorizontalRecipeCards recipesData={recipesData} savedRecipesData={savedRecipesData} handleToggleFavorite={handleToggleFavorite}  type="beef" />
                 </div>
               </HorizontalScrollContainer>
             </section>
@@ -293,7 +367,7 @@ const RecipeListPage = () => {
               {/* Recent Recipes Content */}
               <HorizontalScrollContainer className="bg-gradient-to-r from-backgroundDash to-inherit">
                 <div className="snap-start flex px-2 ml-2">
-                  <HorizontalRecipeCards type="vegetarian" />
+                  <HorizontalRecipeCards recipesData={recipesData} savedRecipesData={savedRecipesData} handleToggleFavorite={handleToggleFavorite}  type="vegetarian" />
                 </div>
               </HorizontalScrollContainer>
             </section>

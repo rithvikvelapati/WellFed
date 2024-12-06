@@ -1,0 +1,84 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
+
+trigger: none
+  #branches:
+    #include:
+      #- main
+      # - dummy-main
+
+pr: none
+
+variables: 
+  - group: wellfed-variablegroup  # References a variable group for environment variables.
+
+jobs:
+  - job: Wellfef_frontend_CI_pipeline
+    pool:
+      vmImage: 'ubuntu-latest'  # Executes tasks on an Ubuntu-based environment.
+
+    steps:
+      /* Step 1: Install SOPS
+      - task: Bash@3
+        displayName: "Install SOPS"
+        inputs:
+          targetType: inline
+          script: |
+            sudo apt-get update
+            sudo apt-get install -y sops
+
+      # Step 2: Clone the AKS-CONFIG Repository
+      #- task: Bash@3
+       # displayName: "Clone Variables Repository"
+        #env:
+        #  GIT_USERNAME: "$(git_username)"
+        #  GIT_PASSWORD: "$(git_password)"
+        #  REPO_URL: "https://github.com/your-org/AKS-CONFIG"
+        #inputs:
+        #  targetType: inline
+        #  script: |
+        #    git clone https://$(GIT_USERNAME):$(GIT_PASSWORD)@github.com/your-org/AKS-CONFIG aks-config
+
+      # Step 3: Decrypt Encrypted Files
+      #- task: Bash@3
+      #  displayName: "Decrypt Encrypted Variables"
+      #  inputs:
+      #    targetType: inline
+      #    script: |
+      #      mkdir -p $(Pipeline.Workspace)/decrypted
+      #      sops -d AKS-config/credentials/backend.enc.yaml > $(Pipeline.Workspace)/decrypted/backend.yaml
+      #      sops -d AKS-config/credentials/frontend.enc.yaml > $(Pipeline.Workspace)/decrypted/frontend.yaml
+
+      # Step 4: Export Variables as Environment Variables
+      #- task: Bash@3
+      #  displayName: "Export Variables from Decrypted Files"
+      #  inputs:
+      #    targetType: inline
+      #    script: |
+      #      export $(cat $(Pipeline.Workspace)/decrypted/backend.yaml | xargs)
+      #      export $(cat $(Pipeline.Workspace)/decrypted/frontend.yaml | xargs) */
+
+
+      - task: Bash@3
+        displayName: "Run Ansible Playbook"
+        env:
+          git_username: "$(git_username)"
+          git_password: "$(git_password)"
+          subscription_id: "$(subscription_id)"
+          service_principal_id: "$(service_principal_id)"
+          service_principal_secret: "$(service_principal_secret)"
+          acr_regisroty_url: "$(acr_regisroty_url)"
+          acr_username: "$(acr_username)"
+          tenant_id: "$(tenant_id)"
+          service_name: "$(service_name)"
+          source_dir: "$(Build.SourcesDirectory)"
+        inputs:
+          targetType: inline
+          script: |
+            pwd
+            # cd ${source_dir}/frontend/wellfed
+            # pwd
+            python3 --version
+            pip --version
+            pip3 --version
+            ls -lrt
+            ansible-playbook  ${source_dir}/frontend/wellfed/cicd/ansible/ci.yaml -i "localhost, " -v
