@@ -1,22 +1,64 @@
-name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)
+name: $(Date:yyyyMMdd)$(Rev:.r)-$(Build.SourceBranchName)  # Pipeline naming convention.
 
-trigger: none
+trigger: none  # No automatic triggers.
 
 variables: 
-  - group: wellfed-variablegroup
+  - group: wellfed-variablegroup  # Uses a pre-defined variable group.
 
 parameters: 
   - name: version 
-    displayName: Version 
+    displayName: Version  # Parameter for versioning.
     type: string 
-    default: '0.0.5'
+    default: '0.0.5'  # Default version value.
 
 jobs:
   - job: wellfed_frontend_CD_pipeline
     pool:
-      vmImage: 'ubuntu-latest'
+      vmImage: 'ubuntu-latest'  # Runs the job on the latest Ubuntu image.
 
     steps:
+
+      # Step 1: Install SOPS
+      #- task: Bash@3
+      #  displayName: "Install SOPS"
+      #  inputs:
+      #    targetType: inline
+      #    script: |
+      #      sudo apt-get update
+      #      sudo apt-get install -y sops
+
+      # Step 2: Clone the AKS-CONFIG Repository
+      #- task: Bash@3
+      #  displayName: "Clone Variables Repository"
+      #  env:
+      #   GIT_USERNAME: "$(git_username)"
+      #    GIT_PASSWORD: "$(git_password)"
+      #    REPO_URL: "https://github.com/your-org/AKS-CONFIG"
+      #  inputs:
+      #    targetType: inline
+      #    script: |
+      #      git clone https://$(GIT_USERNAME):$(GIT_PASSWORD)@github.com/your-org/AKS-CONFIG aks-config
+
+      # Step 3: Decrypt Encrypted Files
+      #- task: Bash@3
+      #  displayName: "Decrypt Encrypted Variables"
+      #  inputs:
+      #    targetType: inline
+      #    script: |
+      #      mkdir -p $(Pipeline.Workspace)/decrypted
+      #      sops -d AKS-config/credentials/backend.enc.yaml > $(Pipeline.Workspace)/decrypted/backend.yaml
+      #      sops -d AKS-config/credentials/frontend.enc.yaml > $(Pipeline.Workspace)/decrypted/frontend.yaml
+
+      # Step 4: Export Variables as Environment Variables
+      #- task: Bash@3
+      #  displayName: "Export Variables from Decrypted Files"
+      #  inputs:
+      #    targetType: inline
+      #    script: |
+      #      export $(cat $(Pipeline.Workspace)/decrypted/backend.yaml | xargs)
+      #      export $(cat $(Pipeline.Workspace)/decrypted/frontend.yaml | xargs)
+
+
       - script: |
           echo "Version: $(version)"
           VERSION=$(version)

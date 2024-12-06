@@ -1,31 +1,21 @@
-trigger: none
-
+trigger: none  # No automatic triggers; this pipeline runs manually.
 
 pool:
-  # vmImage: 'Azure Pipelines'
-  name: Azure Pipelines
+  name: Azure Pipelines  # Uses the Azure Pipelines pool.
   demands:
-    - Agent.Name -equals Hosted Agent
+    - Agent.Name -equals Hosted Agent  # Ensures the job runs on a hosted agent.
 
 steps:
-
-# - task: Bash@2
-#   displayName: CHange directory permissions
-#   inputs:
-#     targetType: inline
-#     script: |
-#       chmod +x $(Agent.BuildDirectory)/scripts/
-
-# Install Node.js
+# Task: Check Node.js version
 - task: useNode@1
-  displayName: "check node version"
+  displayName: "Check Node.js version"
   inputs:
     targetType: inline
     script: |
-      node --version
-      npm --version
+      node --version  # Checks the Node.js version.
+      npm --version   # Checks the npm version.
 
-# Install Docker
+# Task: Install Docker
 - task: Bash@2
   displayName: "Install Docker"
   inputs:
@@ -38,19 +28,19 @@ steps:
       sudo apt-get update
       sudo apt-get install -y docker-ce
       sudo usermod -aG docker $(whoami)
-      docker --version
+      docker --version  # Verifies the Docker installation.
 
-# Install Python and pip
+# Task: Install Python and pip
 - task: Bash@2
   displayName: "Install Python and pip"
   inputs:
     targetType: inline
     script: |
       sudo apt-get install -y python3 python3-pip
-      python3 --version
-      pip3 --version
+      python3 --version  # Checks Python version.
+      pip3 --version     # Checks pip version.
 
-# Install Ansible
+# Task: Install Ansible
 - task: Bash@2
   displayName: "Install Ansible"
   inputs:
@@ -60,4 +50,4 @@ steps:
       sudo apt-get install -y software-properties-common
       sudo add-apt-repository --yes --update ppa:ansible/ansible
       sudo apt-get install -y ansible
-      ansible --version
+      ansible --version  # Verifies the Ansible installation.
