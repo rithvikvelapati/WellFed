@@ -13,6 +13,7 @@ const SampleDataLoader: React.FC = () => {
       { id: '1', name: 'Alice', avatar: '/avatars/Avatar1.png', isOnline: true },
       { id: '2', name: 'Bob', avatar: '/avatars/Avatar2.png', isOnline: false },
       { id: '3', name: 'Charlie', avatar: '/avatars/Avatar3.png', isOnline: true },
+       { id: '4', name: 'David', avatar: '/avatars/Avatar4.png', isOnline: true },
     ];
 
     // Sample Friends
