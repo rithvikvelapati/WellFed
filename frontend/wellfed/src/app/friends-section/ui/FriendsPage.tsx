@@ -10,7 +10,7 @@ import {
   selectAllFriendsCount,
   selectPendingFriendRequests,
   selectOnlineFriends,
-  selectAllFriends,
+  selectAllFriends
 } from "@/store/userSelectors";
 import { acceptFriendRequest, rejectFriendRequest } from "@/store/userSlice";
 import Image from "next/image";
@@ -85,6 +85,7 @@ const FriendsPage: React.FC = () => {
     try {
       // Dispatch the rejectFriendRequest thunk
       await dispatch(rejectFriendRequest(requestId)).unwrap();
+      await dispatch(rejectFriendRequest(requestId)).unwrap();
     } catch (error: any) {
       // Set error message for this request
       setErrorRequests((prev) => ({
@@ -101,15 +102,15 @@ const FriendsPage: React.FC = () => {
     <div className="p-4">
       {/* Add Friends Button */}
       <div className="flex justify-center mb-6">
-        <Link href="/username-search">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex justify-center items-center bg-gradient-to-r from-primary to-secondary text-white w-full max-w-md py-2 px-4 rounded-2xl text-lg font-medium shadow-md transition duration-200"
-            >
-              <IoMdPersonAdd className="mr-2 h-6 w-6" />
-              Add Friends
-            </motion.button>
+        <Link href="/friends-section/add-friend">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex justify-center items-center bg-gradient-to-r from-primary to-secondary text-white w-full max-w-md py-2 px-4 rounded-2xl text-lg font-medium shadow-md transition duration-200"
+          >
+            <IoMdPersonAdd className="mr-2 h-6 w-6" />
+            Add Friends
+          </motion.button>
         </Link>
       </div>
 
@@ -117,7 +118,7 @@ const FriendsPage: React.FC = () => {
       <div className="space-y-6">
         {/* Online Users Section */}
         <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Online Friends</h2>
+          <h2 className="text-2xl font-semibold mb-4">Online Friends</h2>
           {onlineFriends.length > 0 ? (
             <div className="flex space-x-4 overflow-x-auto">
               {onlineFriends.map((friend) => (
@@ -129,7 +130,9 @@ const FriendsPage: React.FC = () => {
                     width={64}
                     height={64}
                   />
-                  <p className="mt-2 text-center text-gray-800">{friend.name}</p>
+                  <p className="mt-2 text-center text-gray-800">
+                    {friend.name}
+                  </p>
                 </div>
               ))}
             </div>
@@ -140,7 +143,7 @@ const FriendsPage: React.FC = () => {
 
         {/* All Friends Section */}
         <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">All Friends</h2>
+          <h2 className="text-2xl font-semibold mb-4">All Friends</h2>
           {allFriends.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {allFriends.map((friend) => (
@@ -152,7 +155,9 @@ const FriendsPage: React.FC = () => {
                     width={64}
                     height={64}
                   />
-                  <p className="mt-2 text-center text-gray-800">{friend.name}</p>
+                  <p className="mt-2 text-center text-gray-800">
+                    {friend.name}
+                  </p>
                 </div>
               ))}
             </div>
@@ -162,7 +167,9 @@ const FriendsPage: React.FC = () => {
         </div>
         {/* Pending Friend Requests Section */}
         <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Pending Friend Requests</h2>
+          <h2 className="text-2xl font-semibold mb-4">
+            Pending Friend Requests
+          </h2>
           {pendingFriendRequests.length > 0 ? (
             <div className="space-y-4">
               {pendingFriendRequests.map((request) => (
@@ -178,7 +185,9 @@ const FriendsPage: React.FC = () => {
                     height={64}
                   />
                   <div className="flex-1">
-                    <p className="text-lg font-medium text-gray-800">{request.name}</p>
+                    <p className="text-lg font-medium text-gray-800">
+                      {request.name}
+                    </p>
                   </div>
                   <div className="flex flex-col space-y-2">
                     <Button
@@ -211,17 +220,18 @@ const FriendsPage: React.FC = () => {
             <p className="text-gray-700">No pending friend requests.</p>
           )}
         </div>
+
         {/* Blocked Users Button (Optional) */}
         <div className="flex justify-center my-6">
           <Link href="/blocked-users">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex justify-center items-center bg-gradient-to-r from-primary to-secondary text-white w-full max-w-md py-2 px-4 rounded-2xl text-lg font-medium shadow-md transition duration-200"
-              >
-                <ImBlocked className="mr-2 h-6 w-6" />
-                Blocked Users
-              </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex justify-center items-center bg-gradient-to-r from-primary to-secondary text-white w-full max-w-md py-2 px-4 rounded-2xl text-lg font-medium shadow-md transition duration-200"
+            >
+              <ImBlocked className="mr-2 h-6 w-6" />
+              Blocked Users
+            </motion.button>
           </Link>
         </div>
       </div>

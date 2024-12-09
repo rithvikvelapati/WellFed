@@ -10,12 +10,12 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button: React.FC<ButtonProps> = ({ children, variant = 'primary', ...props }) => {
   const baseStyles =
-    'px-4 py-2 rounded-md focus:outline-none focus:ring transition duration-200 flex items-center justify-center';
+    'px-4 py-2 rounded-xl focus:outline-none focus:ring transition duration-200 flex items-center justify-center';
 
   const variantStyles = {
-    primary: 'bg-gradient-to-r from-primary to-secondary text-white',
-    secondary: 'bg-gradient-to-r from-primary to-secondary text-white',
-    danger: 'bg-gradient-to-r from-primary to-secondary text-white',
+    primary: 'bg-gradient-to-r from-primary to-secondary text-white ',
+    secondary: 'bg-gradient-to-r from-primary to-secondary text-white ',
+    danger: 'bg-gradient-to-r from-primary to-secondary text-white ',
   };
 
   return (
