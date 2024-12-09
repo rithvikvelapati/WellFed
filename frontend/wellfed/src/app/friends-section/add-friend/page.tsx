@@ -64,104 +64,105 @@ const AddFriendsPage: React.FC = () => {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-50 bg-white overflow-y-auto"
+        className="fixed inset-0 z-50 bg-white overflow-y-auto flex flex-col"
         variants={modalVariants}
         initial="initial"
         animate="animate"
         exit="exit"
       >
-        {/* Top Bar with Back*/}
-        <div className="absolute top-10 left-0 right-0 flex justify-between items-center px-4">
+        {/* Header: Back Arrow and Title */}
+        <div className="mt-10 flex items-center justify-between px-4 py-2 bg-white shadow-md">
+          {/* Back Arrow */}
           <button
             onClick={handleClose}
             className="p-2 focus:outline-none"
-            aria-label="Close Filter Modal"
+            aria-label="Close Add Friends Modal"
           >
             <IoIosArrowBack className="text-2xl text-slate-900" />
           </button>
+
+          {/* Title */}
+          <h1 className="text-2xl font-bold text-gray-800">Add Friends</h1>
+
+          {/* Placeholder to balance the flex layout */}
+          <div className="w-8"></div>
         </div>
-          <h1 className="absolute top-7 left-1/2 transform -translate-x-1/2 text-2xl font-bold my-4">Add Friends</h1>
-        <div className="mt-16 pt-4 pl-4 pb-10">
-          {/* Action Buttons */}
-          <div className="flex justify-around p-4 bg-white">
-            {/* Share Button */}
-            <div className="flex flex-col items-center">
-              <Button variant="secondary" className="rounded-full p-3">
-                <IoMdShare className="h-6 w-6" />
-              </Button>
-              <span className="mt-2 text-sm text-gray-700">Share</span>
-            </div>
 
-            {/* Copy Link Button */}
-            <div className="flex flex-col items-center">
-              <Button variant="secondary" className="rounded-full p-3">
-                <IoMdCopy className="h-6 w-6" />
-              </Button>
-              <span className="mt-2 text-sm text-gray-700">Copy Link</span>
-            </div>
-
-            {/* Messages Button */}
-            <div className="flex flex-col items-center">
-              <Button variant="secondary" className="rounded-full p-3">
-                <IoMdChatboxes className="h-6 w-6" />
-              </Button>
-              <span className="mt-2 text-sm text-gray-700">Messages</span>
-            </div>
-
-            {/* Facebook Button */}
-            <div className="flex flex-col items-center">
-              <Button variant="secondary" className="rounded-full p-3">
-                <IoLogoFacebook className="h-6 w-6" />
-              </Button>
-              <span className="mt-2 text-sm text-gray-700">Facebook</span>
-            </div>
-
-            {/* More Button */}
-            <div className="flex flex-col items-center">
-              <Button variant="secondary" className="rounded-full p-3">
-                <IoMdMore className="h-6 w-6" />
-              </Button>
-              <span className="mt-2 text-sm text-gray-700">More</span>
-            </div>
+        {/* Action Buttons: Share, Copy Link, Messages, Facebook, More */}
+        <div className="flex justify-around p-2 bg-white">
+          {/* Share Button */}
+          <div className="flex flex-col items-center">
+            <Button variant="secondary" className="bg-slate-800 text-slate-300 rounded-full p-3">
+              <IoMdShare className="h-6 w-6" />
+            </Button>
+            <span className="mt-2 text-sm text-gray-700">Share</span>
           </div>
 
-           {/* Search by Username Button */}
-          <div className="px-4">
-            <Link href="/username-search">
+          {/* Copy Link Button */}
+          <div className="flex flex-col items-center">
+            <Button variant="secondary" className="bg-slate-800 text-slate-300 rounded-full p-3">
+              <IoMdCopy className="h-6 w-6" />
+            </Button>
+            <span className="mt-2 text-sm text-gray-700">Copy Link</span>
+          </div>
+
+          {/* Messages Button */}
+          <div className="flex flex-col items-center">
+            <Button variant="secondary" className="bg-slate-800 text-slate-300 rounded-full p-3">
+              <IoMdChatboxes className="h-6 w-6" />
+            </Button>
+            <span className="mt-2 text-sm text-gray-700">Messages</span>
+          </div>
+
+          {/* Facebook Button */}
+          <div className="flex flex-col items-center">
+            <Button variant="secondary" className="bg-slate-800 text-slate-300 rounded-full p-3">
+              <IoLogoFacebook className="h-6 w-6" />
+            </Button>
+            <span className="mt-2 text-sm text-gray-700">Facebook</span>
+          </div>
+
+          {/* More Button */}
+          <div className="flex flex-col items-center">
+            <Button variant="secondary" className="bg-slate-800 text-slate-300 rounded-full p-3">
+              <IoMdMore className="h-6 w-6" />
+            </Button>
+            <span className="mt-2 text-sm text-gray-700">More</span>
+          </div>
+        </div>
+
+        {/* Search by Username Button */}
+        <div className="px-4 py-2">
+          <Link href="/username-search">
               <Button
                 variant="primary"
-                className="w-full flex justify-between items-center px-6 py-3 text-left"
+                className="bg-third/15 w-full flex justify-between items-center px-6 py-1 text-left rounded-2xl"
               >
                 <span className="text-lg text-gray-800">
                   @ Search by Username
                 </span>
                 <IoIosArrowForward className="h-6 w-6 text-slate-900" />
               </Button>
-            </Link>
-          </div>
+          </Link>
         </div>
 
         {/* Sync Contacts Section */}
-        <div className="flex-grow">
-          <div className="bg-third/25 h-full w-auto rounded-t-3xl p-4 flex flex-col items-center justify-center">
-            <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-2xl font-semibold text-gray-800 text-center">
-                Sync your contacts and Find your Friends
-              </h2>
-              <Button variant="primary" className="mt-6 w-full">
-                Allow
-              </Button>
-            </div>
-        {/* Allow Contacts Toggle */}
-        <div className="flex justify-center items-end mt-2">
-          <span className="text-lg text-gray-800">
-            Allow Contacts to find me
-          </span>
-          <ToggleSwitch isEnabled={isContactsAllowed} toggle={toggleContacts} />
-        </div>
+        <div className="flex-grow bg-third/15 rounded-t-3xl flex flex-col justify-center items-center p-4">
+          <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-2xl font-semibold text-gray-800 text-center">
+              Sync your contacts and Find your Friends
+            </h2>
+            <Button variant="primary" className="p-1 mt-6 w-full bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl shadow-md">
+              Allow
+            </Button>
           </div>
         </div>
 
+        {/* Allow Contacts Toggle: Sticks to the Bottom */}
+        <div className="p-4 bg-third/15 shadow-md flex justify-between items-center">
+          <span className="text-lg text-slate-900 font-medium">Allow Contacts to find me</span>
+          <ToggleSwitch isEnabled={isContactsAllowed} toggle={toggleContacts} />
+        </div>
       </motion.div>
     </AnimatePresence>
   );
