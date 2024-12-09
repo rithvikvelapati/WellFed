@@ -68,7 +68,7 @@ const FriendsPage: React.FC = () => {
       // Set error message for this request
       setErrorRequests((prev) => ({
         ...prev,
-        [requestId]: error || "Failed to accept friend request."
+        [requestId]: error || "Failed to accept friend request.",
       }));
     } finally {
       // Reset loading state for this request
@@ -85,11 +85,12 @@ const FriendsPage: React.FC = () => {
     try {
       // Dispatch the rejectFriendRequest thunk
       await dispatch(rejectFriendRequest(requestId)).unwrap();
+      await dispatch(rejectFriendRequest(requestId)).unwrap();
     } catch (error: any) {
       // Set error message for this request
       setErrorRequests((prev) => ({
         ...prev,
-        [requestId]: error || "Failed to reject friend request."
+        [requestId]: error || "Failed to reject friend request.",
       }));
     } finally {
       // Reset loading state for this request
@@ -164,7 +165,6 @@ const FriendsPage: React.FC = () => {
             <p className="text-gray-700">You have no friends yet.</p>
           )}
         </div>
-
         {/* Pending Friend Requests Section */}
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-semibold mb-4">

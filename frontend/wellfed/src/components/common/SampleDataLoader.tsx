@@ -25,6 +25,8 @@ const SampleDataLoader: React.FC = () => {
     // Sample Pending Friend Requests
     const pendingFriendRequests = [
       { id: '3', name: 'Charlie', avatar: '/avatars/Avatar3.png' },
+      { id: '2', name: 'Bob', avatar: '/avatars/Avatar2.png'},
+      { id: '1', name: 'Alice', avatar: '/avatars/Avatar1.png'},
     ];
 
     dispatch(setUsers(users));

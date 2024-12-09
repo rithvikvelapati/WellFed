@@ -134,10 +134,10 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
         <div className="container flex items-center">
           <span className="mr-0.5 font-semibold">{recipe?.rating}</span>
           <FaStar className="text-[#EC9556]" />
-          <span className="ml-0.5">({recipe?.reviewsCount})</span>
+          <span className="ml-0.5">({recipe?.reviewsCount || 0})</span>
           <span className="mx-0.5">•</span>
           <FaClock className="mr-0.5" />
-          <span className="ml-0.5">{recipe?.time}</span>
+          <span className="ml-0.5">{recipe?.totalTime} mins</span>
         </div>
       </div>
 

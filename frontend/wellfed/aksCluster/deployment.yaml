@@ -1,48 +1,48 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps/v1  # Specifies the API version for Deployment resources.
+kind: Deployment  # Defines this resource as a Deployment.
 metadata:
-  name: wellfed-deploy
-  namespace: wellfed-frontend  # Corrected namespace
+  name: wellfed-deploy  # Name of the deployment.
+  namespace: wellfed-frontend  # Namespace to which this deployment belongs.
   labels:
-    app: wellfed-deploy
+    app: wellfed-deploy  # Labels to identify and group resources.
 spec:
-  replicas: 1
+  replicas: 1  # Number of desired pod replicas.
   selector:
     matchLabels:
-      app: wellfed-deploy
+      app: wellfed-deploy  # Ensures the deployment matches pods with this label.
   template:
     metadata:
       labels:
-        app: wellfed-deploy  # Updated to match the service selector
+        app: wellfed-deploy  # Labels for the pods created by this deployment.
     spec:
       containers:
-      - name: wellfed-frontend
-        image: wellfeddev.azurecr.io/wellfed-frontend:0.0.2
+      - name: wellfed-frontend  # Name of the container.
+        image: wellfeddev.azurecr.io/wellfed-frontend:0.0.5  # Container image with version tag.
         ports:
-        - containerPort: 3000
-        env:
+        - containerPort: 3000  # Port exposed by the container.
+        env:  # Environment variables for the container.
         - name: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
           valueFrom:
             secretKeyRef:
-              name: wellfed-secrets
-              key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+              name: wellfed-secrets  # Secret reference name.
+              key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY  # Key inside the secret.
         - name: CLERK_SECRET_KEY
           valueFrom:
             secretKeyRef:
-              name: wellfed-secrets
-              key: CLERK_SECRET_KEY
+              name: wellfed-secrets  # Secret reference name.
+              key: CLERK_SECRET_KEY  # Key inside the secret.
         - name: NODE_ENV
-          value: "production"
+          value: "production"  # Sets the environment to production.
         - name: PORT
-          value: "3000"
+          value: "3000"  # Application listens on this port.
         - name: NEXT_PUBLIC_API_URL
-          value: "http://48.217.198.29"  # Updated to use the correct URL
-        resources:
+          value: "http://48.217.198.29"  # Public API URL for the application.
+        resources:  # Resource requests and limits for the container.
           requests:
-            memory: "256Mi"
-            cpu: "250m"
+            memory: "256Mi"  # Minimum memory required.
+            cpu: "250m"  # Minimum CPU required.
           limits:
-            memory: "512Mi"
-            cpu: "500m"
+            memory: "512Mi"  # Maximum memory allowed.
+            cpu: "500m"  # Maximum CPU allowed.
       imagePullSecrets:
-      - name: acr-secret
+      - name: acr-secret  # Secret for pulling images from the Azure Container Registry.
