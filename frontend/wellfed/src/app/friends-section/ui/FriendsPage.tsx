@@ -99,7 +99,7 @@ const FriendsPage: React.FC = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-1">
       {/* Add Friends Button */}
       <div className="flex justify-center mb-4">
         <Link href="/friends-section/add-friend">
@@ -117,8 +117,8 @@ const FriendsPage: React.FC = () => {
       {/* Sections */}
       <div className="space-y-4">
         {/* Online Users Section */}
-        <div className="bg-white shadow-md rounded-lg p-4">
-          <h2 className="text-2xl font-semibold mb-4">Online Friends</h2>
+        <div className="bg-white shadow-md rounded-lg p-2">
+          <h2 className="text-xl font-semibold mb-4">Online Friends</h2>
           {onlineFriends.length > 0 ? (
             <div className="flex space-x-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory">
               {onlineFriends.map((friend) => (
@@ -142,8 +142,8 @@ const FriendsPage: React.FC = () => {
           )}
         </div>
         {/* All Friends Section */}
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-2xl font-semibold mb-4">All Friends</h2>
+        <div className="bg-white shadow-md rounded-lg p-2">
+          <h2 className="text-xl font-semibold mb-4">All Friends</h2>
           {allFriends.length > 0 ? (
             <div className="flex space-x-4 overflow-x-auto scrollbar-hide">
               {allFriends.map((friend) => (
@@ -166,16 +166,16 @@ const FriendsPage: React.FC = () => {
           )}
         </div>
         {/* Pending Friend Requests Section */}
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-2xl font-semibold mb-4">
+        <div className="bg-white shadow-md rounded-lg p-2">
+          <h2 className="text-xl font-semibold mb-4">
             Pending Friend Requests
           </h2>
           {pendingFriendRequests.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-2">
               {pendingFriendRequests.map((request) => (
                 <div
                   key={request.id}
-                  className="flex sm:flex-row items-center sm:items-start space-y-2 sm:space-y-0 sm:space-x-4 p-4 border rounded-lg"
+                  className="flex sm:flex-row items-center sm:items-start space-y-2 sm:space-y-0 sm:space-x-4 p-4 shadow-md rounded-lg"
                 >
                   <Image
                     src={request.avatar}
@@ -227,7 +227,7 @@ const FriendsPage: React.FC = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex justify-center items-center bg-gradient-to-r from-primary to-secondary text-white w-full max-w-md py-2 px-4 rounded-2xl text-lg font-medium shadow-md transition duration-200"
+              className="mb-2 flex justify-center items-center bg-gradient-to-r from-primary to-secondary text-white w-full max-w-md py-2 px-4 rounded-2xl text-lg font-medium shadow-md transition duration-200"
             >
               <ImBlocked className="mr-2 h-6 w-6" />
               Blocked Users
