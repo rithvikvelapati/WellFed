@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -16,8 +17,13 @@ import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { IoIosArrowBack } from "react-icons/io";
-import { useDispatch } from "react-redux";
-import { setModalOpen } from "@/store/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setModalOpen, setInviteModalOpen } from "@/store/modalSlice";
+import AddRecipePopup from "./AddRecipePopup";
+import InviteModal from "@/components/EditEvent/InviteModal";
+import { Recipe } from "@/constants";
+import { RiDeleteBinFill } from "react-icons/ri";
+import { RootState } from "@/store/store";
 
 // Helper function to generate time slots
 const generateTimeSlots = (interval: number) => {
@@ -28,9 +34,8 @@ const generateTimeSlots = (interval: number) => {
   for (let i = start; i < end; i += interval) {
     const hours = Math.floor(i / 60);
     const minutes = i % 60;
-    const timeString = `${hours % 12 === 0 ? 12 : hours % 12}:${
-      minutes === 0 ? "00" : minutes
-    } ${hours >= 12 ? "PM" : "AM"}`;
+    const timeString = `${hours % 12 === 0 ? 12 : hours % 12}:${minutes === 0 ? "00" : minutes
+      } ${hours >= 12 ? "PM" : "AM"}`;
     times.push(timeString);
   }
 
@@ -41,10 +46,15 @@ const AddEvent: React.FC = () => {
   const router = useRouter();
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedRecipes, setSelectedRecipes] = useState<Recipe[]>([]); // State to store selected recipes
   const [startTime, setStartTime] = useState("09:00 AM");
   const [endTime, setEndTime] = useState("12:00 PM");
   const [notes, setNotes] = useState("");
   const dispatch = useDispatch();
+
+  const isInviteModalOpen = useSelector(
+    (state: RootState) => state.modal.isInviteModalOpen
+  );
 
   // Set modal open state to true when component mounts
   useEffect(() => {
@@ -54,7 +64,6 @@ const AddEvent: React.FC = () => {
     };
   }, [dispatch]);
 
-  // Animation variants for sliding in from left to right
   const modalVariants = {
     initial: {
       x: "-100vw", // Start from the left
@@ -76,7 +85,6 @@ const AddEvent: React.FC = () => {
     router.push("/calendar-section"); // Navigate back to the previous page
   };
 
-  // Generate array of days for the current month
   const daysInMonth = eachDayOfInterval({
     start: startOfMonth(currentMonth),
     end: endOfMonth(currentMonth),
@@ -90,7 +98,6 @@ const AddEvent: React.FC = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
 
-  // Handle month change from dropdown
   const handleMonthChange = (event: SelectChangeEvent<number>) => {
     const newMonth = Number(event.target.value) - 1; // Convert to 0-based month index
     setCurrentMonth(setMonth(currentMonth, newMonth));
@@ -100,13 +107,21 @@ const AddEvent: React.FC = () => {
     setSelectedDate(day);
   };
 
-  // Generate time slots for every 30 minutes
   const timeSlots = generateTimeSlots(30);
 
-  // Navigate to meal details page on `+` button click
-  const handleAddToMealDetails = () => {
+  const handleInviteModalOpen = () => {
+    dispatch(setInviteModalOpen(true));
+  };
+
+  const handleInviteModalClose = () => {
+    dispatch(setInviteModalOpen(false));
+  };
+
+  const handleAddAttendeesDetails = () => {
     router.push("/calendar-section/meal-details");
   };
+
+  const [isRecipePopupOpen, setRecipePopupOpen] = useState(false);
 
   return (
     <AnimatePresence>
@@ -139,9 +154,8 @@ const AddEvent: React.FC = () => {
                 New Event
               </button>
             </div>
-
-            {/* Month Selector */}
             <div className="rounded-t-[2.5rem] shadow-[0px_0px_15px_5px_#dcdcdc] p-6">
+              {/* Month Selector */}
               <div className="flex justify-between items-center mb-4">
                 <p className="font-semibold text-xl">Date</p>
                 <Select
@@ -180,7 +194,6 @@ const AddEvent: React.FC = () => {
                 {/* Date Slider */}
                 <div className="overflow-x-auto">
                   <div className="flex space-x-4">
-                    {/* Weekdays */}
                     {daysInMonth.map((day) => (
                       <div
                         key={day.toISOString()}
@@ -196,8 +209,7 @@ const AddEvent: React.FC = () => {
                           }`}
                         >
                           {format(day, "EEE")}
-                        </span>{" "}
-                        {/* Weekday */}
+                        </span>
                         <button
                           className={`py-2.5 px-2.5 rounded-b-full min-w-[40px] ${
                             selectedDate &&
@@ -208,7 +220,7 @@ const AddEvent: React.FC = () => {
                           }`}
                           onClick={() => handleDateChange(day)}
                         >
-                          {format(day, "dd")} {/* Day */}
+                          {format(day, "dd")}
                         </button>
                       </div>
                     ))}
@@ -246,21 +258,43 @@ const AddEvent: React.FC = () => {
                 </div>
               </div>
 
-              {/* Attendees Section */}
+              {/* Add Recipe Section */}
               <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2">
-                  Add Recipe and Attendees
-                </h2>
+                <h2 className="text-lg font-semibold mb-2">Add Recipe</h2>
+                {selectedRecipes.map((recipe) => (
+                  <div
+                    key={recipe._id}
+                    className="pt-6 rounded-lg flex justify-between items-center mb-4"
+                  >
+                    <div className="flex items-center">
+                      <div className="w-16 h-16 bg-gray-300 rounded-lg flex items-center justify-center mr-4">
+                        <img
+                          src={`https://wellfedpics.blob.core.windows.net/recipie-images/${recipe.recipeId}-recipe.jpeg`}
+                          alt={recipe.title}
+                          className="w-full h-full rounded-lg object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-md">{recipe.title}</h3>
+                      </div>
+                    </div>
+                    <button
+                      className="text-[#B64B29] text-2xl"
+                      onClick={() =>
+                        setSelectedRecipes((prev) =>
+                          prev.filter((r) => r._id !== recipe._id)
+                        )
+                      }
+                    >
+                      <RiDeleteBinFill />
+                    </button>
+                  </div>
+                ))}
                 <button
                   className="flex items-center justify-center w-9 h-9 bg-slate-100 rounded-full text-xl font-black text-slate-600 shadow-md"
-                  onClick={handleAddToMealDetails}
+                  onClick={() => setRecipePopupOpen(true)}
                 >
                   +
-                </button>
-                <button
-                  className="mt-3 flex items-center justify-center w-full py-2 px-4 bg-slate-100 text-primary font-semibold rounded-xl shadow-md"
-                >
-                  <HiMiniUserGroup className="mr-2" /> Add Family
                 </button>
               </div>
 
@@ -276,18 +310,41 @@ const AddEvent: React.FC = () => {
                 />
               </div>
 
-              {/* Add to Calendar Button */}
-              <div className="mb-4">
+              {/* Add Attendees Section */}
+              <div className="mb-6">
+                <h2 className="text-lg font-semibold mb-2">Add Attendees</h2>
                 <button
-                  className="mt-2 flex items-center justify-center w-full py-2 px-4 bg-slate-100 text-primary font-semibold rounded-xl shadow-md"
+                  className="flex items-center justify-center w-9 h-9 bg-slate-100 rounded-full text-xl font-black text-slate-600 shadow-md"
+                  onClick={handleInviteModalOpen}
                 >
-                  <FaCalendarDay className="mr-2" /> Add to Calendar
+                  +
+                </button>
+                <button
+                  className="mt-3 flex items-center justify-center w-full py-2 px-4 bg-slate-100 text-primary font-semibold rounded-xl shadow-md"
+                >
+                  <HiMiniUserGroup className="mr-2" /> Add Family
+                </button>
+                <button
+                  className="mt-6 w-full py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-xl flex items-center justify-center shadow-md"
+                  onClick={handleAddAttendeesDetails}
+                >
+                  Finalize Things
                 </button>
               </div>
             </div>
           </div>
         </div>
       </motion.div>
+      {isRecipePopupOpen && (
+        <AddRecipePopup
+          onClose={() => setRecipePopupOpen(false)}
+          onRecipeSelect={(recipes) => setSelectedRecipes(recipes)}
+        />
+      )}
+      <InviteModal
+        isInviteModalOpen={isInviteModalOpen}
+        handleModalClose={handleInviteModalClose}
+      />
     </AnimatePresence>
   );
 };
