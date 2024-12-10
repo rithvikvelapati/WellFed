@@ -13,7 +13,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ isEnabled, toggle }) => {
     <span
       onClick={toggle}
       className={`${
-        isEnabled ? "bg-gradient-to-r from-primary to-secondary" : "bg-gradient-to-r from-secondary to-primary"
+        isEnabled ? "bg-gradient-to-r from-primary to-secondary" : "bg-slate-300"
       } relative inline-flex items-center h-6 rounded-full w-11 cursor-pointer transition-colors duration-200`}
     >
       <span
