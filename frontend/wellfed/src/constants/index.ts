@@ -431,6 +431,7 @@ export const reviews = [
 ];
 
 export interface Recipe {
+  image: string;
   id: number;
   recipeId: number;
   category: string;

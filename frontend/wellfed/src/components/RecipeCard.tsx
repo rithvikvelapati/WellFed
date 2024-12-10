@@ -29,6 +29,8 @@ interface RecipeCardProps {
   onToggleFavorite: (id: Recipe) => void;
   onToggleBookmark: (id: number) => void;
   className?: string;
+  size?: "extra-small" | "small" | "default"; // Size options
+  onRemove?: () => void; // Optional remove button handler
 }
 
 const RecipeCard: React.FC<RecipeCardProps> = ({
@@ -36,6 +38,8 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
   savedRecipesData,
   onToggleFavorite,
   onToggleBookmark,
+  size = "default",
+  onRemove,
 }) => {
   if (!recipe) return null; // Safeguard if recipe is undefined
 
@@ -48,15 +52,25 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
     }
   };
 
+  // Determine size-specific class names
+  const cardSizeClass =
+    size === "extra-small"
+      ? "w-[100px] h-[110px]"
+      : size === "small"
+      ? "w-[140px] h-[150px]"
+      : "w-[180px] h-[178px]";
+  const imageHeight = size === "extra-small" ? "h-[80px]" : "h-[131px]";
+  const textSizeClass = size === "extra-small" ? "text-[10px]" : "text-[12px]";
+
   return (
     <div
-      className="relative inline-block flex-shrink-0 w-[180px] h-[178px] bg-white rounded-lg overflow-hidden shadow-md"
+      className={`relative inline-block flex-shrink-0 ${cardSizeClass} bg-white rounded-lg overflow-hidden shadow-md`}
       tabIndex={0}
       onFocus={handleFocus}
       onBlur={handleBlur}
     >
       {/* Recipe Image */}
-      <div className="relative w-full h-[131px]">
+      <div className={`relative w-full ${imageHeight}`}>
         <Link href={`/recipe-card/${recipe?._id}`} className="w-full h-full">
           <Image
             src={`https://wellfedpics.blob.core.windows.net/recipie-images/${recipe.recipeId}-recipe.jpeg`}
@@ -64,8 +78,6 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
             fill
             className="w-full h-full object-cover"
           />
-
-
         </Link>
 
         {/* Gradient Overlay */}
@@ -83,12 +95,23 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
           className="absolute top-1 right-0 text-lg text-[#EC9556] hover:text-[#e8773c] mr-0.5"
           aria-label={recipe?.bookmarked ? "Remove Bookmark" : "Add Bookmark"}
         >
-          {recipe?.bookmarked ? (
-            <FaBookmark className="drop-shadow-[0_0_5px_rgba(0,0,0,1)]" />
-          ) : (
-            <FaRegBookmark className="drop-shadow-[0_0_5px_rgba(0,0,0,1)]" />
-          )}
+          {recipe?.bookmarked ? <FaBookmark /> : <FaRegBookmark />}
         </button>
+
+        {/* Remove Button */}
+        {onRemove && (
+          <button
+            className="absolute top-1 left-1 text-red-500 text-sm"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onRemove();
+            }}
+            aria-label="Remove Recipe"
+          >
+            ✕
+          </button>
+        )}
       </div>
 
       {/* Recipe Details */}
@@ -100,17 +123,16 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
               {recipe?.title && recipe.title.length > 15 ? (
                 <AutoScrollText
                   text={recipe.title}
-                  className="text-[12px] leading-tight"
+                  className={`${textSizeClass} leading-tight`}
                   isFocused={isFocused}
                 />
               ) : (
-                <span className="text-[12px] leading-tight">
-                  {recipe?.title || 'Untitled Recipe'}
+                <span className={`${textSizeClass} leading-tight`}>
+                  {recipe?.title || "Untitled Recipe"}
                 </span>
               )}
             </Link>
           </div>
-
 
           {/* Favorite Button */}
           <button
@@ -130,7 +152,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
       </div>
 
       {/* Rating, Reviews, and Time */}
-      <div className="flex flex-shrink w-full items-center text-[10px] mx-1">
+      <div className={`flex flex-shrink w-full items-center text-[10px] mx-1`}>
         <div className="container flex items-center">
           <span className="mr-0.5 font-semibold">{recipe?.rating}</span>
           <FaStar className="text-[#EC9556]" />
@@ -142,7 +164,9 @@ const RecipeCard: React.FC<RecipeCardProps> = ({
       </div>
 
       {/* Chef Handle */}
-      <div className="flex justify-end items-center text-[10px] font-semibold leading-tight mr-0.5">
+      <div
+        className={`flex justify-end items-center ${textSizeClass} font-semibold leading-tight mr-0.5`}
+      >
         <div className="w-[65%]">
           {recipe?.handle?.length > 15 ? (
             <AutoScrollText
