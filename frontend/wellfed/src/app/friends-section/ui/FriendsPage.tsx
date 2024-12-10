@@ -101,7 +101,7 @@ const FriendsPage: React.FC = () => {
   return (
     <div className="p-4">
       {/* Add Friends Button */}
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-4">
         <Link href="/friends-section/add-friend">
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -115,20 +115,21 @@ const FriendsPage: React.FC = () => {
       </div>
 
       {/* Sections */}
-      <div className="space-y-6">
+      <div className="space-y-4">
         {/* Online Users Section */}
-        <div className="bg-white shadow-md rounded-lg p-6">
+        <div className="bg-white shadow-md rounded-lg p-4">
           <h2 className="text-2xl font-semibold mb-4">Online Friends</h2>
           {onlineFriends.length > 0 ? (
-            <div className="flex space-x-4 overflow-x-auto">
+            <div className="flex space-x-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory">
               {onlineFriends.map((friend) => (
-                <div key={friend.id} className="flex flex-col items-center">
+                <div key={friend.id} className="flex-shrink-0 flex flex-col items-center snap-start hover:scale-105 transition-transform duration-200">
                   <Image
                     src={friend.avatar}
                     alt={friend.name}
-                    className="w-16 h-16 rounded-full"
-                    width={64}
-                    height={64}
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover"
+                    width={80}
+                    height={80}
+                    loading='lazy'
                   />
                   <p className="mt-2 text-center text-gray-800">
                     {friend.name}
@@ -140,18 +141,17 @@ const FriendsPage: React.FC = () => {
             <p className="text-gray-700">No friends are currently online.</p>
           )}
         </div>
-
         {/* All Friends Section */}
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-2xl font-semibold mb-4">All Friends</h2>
           {allFriends.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            <div className="flex space-x-4 overflow-x-auto scrollbar-hide">
               {allFriends.map((friend) => (
-                <div key={friend.id} className="flex flex-col items-center">
+                <div key={friend.id} className="flex-shrink-0 flex flex-col items-center">
                   <Image
                     src={friend.avatar}
                     alt={friend.name}
-                    className="w-16 h-16 rounded-full"
+                    className="w-16 h-16 rounded-full object-cover"
                     width={64}
                     height={64}
                   />
