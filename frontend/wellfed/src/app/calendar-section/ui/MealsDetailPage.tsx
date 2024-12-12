@@ -1,3 +1,5 @@
+// components/MealDetailsPage.tsx
+
 "use client";
 
 import React, { useEffect } from "react";
@@ -17,12 +19,12 @@ import {
   setInviteModalOpen,
 } from "@/store/modalSlice";
 import { RootState } from "@/store/store";
-import { Recipe } from "@/constants"; // Import your Recipe interface
 
 const MealDetailsPage: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  // Use Redux to track modal states
   const isModalOpen = useSelector(
     (state: RootState) => state.modal.isModalOpen
   );
@@ -33,27 +35,15 @@ const MealDetailsPage: React.FC = () => {
     (state: RootState) => state.modal.isInviteModalOpen
   );
 
-  const [reminderTime, setReminderTime] = React.useState("15 minutes before");
-  const [recipes, setRecipes] = React.useState<Recipe[]>([]);
-  const [selectedRecipes, setSelectedRecipes] = React.useState<Recipe[]>([]);
-  const [isRecipeModalOpen, setRecipeModalOpen] = React.useState(false);
-
   const people = [
     { name: "John Doe", avatar: "/Profile1.svg" },
     { name: "Jane Doe", avatar: "/Profile2.svg" },
     { name: "Amanda Lockwood", avatar: "/Profile3.svg" },
   ];
 
-  // Fetch recipes
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      const response = await fetch("/api/recipes"); // Adjust endpoint
-      const data: Recipe[] = await response.json();
-      setRecipes(data);
-    };
-    fetchRecipes();
-  }, []);
+  const [reminderTime, setReminderTime] = React.useState("15 minutes before");
 
+  // Set main modal open state when component mounts
   useEffect(() => {
     dispatch(setModalOpen(true));
     return () => {
@@ -61,33 +51,54 @@ const MealDetailsPage: React.FC = () => {
     };
   }, [dispatch]);
 
+  // Animation variants for sliding in from left to right
   const modalVariants = {
     initial: {
-      x: "-100vw",
+      x: "-100vw", // Start from the left
       opacity: 0,
     },
     animate: {
-      x: 0,
+      x: 0, // Slide to the center
       opacity: 1,
       transition: { type: "tween", duration: 0.5 },
     },
     exit: {
-      x: "100vw",
+      x: "100vw", // Slide out to the right
       opacity: 0,
       transition: { type: "tween", duration: 0.5 },
     },
   };
 
-  const handleReminderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setReminderTime(e.target.value);
+  const handleClose = () => {
+    dispatch(setModalOpen(false));
+    router.push("/calendar-section");
   };
 
   const handleBack = () => {
-    router.back();
+    router.back(); // Navigate back to the previous page
+  };
+
+  const handleReminderChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setReminderTime(e.target.value);
+  };
+
+  const handleEditDetailsModalClose = () => {
+    dispatch(setEditDetailsModalOpen(false));
+  };
+
+  const handleInviteModalOpen = () => {
+    dispatch(setInviteModalOpen(true));
+  };
+
+  const handleInviteModalClose = () => {
+    dispatch(setInviteModalOpen(false));
   };
 
   return (
     <>
+      {/* Main Modal */}
       <AnimatePresence>
         <motion.div
           className="fixed inset-0 z-50 bg-white h-screen w-auto overflow-y-auto"
@@ -96,6 +107,7 @@ const MealDetailsPage: React.FC = () => {
           animate="animate"
           exit="exit"
         >
+          {/* Back Button */}
           <div className="flex gap-16 pl-2 pt-4">
             <button
               onClick={handleBack}
@@ -105,7 +117,9 @@ const MealDetailsPage: React.FC = () => {
               <IoIosArrowBack className="text-2xl text-slate-700" />
             </button>
             <div className="my-4">
-              <h2 className="text-3xl font-semibold mt-5 mb-2">Wednesday</h2>
+              <h2 className="text-3xl font-semibold mt-5 mb-2">
+                Wednesday
+              </h2>
               <p className="text-xl">
                 28 September 2024{" "}
                 <FaChevronDown className="inline ml-2 text-sm" />
@@ -113,68 +127,37 @@ const MealDetailsPage: React.FC = () => {
             </div>
           </div>
 
+          {/* Meal Details */}
           <div className="h-screen rounded-t-[2.5rem] shadow-md p-2 mt-4 z-50">
-            <div>
-              {selectedRecipes.map((recipe) => (
-                <div
-                  key={recipe.id}
-                  className="flex justify-between items-center mb-4"
-                >
-                  <div className="flex items-center">
-                    <div className="w-16 h-16 bg-gray-300 rounded-lg flex items-center justify-center mr-4">
-                      <Image
-                        src={recipe.image}
-                        alt={recipe.title}
-                        width={64}
-                        height={64}
-                      />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-md">{recipe.title}</h3>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() =>
-                      setSelectedRecipes(
-                        selectedRecipes.filter((r) => r.id !== recipe.id)
-                      )
-                    }
-                    className="text-[#B64B29] text-2xl"
-                  >
-                    <RiDeleteBinFill />
-                  </button>
+            {/* Meal details content */}
+            <div className="pt-6 rounded-lg flex justify-between items-center mb-4">
+              <div className="flex items-center">
+                <div className="w-16 h-16 bg-gray-300 rounded-lg flex items-center justify-center mr-4">
+                  <p className="text-xs">64 x 64</p>
                 </div>
-              ))}
+                <div>
+                  <h3 className="font-bold text-md">
+                    The All-American Breakfast Muffin
+                  </h3>
+                  <p className="text-gray-600 text-sm">by Amanda Lockwood</p>
+                </div>
+              </div>
+              <button className="text-[#B64B29] text-2xl">
+                <RiDeleteBinFill />
+              </button>
             </div>
 
             <div className="flex justify-center items-center py-4 border-t border-b">
               <button
                 className="text-gray-500 text-xl flex items-center"
-                onClick={() => setRecipeModalOpen(true)}
+                onClick={() => router.push("/food-section/recipe-list")}
               >
                 <MdOutlineAddCircle className="mr-2" /> Add recipe
               </button>
             </div>
 
-            {isRecipeModalOpen && (
-              <div className="modal">
-                <ul className="bg-white shadow-lg rounded p-4">
-                  {recipes.map((recipe) => (
-                    <li
-                      key={recipe.id}
-                      className="cursor-pointer hover:bg-gray-100 p-2"
-                      onClick={() => {
-                        setSelectedRecipes([...selectedRecipes, recipe]);
-                        setRecipeModalOpen(false);
-                      }}
-                    >
-                      {recipe.title}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
 
+            {/* Reminder Section */}
             <div className="mt-6 px-6">
               <label className="block font-bold text-gray-700">Reminder</label>
               <select
@@ -189,6 +172,7 @@ const MealDetailsPage: React.FC = () => {
               </select>
             </div>
 
+            {/* Invite People Section */}
             <div className="mt-6 px-6">
               <label className="block font-bold text-gray-700">
                 Invite People
@@ -203,12 +187,14 @@ const MealDetailsPage: React.FC = () => {
                       height={40}
                       className="rounded-full"
                     />
+                    {/* Status Dot */}
                     <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-500 border border-white"></span>
                   </div>
                 ))}
+                {/* Add Profile Button */}
                 <button
                   className="w-10 h-10 flex items-center justify-center"
-                  onClick={() => dispatch(setInviteModalOpen(true))}
+                  onClick={handleInviteModalOpen}
                 >
                   <Image
                     src="/add.svg"
@@ -220,34 +206,43 @@ const MealDetailsPage: React.FC = () => {
                 </button>
               </div>
             </div>
+            
+            <div className="mt-6 px-6">
+            <label className="block font-bold text-gray-700">
+              Notes
+            </label>
+            <p className="mt-2 text-gray-500 text-sm md:text-base">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+              euismod, nunc ut laoreet venenatis, massa justo ultricies justo,
+              vel laoreet est tortor non turpis. Suspendisse potenti. Proin sit
+              amet semper urna.
+            </p>
+          </div>      
 
+            {/* Add to Calendar page */}
             <div className="flex flex-col space-y-4 mt-10 px-6">
               <button
-                className="w-full py-2 bg-slate-100 rounded-xl text-primary font-semibold shadow-md"
-                onClick={() => dispatch(setEditDetailsModalOpen(true))}
-              >
-                Edit Details
-              </button>
-              <button
                 className="w-full py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-xl flex items-center justify-center shadow-md"
-                onClick={() => router.push("/calendar-section")}
+                onClick={handleClose}
               >
-                Return to Calendar Page
-                <FaCalendarDay className="ml-3 text-xl" />
+                Add to Calendar
+                <FaCalendarDay className="ml-3 text-xl" /> {/* Add margin and adjust size */}
               </button>
             </div>
           </div>
         </motion.div>
       </AnimatePresence>
 
+      {/* EditDetailsModal */}
       <EditDetailsModal
         isEditDetailsModalOpen={isEditDetailsModalOpen}
-        handleModalClose={() => dispatch(setEditDetailsModalOpen(false))}
+        handleModalClose={handleEditDetailsModalClose}
       />
 
+      {/* InviteModal */}
       <InviteModal
         isInviteModalOpen={isInviteModalOpen}
-        handleModalClose={() => dispatch(setInviteModalOpen(false))}
+        handleModalClose={handleInviteModalClose}
       />
     </>
   );

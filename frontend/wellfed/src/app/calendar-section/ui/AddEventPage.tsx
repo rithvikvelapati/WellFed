@@ -121,6 +121,10 @@ const AddEvent: React.FC = () => {
     router.push("/calendar-section/meal-details");
   };
 
+  const handleRecipeSelect = (recipes: Recipe[]) => {
+    setSelectedRecipes(recipes); // Directly set the updated recipes list
+  };
+
   const [isRecipePopupOpen, setRecipePopupOpen] = useState(false);
 
   return (
@@ -200,24 +204,22 @@ const AddEvent: React.FC = () => {
                         className="flex flex-col items-center"
                       >
                         <span
-                          className={`py-2.5 px-1 rounded-t-full font-semibold text-center min-w-[40px] ${
-                            selectedDate &&
+                          className={`py-2.5 px-1 rounded-t-full font-semibold text-center min-w-[40px] ${selectedDate &&
                             format(selectedDate, "yyyy-MM-dd") ===
-                              format(day, "yyyy-MM-dd")
-                              ? "bg-secondary text-primary"
-                              : "text-black"
-                          }`}
+                            format(day, "yyyy-MM-dd")
+                            ? "bg-secondary text-primary"
+                            : "text-black"
+                            }`}
                         >
                           {format(day, "EEE")}
                         </span>
                         <button
-                          className={`py-2.5 px-2.5 rounded-b-full min-w-[40px] ${
-                            selectedDate &&
+                          className={`py-2.5 px-2.5 rounded-b-full min-w-[40px] ${selectedDate &&
                             format(selectedDate, "yyyy-MM-dd") ===
-                              format(day, "yyyy-MM-dd")
-                              ? "bg-secondary text-primary"
-                              : "text-gray-500"
-                          }`}
+                            format(day, "yyyy-MM-dd")
+                            ? "bg-secondary text-primary"
+                            : "text-gray-500"
+                            }`}
                           onClick={() => handleDateChange(day)}
                         >
                           {format(day, "dd")}
@@ -280,14 +282,14 @@ const AddEvent: React.FC = () => {
                     </div>
                     <button
                       className="text-[#B64B29] text-2xl"
-                      onClick={() =>
-                        setSelectedRecipes((prev) =>
-                          prev.filter((r) => r._id !== recipe._id)
-                        )
-                      }
+                      onClick={() => {
+                        const updatedRecipes = selectedRecipes.filter((r) => r._id !== recipe._id);
+                        setSelectedRecipes(updatedRecipes); // Update parent state
+                      }}
                     >
                       <RiDeleteBinFill />
                     </button>
+
                   </div>
                 ))}
                 <button
@@ -324,13 +326,18 @@ const AddEvent: React.FC = () => {
                 >
                   <HiMiniUserGroup className="mr-2" /> Add Family
                 </button>
-                <button
-                  className="mt-6 w-full py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-xl flex items-center justify-center shadow-md"
-                  onClick={handleAddAttendeesDetails}
-                >
-                  Finalize Things
-                </button>
               </div>
+              <div className="flex justify-center items-center py-4">
+  <button
+    className="bg-gradient-to-r from-primary to-secondary text-white rounded-xl text-xl flex items-center border border-gray-400 rounded-lg px-4 py-2 hover:bg-gray-100"
+    onClick={handleAddAttendeesDetails}
+  >
+    Finalize Meal
+  </button>
+</div>
+
+
+              
             </div>
           </div>
         </div>
@@ -338,9 +345,11 @@ const AddEvent: React.FC = () => {
       {isRecipePopupOpen && (
         <AddRecipePopup
           onClose={() => setRecipePopupOpen(false)}
-          onRecipeSelect={(recipes) => setSelectedRecipes(recipes)}
+          onRecipeSelect={handleRecipeSelect}
+          preSelectedRecipes={selectedRecipes} // Pass selected recipes
         />
       )}
+
       <InviteModal
         isInviteModalOpen={isInviteModalOpen}
         handleModalClose={handleInviteModalClose}

@@ -11,11 +11,15 @@ import RecipeCard from "@/components/RecipeCard";
 const AddRecipePopup: React.FC<{
   onClose: () => void;
   onRecipeSelect: (recipes: Recipe[]) => void;
-}> = ({ onClose, onRecipeSelect }) => {
+  preSelectedRecipes: Recipe[]; // Add preSelectedRecipes prop
+}> = ({ onClose, onRecipeSelect, preSelectedRecipes }) => {
+
   const [recipesData, setRecipesData] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [selectedRecipes, setSelectedRecipes] = useState<Set<Recipe>>(new Set());
+  const [selectedRecipes, setSelectedRecipes] = useState<Set<Recipe>>(
+    new Set(preSelectedRecipes) // Initialize with recipes passed from the parent
+  );
   const { isSignedIn, user } = useUser();
 
   useEffect(() => {
@@ -56,9 +60,11 @@ const AddRecipePopup: React.FC<{
       } else {
         updated.add(recipe);
       }
+      onRecipeSelect(Array.from(updated)); // Update parent state immediately
       return updated;
     });
   };
+
 
   const handleAddRecipes = () => {
     onRecipeSelect(Array.from(selectedRecipes));
@@ -104,8 +110,8 @@ const AddRecipePopup: React.FC<{
                   </button>
                   <RecipeCard
                     recipe={recipe}
-                    onToggleFavorite={() => {}}
-                    onToggleBookmark={() => {}}
+                    onToggleFavorite={() => { }}
+                    onToggleBookmark={() => { }}
                     savedRecipesData={[]}
                     size="extra-small"
                   />
@@ -138,8 +144,8 @@ const AddRecipePopup: React.FC<{
                 />
                 <RecipeCard
                   recipe={recipe}
-                  onToggleFavorite={() => {}}
-                  onToggleBookmark={() => {}}
+                  onToggleFavorite={() => { }}
+                  onToggleBookmark={() => { }}
                   savedRecipesData={[]}
                 />
               </div>
