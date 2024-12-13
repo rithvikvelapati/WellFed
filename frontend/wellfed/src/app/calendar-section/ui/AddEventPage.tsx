@@ -50,6 +50,7 @@ const AddEvent: React.FC = () => {
   const [startTime, setStartTime] = useState("09:00 AM");
   const [endTime, setEndTime] = useState("12:00 PM");
   const [notes, setNotes] = useState("");
+  const [title, setTitle] = useState("");
   const dispatch = useDispatch();
 
   const isInviteModalOpen = useSelector(
@@ -260,6 +261,19 @@ const AddEvent: React.FC = () => {
                 </div>
               </div>
 
+              {/* Title Section */}
+              <div className="mb-6">
+                <h2 className="text-lg font-semibold mb-2">Title</h2>
+                <textarea
+                  value={title} // Bind to title state
+                  onChange={(e) => setTitle(e.target.value)} // Update title state
+                  className="w-full h-10 border border-gray-300 rounded-md px-3 py-2 leading-5 placeholder-gray-500"
+                  rows={1}
+                  placeholder="Add Title..."
+                />
+              </div>
+
+
               {/* Add Recipe Section */}
               <div className="mb-6">
                 <h2 className="text-lg font-semibold mb-2">Add Recipe</h2>
@@ -328,16 +342,13 @@ const AddEvent: React.FC = () => {
                 </button>
               </div>
               <div className="flex justify-center items-center py-4">
-  <button
-    className="bg-gradient-to-r from-primary to-secondary text-white rounded-xl text-xl flex items-center border border-gray-400 rounded-lg px-4 py-2 hover:bg-gray-100"
-    onClick={handleAddAttendeesDetails}
-  >
-    Finalize Meal
-  </button>
-</div>
-
-
-              
+                <button
+                  className="bg-gradient-to-r from-primary to-secondary text-white rounded-xl text-xl flex items-center border border-gray-400 rounded-lg px-4 py-2 hover:bg-gray-100"
+                  onClick={handleAddAttendeesDetails}
+                >
+                  Finalize Meal
+                </button>
+              </div>
             </div>
           </div>
         </div>
