@@ -17,14 +17,14 @@ jobs:
       vmImage: 'ubuntu-latest'  # Executes tasks on an Ubuntu-based environment.
 
     steps:
-      /* Step 1: Install SOPS
-      - task: Bash@3
-        displayName: "Install SOPS"
-        inputs:
-          targetType: inline
-          script: |
-            sudo apt-get update
-            sudo apt-get install -y sops
+    #  Step 1: Install SOPS
+    #  - task: Bash@3
+    #    displayName: "Install SOPS"
+    #    inputs:
+    #      targetType: inline
+    #      script: |
+    #        sudo apt-get update
+    #        sudo apt-get install -y sops
 
       # Step 2: Clone the AKS-CONFIG Repository
       #- task: Bash@3
