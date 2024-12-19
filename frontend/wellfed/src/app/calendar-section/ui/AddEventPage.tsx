@@ -21,9 +21,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setModalOpen, setInviteModalOpen } from "@/store/modalSlice";
 import AddRecipePopup from "./AddRecipePopup";
 import InviteModal from "@/components/EditEvent/InviteModal";
-import { Recipe } from "@/constants";
+import { Recipe, recipeCard } from "@/constants";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { RootState } from "@/store/store";
+import { useUser } from "@clerk/nextjs";
+import { useAppState } from "@/context/AppState";
 
 // Helper function to generate time slots
 const generateTimeSlots = (interval: number) => {
@@ -52,6 +54,12 @@ const AddEvent: React.FC = () => {
   const [notes, setNotes] = useState("");
   const [title, setTitle] = useState("");
   const dispatch = useDispatch();
+  const { setSharedState, sharedState } = useAppState();
+
+  const { isSignedIn, user } = useUser();
+
+  const [isMeal, setIsMeal] = useState(true);
+
 
   const isInviteModalOpen = useSelector(
     (state: RootState) => state.modal.isInviteModalOpen
@@ -119,7 +127,26 @@ const AddEvent: React.FC = () => {
   };
 
   const handleAddAttendeesDetails = () => {
-    router.push("/calendar-section/meal-details");
+    if(isSignedIn && sharedState) {
+      const meal = {
+        title: title,
+        date: currentMonth,
+        time: {
+          start: startTime,
+          end: endTime
+        },
+        recipes: selectedRecipes?.map(recipe => recipe._id),
+        notes: notes,
+        createdBy: user.id,
+        createdAt: new Date(),
+        updatedBy: user.id,
+        updatedAt: new Date()
+      }
+      sharedState.meal = meal;
+      setSharedState({...sharedState})
+      router.push("/calendar-section/meal-details", );
+    }
+   
   };
 
   const handleRecipeSelect = (recipes: Recipe[]) => {

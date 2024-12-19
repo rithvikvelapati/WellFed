@@ -12,17 +12,23 @@ import { RiDeleteBinFill } from "react-icons/ri";
 import { MdOutlineAddCircle } from "react-icons/md";
 import EditDetailsModal from "@/components/EventCalender/EditDetailsModal";
 import InviteModal from "@/components/EditEvent/InviteModal";
-import Image from "next/image";
+import { format } from "date-fns";
+import { Recipe, recipeCard } from "@/constants";
 import {
   setModalOpen,
   setEditDetailsModalOpen,
   setInviteModalOpen,
 } from "@/store/modalSlice";
 import { RootState } from "@/store/store";
+import { useAppState } from "@/context/AppState";
+import { BASE_URL, POST_MEAL } from "@/constants/api";
 
 const MealDetailsPage: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const { setSharedState, sharedState } = useAppState();
+  const meal = sharedState?.meal;
 
   // Use Redux to track modal states
   const isModalOpen = useSelector(
@@ -69,9 +75,33 @@ const MealDetailsPage: React.FC = () => {
     },
   };
 
+  const createMeal = async () => {
+    try {
+      const profileUpdateUrl = BASE_URL + POST_MEAL;
+
+      const body = sharedState?.meal;
+
+      await fetch(profileUpdateUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+      dispatch(setModalOpen(false));
+      router.push("/calendar-section");
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
+
   const handleClose = () => {
-    dispatch(setModalOpen(false));
-    router.push("/calendar-section");
+
+
+    console.log(sharedState)
+    createMeal();
+
+
   };
 
   const handleBack = () => {
@@ -96,6 +126,10 @@ const MealDetailsPage: React.FC = () => {
     dispatch(setInviteModalOpen(false));
   };
 
+  function handleDeleteRecipe(recipeId: any): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <>
       {/* Main Modal */}
@@ -118,115 +152,72 @@ const MealDetailsPage: React.FC = () => {
             </button>
             <div className="my-4">
               <h2 className="text-3xl font-semibold mt-5 mb-2">
-                Wednesday
+                {meal?.date ? format(new Date(meal.date), "EEEE") : ""}
               </h2>
               <p className="text-xl">
-                28 September 2024{" "}
-                <FaChevronDown className="inline ml-2 text-sm" />
+                {meal?.date ? format(new Date(meal.date), "dd MMMM yyyy") : ""}
               </p>
             </div>
           </div>
 
           {/* Meal Details */}
           <div className="h-screen rounded-t-[2.5rem] shadow-md p-2 mt-4 z-50">
+            {/* Title */}
+            <h3 className="font-bold text-md px-6">{meal?.title}</h3>
+
             {/* Meal details content */}
-            <div className="pt-6 rounded-lg flex justify-between items-center mb-4">
-              <div className="flex items-center">
-                <div className="w-16 h-16 bg-gray-300 rounded-lg flex items-center justify-center mr-4">
-                  <p className="text-xs">64 x 64</p>
-                </div>
-                <div>
-                  <h3 className="font-bold text-md">
-                    The All-American Breakfast Muffin
-                  </h3>
-                  <p className="text-gray-600 text-sm">by Amanda Lockwood</p>
-                </div>
-              </div>
-              <button className="text-[#B64B29] text-2xl">
-                <RiDeleteBinFill />
-              </button>
-            </div>
-
-            <div className="flex justify-center items-center py-4 border-t border-b">
-              <button
-                className="text-gray-500 text-xl flex items-center"
-                onClick={() => router.push("/food-section/recipe-list")}
-              >
-                <MdOutlineAddCircle className="mr-2" /> Add recipe
-              </button>
-            </div>
-
-
-            {/* Reminder Section */}
-            <div className="mt-6 px-6">
-              <label className="block font-bold text-gray-700">Reminder</label>
-              <select
-                className="block py-2 mt-1 rounded-md text-gray-600 focus:ring focus:ring-orange-400 w-[170px]"
-                value={reminderTime}
-                onChange={handleReminderChange}
-              >
-                <option value="15 minutes before">15 minutes before</option>
-                <option value="30 minutes before">30 minutes before</option>
-                <option value="45 minutes before">45 minutes before</option>
-                <option value="60 minutes before">60 minutes before</option>
-              </select>
-            </div>
-
-            {/* Invite People Section */}
-            <div className="mt-6 px-6">
-              <label className="block font-bold text-gray-700">
-                Invite People
-              </label>
-              <div className="flex items-center mt-2 space-x-4">
-                {people.map((person, index) => (
-                  <div className="relative" key={index}>
-                    <Image
-                      src={person.avatar}
-                      alt={person.name}
-                      width={40}
-                      height={40}
-                      className="rounded-full"
-                    />
-                    {/* Status Dot */}
-                    <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-500 border border-white"></span>
-                  </div>
-                ))}
-                {/* Add Profile Button */}
-                <button
-                  className="w-10 h-10 flex items-center justify-center"
-                  onClick={handleInviteModalOpen}
+            {meal?.recipes?.length > 0 &&
+              meal.recipes.map((recipe: Recipe, index: number) => (
+                <div
+                  key={recipe.id || index}
+                  className="pt-6 rounded-lg flex justify-between items-center mb-4 px-6"
                 >
-                  <Image
-                    src="/add.svg"
-                    alt="Add Profile"
-                    width={40}
-                    height={40}
-                    className="rounded-full"
-                  />
-                </button>
-              </div>
-            </div>
-            
-            <div className="mt-6 px-6">
-            <label className="block font-bold text-gray-700">
-              Notes
-            </label>
-            <p className="mt-2 text-gray-500 text-sm md:text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              euismod, nunc ut laoreet venenatis, massa justo ultricies justo,
-              vel laoreet est tortor non turpis. Suspendisse potenti. Proin sit
-              amet semper urna.
-            </p>
-          </div>      
+                  {/* Recipe Image */}
+                  <div className="flex items-center">
+                    <div className="w-16 h-16 bg-gray-300 rounded-lg flex items-center justify-center mr-4">
+                      <img
+                        src={`https://wellfedpics.blob.core.windows.net/recipie-images/${recipe.recipeId}-recipe.jpeg`}
+                        alt={recipe.title || "Unnamed Recipe"}
+                        className="w-full h-full rounded-lg object-cover"
+                      />
+                    </div>
+                    {/* Recipe Title */}
+                    <div>
+                      <h3 className="font-bold text-md">{recipe.title || "Unnamed Recipe"}</h3>
+                    </div>
+                  </div>
+                  {/* Delete Button */}
+                  <button className="text-[#B64B29] text-2xl">
+                    <RiDeleteBinFill />
+                  </button>
+                </div>
+              ))}
+              
 
-            {/* Add to Calendar page */}
+            {/* Time Section */}
+            <div className="mt-6 px-6">
+              <label className="block font-bold text-gray-700">Time</label>
+              <p className="mt-2 text-gray-600">
+                {meal?.time?.start} - {meal?.time?.end}
+              </p>
+            </div>
+
+            {/* Notes Section */}
+            <div className="mt-6 px-6">
+              <label className="block font-bold text-gray-700">Notes</label>
+              <p className="mt-2 text-gray-500 text-sm md:text-base">
+                {meal?.notes}
+              </p>
+            </div>
+
+            {/* Add to Calendar */}
             <div className="flex flex-col space-y-4 mt-10 px-6">
               <button
                 className="w-full py-2 bg-gradient-to-r from-primary to-secondary text-white rounded-xl flex items-center justify-center shadow-md"
                 onClick={handleClose}
               >
                 Add to Calendar
-                <FaCalendarDay className="ml-3 text-xl" /> {/* Add margin and adjust size */}
+                <FaCalendarDay className="ml-3 text-xl" />
               </button>
             </div>
           </div>
@@ -246,6 +237,7 @@ const MealDetailsPage: React.FC = () => {
       />
     </>
   );
+
 };
 
 export default MealDetailsPage;

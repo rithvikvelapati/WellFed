@@ -1,9 +1,12 @@
+"use client";
+
 import './globals.css';
 import RootLayoutClient from '@/components/Dashboard/RootLayoutClient';
 import ReduxProvider from '../store/ReduxProvider'; // Import ReduxProvider
 import { ClerkProvider } from '@clerk/nextjs';
 import SearchModal from '@/components/SearchModal';
 import SampleDataLoader from '../components/common/SampleDataLoader';
+import { StateProvider } from '@/context/AppState';
 
 export default function RootLayout({
   children,
@@ -15,8 +18,10 @@ export default function RootLayout({
       <body>
         <ClerkProvider>
           <ReduxProvider>
-            <SampleDataLoader />
-            <RootLayoutClient>{children}</RootLayoutClient>
+            <StateProvider>
+              <SampleDataLoader />
+              <RootLayoutClient>{children}</RootLayoutClient>
+            </StateProvider>
           </ReduxProvider>
         </ClerkProvider>
       </body>
