@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: wellfed-frontend  # Name of the container.
-        image: wellfeddev.azurecr.io/wellfed-frontend:0.0.5  # Container image with version tag.
+        image: wellfeddev.azurecr.io/wellfed-frontend:0.0.6  # Container image with version tag.
         ports:
         - containerPort: 3000  # Port exposed by the container.
         env:  # Environment variables for the container.

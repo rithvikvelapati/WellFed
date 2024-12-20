@@ -9,7 +9,7 @@ parameters:
   - name: version 
     displayName: Version  # Parameter for versioning.
     type: string 
-    default: '0.0.5'  # Default version value.
+    default: '0.0.6'  # Default version value.
 
 jobs:
   - job: wellfed_frontend_CD_pipeline
