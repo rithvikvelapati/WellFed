@@ -12,6 +12,7 @@ import { RiDeleteBinFill } from "react-icons/ri";
 import { MdOutlineAddCircle } from "react-icons/md";
 import EditDetailsModal from "@/components/EventCalender/EditDetailsModal";
 import InviteModal from "@/components/EditEvent/InviteModal";
+import Image from "next/image";
 import { format } from "date-fns";
 import { Recipe, recipeCard } from "@/constants";
 import {
@@ -141,16 +142,16 @@ const MealDetailsPage: React.FC = () => {
           animate="animate"
           exit="exit"
         >
-          {/* Back Button */}
-          <div className="flex gap-16 pl-2 pt-4">
+          {/* Back Button and Date Content */}
+          <div className="flex flex-col items-center justify-center pt-4">
             <button
               onClick={handleBack}
-              className="p-2 focus:outline-none"
+              className="absolute top-4 left-4 p-2 focus:outline-none"
               aria-label="Close Modal"
             >
               <IoIosArrowBack className="text-2xl text-slate-700" />
             </button>
-            <div className="my-4">
+            <div className="text-center my-4">
               <h2 className="text-3xl font-semibold mt-5 mb-2">
                 {meal?.date ? format(new Date(meal.date), "EEEE") : ""}
               </h2>
@@ -160,10 +161,15 @@ const MealDetailsPage: React.FC = () => {
             </div>
           </div>
 
+
+
           {/* Meal Details */}
           <div className="h-screen rounded-t-[2.5rem] shadow-md p-2 mt-4 z-50">
             {/* Title */}
-            <h3 className="font-bold text-md px-6">{meal?.title}</h3>
+            <h3 className="font-bold text-2xl px-2 py-2 text-center border-t border-b border-gray-400">
+              {meal?.title}
+            </h3>
+
 
             {/* Meal details content */}
             {meal?.recipes?.length > 0 &&
@@ -192,7 +198,7 @@ const MealDetailsPage: React.FC = () => {
                   </button>
                 </div>
               ))}
-              
+
 
             {/* Time Section */}
             <div className="mt-6 px-6">
