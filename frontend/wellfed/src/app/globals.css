@@ -292,3 +292,13 @@ button.mobile-secondary-btn {
 .transition-max-height {
   transition: max-height 0.5s ease-in-out;
 }
+
+
+.fc-daygrid-event {
+  position: absolute;
+  top: -40px;
+  padding: 10px;
+  left: -15px;
+  background: transparent !important;
+  border-radius: 50%;
+}

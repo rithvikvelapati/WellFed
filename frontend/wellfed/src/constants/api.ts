@@ -11,3 +11,4 @@ export const GET_TOOLS = 'tools/recipe/';
 export const GET_NUTRITION = 'nutrition/recipe/';
 
 export const POST_MEAL = 'meals/'
+export const GET_MEALS = 'meals/user/'

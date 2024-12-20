@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -7,55 +7,70 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import { FaMapMarkerAlt, FaEdit, FaPlus } from "react-icons/fa"; // Location, Edit, and Plus icons
 import { GoClockFill } from "react-icons/go";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
+import { useUser } from "@clerk/nextjs";
+import { BASE_URL, GET_MEALS } from "@/constants/api";
 
 interface Event {
   title: string;
-  start: string;
-  description: string;
-  time: string;
+  date: string; // ISO date string
+  time: {
+    start: string; // Time in "h:mm A" format
+    end: string; // Time in "h:mm A" format
+  };
+  recipes: string[]; // Array of recipe IDs
+  notes: string;
+  createdBy: string; // User ID of the creator
+  createdAt: string; // ISO date string
+  updatedBy: string; // User ID of the last updater
+  updatedAt: string; // ISO date string
+  colorClass: string;
+  bgColor: string;
   location: string;
-  icon: string;
-  colorClass: string; // Color class for top border
-  bgColor: string;    // Background color for the card
 }
 
 const CalendarHome: React.FC = () => {
   const router = useRouter(); // Initialize Next.js router for navigation
 
-  const [events, setEvents] = useState<Event[]>([
-    {
-      title: "Sunny Grille",
-      start: "2024-09-23T09:00:00",
-      description: "Soccer Game Event",
-      time: "09:00am - 1:00pm",
-      location: "Stamford Bridge",
-      icon: "/avatar1.png",
-      colorClass: "bg-[#428F8F]", // Top border color
-      bgColor: "bg-white "     // Card background color
-    },
-    {
-      title: "Chicken Marsala And Mushrooms",
-      start: "2024-09-23T15:00:00",
-      description: "Items ordered and delivered",
-      time: "3:00pm - 4:00pm",
-      location: "Home",
-      icon: "/avatar2.png",
-      colorClass: "bg-[#EE2B00]",
-      bgColor: "bg-white"
-    },
-    {
-      title: "Coffee and Shortbread Cookies",
-      start: "2024-09-28T21:00:00",
-      description: "Family gathering",
-      time: "9:00pm - 10:00pm",
-      location: "Home",
-      icon: "/avatar3.png",
-      colorClass: "bg-[#EC9556]",
-      bgColor: "bg-white"
-    },
-  ]);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [orignalEvents, setOrignalEvents] = useState<Event[]>([]);
+
+  const [calenderEvents, setCalenderEvents] = useState<Event[]>([]);
+  const { isSignedIn, user } = useUser();
 
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      fetchMeals();
+    }
+  }, [isSignedIn, user])
+
+  const fetchMeals = async () => {
+    try {
+      const mealsUrl = BASE_URL + GET_MEALS + user?.id;
+      const response = await fetch(mealsUrl);
+      const meals = await response.json();
+      setOrignalEvents(meals)
+      const dts = getFiltedData(meals)
+
+      setEvents(dts as any)
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  }
+
+  const getFiltedData = (data: Event[], date?: Date) => {
+    const today = date || new Date();
+    const startOfDay = new Date(today.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(today.setHours(23, 59, 59, 999));
+
+    const filteredData = data.filter(item => {
+      const itemDate = new Date(item.date);
+      return itemDate >= startOfDay && itemDate <= endOfDay;
+    });
+
+    return filteredData;
+  }
 
   const handleEventClick = (info: any) => {
     const eventDetails = info.event;
@@ -64,26 +79,20 @@ const CalendarHome: React.FC = () => {
   };
 
   const handleDateSelect = (selectInfo: any) => {
-    const title = prompt("Enter Event Title");
-    const calendarApi = selectInfo.view.calendar;
-    calendarApi.unselect(); // Clear date selection
+    //  const title = prompt("Enter Event Title");
+    setCalenderEvents([{
+      title: 'Selected',
+      start: selectInfo.startStr,
+      allDay: true,
+      backgroundColor: '#ff9f89', // Highlight color
+      borderColor: '#ff9f89',
+    } as any]);
 
-    if (title) {
-      setEvents([
-        ...events,
-        {
-          title,
-          start: selectInfo.startStr,
-          description: "",
-          time: "",
-          location: "",
-          icon: "/avatar1.png",
-          colorClass: "bg-white",
-          bgColor: "bg-white"
-        },
-      ]);
-    }
+    const dts = getFiltedData(orignalEvents, selectInfo.start)
+
+    setEvents(dts as any)
   };
+
 
   return (
     <div className="container mx-auto p-0 bg-none min-h-screen rounded-xl">
@@ -91,7 +100,7 @@ const CalendarHome: React.FC = () => {
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
-          events={events}
+          events={calenderEvents}
           eventClick={handleEventClick}
           selectable={true}
           select={handleDateSelect}
@@ -136,17 +145,17 @@ const CalendarHome: React.FC = () => {
 
               <div className="flex-1">
                 <h3 className="font-semibold text-lg">{event.title}</h3>
-                <p className="text-sm text-gray-600 italic">{event.description}</p>
+                <p className="text-sm text-gray-600 italic">{event.notes}</p>
                 <div className="flex items-center mt-2">
                   {/* Time Icon */}
                   <div className="flex items-center text-sm text-blue-700 space-x-2">
                     <GoClockFill className="text-blue-700" />
-                    <span>{event.time}</span>
+                    <span>{event.time.start} - {event.time.end}</span>
                   </div>
                   {/* Location Icon */}
                   <div className="flex items-center text-sm text-gray-500 space-x-2 ml-4">
                     <FaMapMarkerAlt className="text-gray-500" />
-                    <span>{event.location}</span>
+                    <span>{event.location || 'Home'} </span>
                   </div>
                 </div>
               </div>

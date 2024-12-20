@@ -127,27 +127,27 @@ const AddEvent: React.FC = () => {
   };
 
   const handleAddAttendeesDetails = () => {
-    if(isSignedIn && sharedState) {
+    if (isSignedIn && sharedState) {
       const meal = {
         title: title,
-        date: currentMonth,
+        date: selectedDate, // Use selectedDate here instead of currentMonth
         time: {
           start: startTime,
-          end: endTime
+          end: endTime,
         },
-        recipes: selectedRecipes?.map(recipe => recipe._id),
+        recipes: selectedRecipes?.map((recipe) => recipe._id),
         notes: notes,
         createdBy: user.id,
         createdAt: new Date(),
         updatedBy: user.id,
-        updatedAt: new Date()
-      }
+        updatedAt: new Date(),
+      };
       sharedState.meal = meal;
-      setSharedState({...sharedState})
-      router.push("/calendar-section/meal-details", );
+      setSharedState({ ...sharedState });
+      router.push("/calendar-section/meal-details");
     }
-   
   };
+
 
   const handleRecipeSelect = (recipes: Recipe[]) => {
     setSelectedRecipes(recipes); // Directly set the updated recipes list
@@ -179,13 +179,26 @@ const AddEvent: React.FC = () => {
           <div className="max-w-md mx-auto bg-white rounded-lg shadow-md shadow-emerald-600">
             {/* Toggle Buttons */}
             <div className="flex items-center justify-between rounded-md p-1 px-12 mb-8">
-              <button className="w-1/2 py-2 text-center font-medium bg-gradient-to-r shadow-[3px_1px_7px_1px_#dcdcdc] from-[#B64B29] to-[#EC9556] text-white rounded-l-xl">
+              <button
+                onClick={() => setIsMeal(true)} // Set "New Meal" as active
+                className={`w-1/2 py-2 text-center font-medium ${isMeal
+                  ? "bg-gradient-to-r from-[#B64B29] to-[#EC9556] text-white" // Active style
+                  : "bg-gray-200 text-gray-600" // Inactive style
+                  } rounded-l-xl`}
+              >
                 New Meal
               </button>
-              <button className="w-1/2 py-2 text-center font-medium shadow-[3px_1px_7px_1px_#dcdcdc] rounded-r-xl">
+              <button
+                onClick={() => setIsMeal(false)} // Set "New Event" as active
+                className={`w-1/2 py-2 text-center font-medium ${!isMeal
+                  ? "bg-gradient-to-r from-[#B64B29] to-[#EC9556] text-white" // Active style
+                  : "bg-gray-200 text-gray-600" // Inactive style
+                  } rounded-r-xl`}
+              >
                 New Event
               </button>
             </div>
+
             <div className="rounded-t-[2.5rem] shadow-[0px_0px_15px_5px_#dcdcdc] p-6">
               {/* Month Selector */}
               <div className="flex justify-between items-center mb-4">
@@ -243,8 +256,7 @@ const AddEvent: React.FC = () => {
                         </span>
                         <button
                           className={`py-2.5 px-2.5 rounded-b-full min-w-[40px] ${selectedDate &&
-                            format(selectedDate, "yyyy-MM-dd") ===
-                            format(day, "yyyy-MM-dd")
+                            format(selectedDate, "yyyy-MM-dd") === format(day, "yyyy-MM-dd")
                             ? "bg-secondary text-primary"
                             : "text-gray-500"
                             }`}
@@ -252,6 +264,7 @@ const AddEvent: React.FC = () => {
                         >
                           {format(day, "dd")}
                         </button>
+
                       </div>
                     ))}
                   </div>
@@ -375,6 +388,7 @@ const AddEvent: React.FC = () => {
                 >
                   Finalize Meal
                 </button>
+
               </div>
             </div>
           </div>
